@@ -1,0 +1,164 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Adventure - @ViewBag.title</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <link href="https://fonts.googleapis.com/css?family=Poppins:200,300,400,500,600,700" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Abril+Fatface" rel="stylesheet">
+
+    <link rel="stylesheet" href="~/Content/open-iconic-bootstrap.min.css">
+    <link rel="stylesheet" href="~/Content/animate.css">
+
+    <link rel="stylesheet" href="~/Content/owl.carousel.min.css">
+    <link rel="stylesheet" href="~/Content/owl.theme.default.min.css">
+    <link rel="stylesheet" href="~/Content/magnific-popup.css">
+
+    <link rel="stylesheet" href="~/Content/aos.css">
+
+    <link rel="stylesheet" href="~/Content/icomoon.css">
+
+    <link rel="stylesheet" href="~/Content/bootstrap-datepicker.css">
+    <link rel="stylesheet" href="~/Content/jquery.timepicker.css">
+
+
+    <link rel="stylesheet" href="~/Content/flaticon.css">
+    <link rel="stylesheet" href="~/Content/icomoon.css">
+    <link rel="stylesheet" href="~/Content/style.css">
+</head>
+<body>
+
+    <nav class="navbar navbar-expand-lg navbar-dark ftco_navbar bg-dark ftco-navbar-light" id="ftco-navbar">
+        <div class="container">
+            <a class="navbar-brand" href="index.html">Adventure</a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#ftco-nav" aria-controls="ftco-nav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="oi oi-menu"></span> Menu
+            </button>
+
+            <div class="collapse navbar-collapse" id="ftco-nav">
+                <ul class="navbar-nav ml-auto">
+                    <li class="nav-item">
+                        @Html.ActionLink("主页", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
+                    </li>
+                    <li class="nav-item">
+                        @Html.ActionLink("关于我们", "AboutUS", "Home", new { area = "" }, new { @class = "navbar-brand" })
+                    </li>
+                    <li class="nav-item">
+                        @Html.ActionLink("体验活动", "Index", "Activity", new { area = "" }, new { @class = "navbar-brand" })
+                    </li>
+                    <li class="nav-item">
+                        @Html.ActionLink("民宿", "Index", "Homestay", new { area = "" }, new { @class = "navbar-brand" })
+                    </li>
+                    <li class="nav-item">
+                        @Html.ActionLink("旅行故事", "Index", "Story", new { area = "" }, new { @class = "navbar-brand" })
+                    </li>
+                    <li class="nav-item">
+                        @Html.ActionLink("联系我们", "Contact", "Home", new { area = "" }, new { @class = "navbar-brand" })
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+    <!-- END nav -->
+    @RenderBody()
+
+
+    <footer class="ftco-footer ftco-bg-dark ftco-section">
+        <div class="container">
+            <div class="row mb-5">
+                <div class="col-md">
+                    <div class="ftco-footer-widget mb-4">
+                        <h2 class="ftco-heading-2">Adventure</h2>
+                        <p>我们是一家联系旅游人士和家有空房出租的房主的服务型网站，致力于为您提供多样的住宿信息和旅行方案</p>
+                        <ul class="ftco-footer-social list-unstyled float-md-left float-lft mt-3">
+                            <li class="ftco-animate"><a href="#"><span class="icon-twitter"></span></a></li>
+                            <li class="ftco-animate"><a href="#"><span class="icon-facebook"></span></a></li>
+                            <li class="ftco-animate"><a href="#"><span class="icon-instagram"></span></a></li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="col-md">
+                    <div class="ftco-footer-widget mb-4 ml-md-4">
+                        <h2 class="ftco-heading-2">更多信息</h2>
+                        <ul class="list-unstyled">
+                            <li>
+                                @Html.ActionLink("主页", "Index", "Home", new { area = "" }, new { @class = "py-2 d-block" })
+                            </li>
+                            <li>
+                                @Html.ActionLink("关于我们", "AboutUS", "Home", new { area = "" }, new { @class = "py-2 d-block" })
+                            </li>
+                            <li>
+                                @Html.ActionLink("体验活动", "Index", "Activity", new { area = "" }, new { @class = "py-2 d-block" })
+                            </li>
+                            <li>
+                                @Html.ActionLink("民宿", "Index", "Homestay", new { area = "" }, new { @class = "py-2 d-block" })
+                            </li>
+                            <li>
+                                @Html.ActionLink("旅行故事", "Index", "Story", new { area = "" }, new { @class = "py-2 d-block" })
+                            </li>
+                            <li>
+                                @Html.ActionLink("联系我们", "Index", "Contact", new { area = "" }, new { @class = "py-2 d-block" })
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="col-md">
+                    <div class="ftco-footer-widget mb-4">
+                        <h2 class="ftco-heading-2">友情链接</h2>
+                        <ul class="list-unstyled">
+                            <li><a href="http://www.tongji.edu.cn" class="py-2 d-block">同济大学主页</a></li>
+                            <li><a href="http://sse.tongji.edu.cn" class="py-2 d-block">同济大学软件学院</a></li>
+                            <li><a href="http://www.airbnb.com" class="py-2 d-block">爱彼迎Airbnb</a></li>
+                            <li><a href="http://www.booking.com" class="py-2 d-block">缤客Booking</a></li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="col-md">
+                    <div class="ftco-footer-widget mb-4">
+                        <h2 class="ftco-heading-2">有任何疑问？</h2>
+                        <div class="block-23 mb-3">
+                            <ul>
+                                <li><span class="icon icon-map-marker"></span><span class="text">上海市嘉定区曹安公路4800号 同济大学嘉定校区</span></li>
+                                <li><span class="icon icon-phone"></span><span class="text">86-21-69589585,69589332(FAX)</span></li>
+                                <li><a href="http://www.tongji.edu.cn"><span class="icon icon-globe"></span><span class="text">www.tongji.edu.cn</span></a></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-12 text-center">
+
+                    <p>
+                        Copyright &copy;
+                        <script>document.write(new Date().getFullYear());</script> Adventure, Tongji Uni. All rights reserved.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- loader -->
+    <div id="ftco-loader" class="show fullscreen"><svg class="circular" width="48px" height="48px"><circle class="path-bg" cx="24" cy="24" r="22" fill="none" stroke-width="4" stroke="#eeeeee" /><circle class="path" cx="24" cy="24" r="22" fill="none" stroke-width="4" stroke-miterlimit="10" stroke="#F96D00" /></svg></div>
+
+    <script src="~/Scripts/jquery.min.js"></script>
+    <script src="~/Scripts/jquery-migrate-3.0.1.min.js"></script>
+    <script src="~/Scripts/popper.min.js"></script>
+    <script src="~/Scripts/bootstrap.min.js"></script>
+    <script src="~/Scripts/jquery.easing.1.3.js"></script>
+    <script src="~/Scripts/jquery.waypoints.min.js"></script>
+    <script src="~/Scripts/jquery.stellar.min.js"></script>
+    <script src="~/Scripts/owl.carousel.min.js"></script>
+    <script src="~/Scripts/jquery.magnific-popup.min.js"></script>
+    <script src="~/Scripts/aos.js"></script>
+    <script src="~/Scripts/jquery.animateNumber.min.js"></script>
+    <script src="~/Scripts/bootstrap-datepicker.js"></script>
+    <!-- <script src="js/jquery.timepicker.min.js"></script> -->
+    <script src="~/Scripts/scrollax.min.js"></script>
+    <script src="~/Scripts/google-map.js"></script>
+    <script src="~/Scripts/main.js"></script>
+    <script src="~/Scripts/range.js"></script>
+
+</body>
+</html>
