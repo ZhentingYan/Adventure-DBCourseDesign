@@ -67,6 +67,15 @@ namespace Adventure.Controllers
         }
         public ActionResult Index()
         {
+            /*
+            if (Session["user"] == null)
+                return Redirect("~/Login/index");
+            else
+            {
+                ViewBag.title = "度假屋、民宿、体验与旅行故事";
+                return View();
+            }
+            */
             ViewBag.title = "度假屋、民宿、体验与旅行故事";
             return View();
         }

@@ -25,7 +25,10 @@
 
     <link rel="stylesheet" href="~/Content/flaticon.css">
     <link rel="stylesheet" href="~/Content/icomoon.css">
+    <link rel="stylesheet" href="~/Content/Loginstyle.css">
+
     <link rel="stylesheet" href="~/Content/style.css">
+
     <script src="~/Scripts/jquery.min.js"></script>
     <script src="~/Scripts/jquery-migrate-3.0.1.min.js"></script>
 
@@ -116,17 +119,17 @@
                                 @Html.ActionLink("联系我们", "Index", "Contact", new { area = "" }, new { @class = "py-2 d-block" })
                             </li>
                             @if (Session["user"] == null)
-                                {
-                                    <li>
-                                        @Html.ActionLink("登陆/注册", "Index", "Login", new { area = "" }, new { @class = "py-2 d-block" })
-                                    </li>
-                                }
-                                else
-                                {
-                                    <li>
-                                        @Html.ActionLink("My Adventure", "Index", "Login", new { area = "" }, new { @class = "py-2 d-block" })
-                                    </li>
-                                }
+                            {
+                                <li>
+                                    @Html.ActionLink("登陆/注册", "Index", "Login", new { area = "" }, new { @class = "py-2 d-block" })
+                                </li>
+                            }
+                            else
+                            {
+                                <li>
+                                    @Html.ActionLink("My Adventure", "Index", "Login", new { area = "" }, new { @class = "py-2 d-block" })
+                                </li>
+                            }
                         </ul>
                     </div>
                 </div>
@@ -186,6 +189,10 @@
     <script src="~/Scripts/google-map.js"></script>
     <script src="~/Scripts/main.js"></script>
     <script src="~/Scripts/range.js"></script>
+    <script src="~/Scripts/jquery.backstretch.min.js"></script>
+    <script src="~/Scripts/retina-1.1.0.min.js"></script>
+    <script src="~/Scripts/scripts.js"></script>
 
 </body>
 </html>
+
