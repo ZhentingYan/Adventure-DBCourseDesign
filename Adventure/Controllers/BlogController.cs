@@ -11,7 +11,13 @@ namespace Adventure.Controllers
         // GET: Blog
         public ActionResult Index()
         {
-            return View();
+            if (Session["user"] == null)
+                return Redirect("~/Login/index");
+            else
+            {
+                ViewBag.title = "旅行故事";
+                return View();
+            }
         }
     }
 }

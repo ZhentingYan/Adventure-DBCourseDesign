@@ -1,7 +1,201 @@
 ﻿@{
-    ViewBag.Title = "About";
+    ViewBag.Title = "关于我们";
 }
-<h2>@ViewBag.Title.</h2>
-<h3>@ViewBag.Message</h3>
 
-<p>Use this area to provide additional information.</p>
+<script>
+    $(document).ready(function () {
+        $.get("../Home/getCount",
+            function (e) {
+                var jsonData = JSON.parse(e.data);
+                $("#customerCount").attr("data-number", jsonData.customerCount);
+                $("#activityCount").attr("data-number", jsonData.activityCount);
+                $("#homestayCount").attr("data-number", jsonData.homestayCount);
+                $("#reviewCount").attr("data-number", jsonData.reviewCount);
+
+            });
+    })
+
+</script>
+<div class="hero-wrap js-fullheight" style="background-image: url('../images/bg_1_backup.jpg');">
+    <div class="overlay"></div>
+    <div class="container">
+        <div class="row no-gutters slider-text js-fullheight align-items-center justify-content-start" data-scrollax-parent="true">
+            <div class="col-md-9 ftco-animate mb-5 pb-5 text-center text-md-left" data-scrollax=" properties: { translateY: '70%' }">
+                <h1 class="mb-4" data-scrollax="properties: { translateY: '30%', opacity: 1.6 }">Adventure<br>Discover New Life</h1>
+                <p data-scrollax="properties: { translateY: '30%', opacity: 1.6 }">从你的全世界路过，快加入Adventure开启新世界吧！</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<section class="ftco-section bg-light">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-4">
+                <div class="intro ftco-animate">
+                    <h3><span>01</span> 出租您的空闲房源</h3>
+                    <p>不论您出租的是哪种类型的房屋或房间，Adventure都可以让您轻松、安全地接待旅行者。 可订日期、价格、房屋守则、与房客的互动方式等，完全由您掌控。</p>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="intro ftco-animate">
+                    <h3><span>02</span> 开展您的体验</h3>
+                    <p>Adventure体验是由当地人设计并带队进行的活动。它不只是普通的旅游项目或课程，而且它们将让参与者亲历独特的当地生活。无需家有空房，任何人都可借此机会与他人分享自己的业余爱好和技能专长。</p>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="intro ftco-animate">
+                    <h3><span>03</span> 寻找您的旅程</h3>
+                    <p>Adventure为您提供丰富的体验与房源选择。何不走出去看看大千世界？欢迎来到Adventure开启奇妙之旅！</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+
+<section class="ftco-section ftco-counter img" id="section-counter" style="background-image: url(../images/bg_1.jpg);" data-stellar-background-ratio="0.5">
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-md-10">
+                <div class="row">
+                    <div class="col-md-3 d-flex justify-content-center counter-wrap ftco-animate">
+                        <div class="block-18 text-center">
+                            <div class="text">
+                                <strong id="customerCount" class="number" data-number="1200">0</strong>
+                                <span>我们的顾客</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-3 d-flex justify-content-center counter-wrap ftco-animate">
+                        <div class="block-18 text-center">
+                            <div class="text">
+                                <strong id="homestayCount" class="number" data-number="1200">0</strong>
+                                <span>我们的民宿房源</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-3 d-flex justify-content-center counter-wrap ftco-animate">
+                        <div class="block-18 text-center">
+                            <div class="text">
+                                <strong id="activityCount" class="number" data-number="1200">0</strong>
+                                <span>我们的体验活动</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-3 d-flex justify-content-center counter-wrap ftco-animate">
+                        <div class="block-18 text-center">
+                            <div class="text">
+                                <strong id="reviewCount" class="number" data-number="1200">0</strong>
+                                <span>我们收获的好评</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="ftco-about d-md-flex">
+    <div class="one-half img" style="background-image: url(../images/about.jpg);"></div>
+    <div class="one-half ftco-animate">
+        <div class="heading-section ftco-animate ">
+            <h3 class="mb-4">Adventure-最棒的旅行供应商</h3>
+        </div>
+        <div>
+            <p>
+                在全球多个城市，Adventure拥有世界一流的客户服务和日益增长的用户社区，为人们提供了一个最简单有效的途径，让他们可以利用闲置空间赚钱，并将它们展示给成百上千万受众，为您带来独一无二的住宿体验。
+            </p>
+        </div>
+    </div>
+</section>
+
+
+
+<section class="ftco-section testimony-section">
+    <div class="container">
+        <div class="row justify-content-center mb-5 pb-3">
+            <div class="col-md-7 text-center heading-section heading-section-white ftco-animate">
+                <h2 class="mb-4">Our satisfied customer says</h2>
+                <p>我们十分重视并倾听Adventure用户对我们的每一次评价</p>
+            </div>
+        </div>
+        <div class="row ftco-animate">
+            <div class="col-md-12">
+                <div class="carousel-testimony owl-carousel ftco-owl">
+                    <div class="item">
+                        <div class="testimony-wrap p-4 pb-5">
+                            <div class="user-img mb-5" style="background-image: url(../images/person_1.jpg)">
+                                <span class="quote d-flex align-items-center justify-content-center">
+                                    <i class="icon-quote-left"></i>
+                                </span>
+                            </div>
+                            <div class="text">
+                                <p class="mb-5">Far far away, behind the word mountains, far from the countries Vokalia and Consonantia, there live the blind texts.</p>
+                                <p class="name">Mark Web</p>
+                                <span class="position">Marketing Manager</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="item">
+                        <div class="testimony-wrap p-4 pb-5">
+                            <div class="user-img mb-5" style="background-image: url(../images/person_2.jpg)">
+                                <span class="quote d-flex align-items-center justify-content-center">
+                                    <i class="icon-quote-left"></i>
+                                </span>
+                            </div>
+                            <div class="text">
+                                <p class="mb-5">Far far away, behind the word mountains, far from the countries Vokalia and Consonantia, there live the blind texts.</p>
+                                <p class="name">Mark Web</p>
+                                <span class="position">Interface Designer</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="item">
+                        <div class="testimony-wrap p-4 pb-5">
+                            <div class="user-img mb-5" style="background-image: url(../images/person_3.jpg)">
+                                <span class="quote d-flex align-items-center justify-content-center">
+                                    <i class="icon-quote-left"></i>
+                                </span>
+                            </div>
+                            <div class="text">
+                                <p class="mb-5">Far far away, behind the word mountains, far from the countries Vokalia and Consonantia, there live the blind texts.</p>
+                                <p class="name">Mark Web</p>
+                                <span class="position">UI Designer</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="item">
+                        <div class="testimony-wrap p-4 pb-5">
+                            <div class="user-img mb-5" style="background-image: url(../images/person_1.jpg)">
+                                <span class="quote d-flex align-items-center justify-content-center">
+                                    <i class="icon-quote-left"></i>
+                                </span>
+                            </div>
+                            <div class="text">
+                                <p class="mb-5">Far far away, behind the word mountains, far from the countries Vokalia and Consonantia, there live the blind texts.</p>
+                                <p class="name">Mark Web</p>
+                                <span class="position">Web Developer</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="item">
+                        <div class="testimony-wrap p-4 pb-5">
+                            <div class="user-img mb-5" style="background-image: url(../images/person_1.jpg)">
+                                <span class="quote d-flex align-items-center justify-content-center">
+                                    <i class="icon-quote-left"></i>
+                                </span>
+                            </div>
+                            <div class="text">
+                                <p class="mb-5">Far far away, behind the word mountains, far from the countries Vokalia and Consonantia, there live the blind texts.</p>
+                                <p class="name">Mark Web</p>
+                                <span class="position">System Analyst</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

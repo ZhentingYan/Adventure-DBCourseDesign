@@ -45,7 +45,7 @@
                         @Html.ActionLink("主页", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
                     </li>
                     <li class="nav-item">
-                        @Html.ActionLink("关于我们", "AboutUS", "Home", new { area = "" }, new { @class = "navbar-brand" })
+                        @Html.ActionLink("关于我们", "About", "Home", new { area = "" }, new { @class = "navbar-brand" })
                     </li>
                     <li class="nav-item">
                         @Html.ActionLink("体验活动", "Index", "Activity", new { area = "" }, new { @class = "navbar-brand" })
@@ -54,7 +54,7 @@
                         @Html.ActionLink("民宿", "Index", "Homestay", new { area = "" }, new { @class = "navbar-brand" })
                     </li>
                     <li class="nav-item">
-                        @Html.ActionLink("旅行故事", "Index", "Story", new { area = "" }, new { @class = "navbar-brand" })
+                        @Html.ActionLink("旅行故事", "Index", "Blog", new { area = "" }, new { @class = "navbar-brand" })
                     </li>
                     <li class="nav-item">
                         @Html.ActionLink("联系我们", "Contact", "Home", new { area = "" }, new { @class = "navbar-brand" })
@@ -69,6 +69,9 @@
                     {
                         <li>
                             @Html.ActionLink("My Adventure", "Index", "Login", new { area = "" }, new { @class = "navbar-brand" })
+                        </li>
+                        <li>
+                            @Html.ActionLink("登出", "Index", "Login", new { area = "" }, new { @class = "navbar-brand" })
                         </li>
                     }
                 </ul>
@@ -101,7 +104,7 @@
                                 @Html.ActionLink("主页", "Index", "Home", new { area = "" }, new { @class = "py-2 d-block" })
                             </li>
                             <li>
-                                @Html.ActionLink("关于我们", "AboutUS", "Home", new { area = "" }, new { @class = "py-2 d-block" })
+                                @Html.ActionLink("关于我们", "About", "Home", new { area = "" }, new { @class = "py-2 d-block" })
                             </li>
                             <li>
                                 @Html.ActionLink("体验活动", "Index", "Activity", new { area = "" }, new { @class = "py-2 d-block" })
@@ -110,10 +113,10 @@
                                 @Html.ActionLink("民宿", "Index", "Homestay", new { area = "" }, new { @class = "py-2 d-block" })
                             </li>
                             <li>
-                                @Html.ActionLink("旅行故事", "Index", "Story", new { area = "" }, new { @class = "py-2 d-block" })
+                                @Html.ActionLink("旅行故事", "Index", "Blog", new { area = "" }, new { @class = "py-2 d-block" })
                             </li>
                             <li>
-                                @Html.ActionLink("联系我们", "Index", "Contact", new { area = "" }, new { @class = "py-2 d-block" })
+                                @Html.ActionLink("联系我们", "Contact", "Home", new { area = "" }, new { @class = "py-2 d-block" })
                             </li>
                             @if (Session["user"] == null)
                                 {

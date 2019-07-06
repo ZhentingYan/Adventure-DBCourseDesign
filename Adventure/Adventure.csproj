@@ -302,6 +302,7 @@
     <Content Include="Views\Home\Index.cshtml" />
     <Content Include="Views\Login\Index.cshtml" />
     <Content Include="Views\Login\Login_Layout.cshtml" />
+    <Content Include="Views\Register\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -309,7 +310,6 @@
     <Folder Include="Views\Activity\" />
     <Folder Include="Views\Blog\" />
     <Folder Include="Views\HomeStay\" />
-    <Folder Include="Views\Register\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\bootstrap.min.css.map" />
@@ -346,6 +346,7 @@
           <SaveServerSettingsInUserFile>False</SaveServerSettingsInUserFile>
         </WebProjectProperties>
       </FlavorProperties>
+      <UserProperties Content_4bootstrap-theme_1css_1map__JSONSchema="" />
     </VisualStudio>
   </ProjectExtensions>
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">

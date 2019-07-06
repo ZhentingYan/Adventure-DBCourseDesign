@@ -1,17 +1,77 @@
 ﻿@{
-    ViewBag.Title = "Contact";
+    ViewBag.Title = "联系我们";
 }
-<h2>@ViewBag.Title.</h2>
-<h3>@ViewBag.Message</h3>
+<div class="hero-wrap js-fullheight" style="background-image: url('../images/Contact_bg.jpg');">
+    <div class="overlay"></div>
+    <div class="container">
+        <div class="row no-gutters slider-text js-fullheight align-items-center justify-content-center" data-scrollax-parent="true">
+            <div class="col-md-9 text-center ftco-animate" data-scrollax=" properties: { translateY: '70%' }">
+                <p class="breadcrumbs" data-scrollax="properties: { translateY: '30%', opacity: 1.6 }"><span class="mr-2"><a href="../Home">Home</a></span> <span>Blog</span></p>
+                <h1 class="mb-3 bread" data-scrollax="properties: { translateY: '30%', opacity: 1.6 }">Contact US</h1>
+            </div>
+        </div>
+    </div>
+</div>
 
-<address>
-    One Microsoft Way<br />
-    Redmond, WA 98052-6399<br />
-    <abbr title="Phone">P:</abbr>
-    425.555.0100
-</address>
+<section class="ftco-section contact-section ftco-degree-bg">
+    <div class="container">
+        <div class="row d-flex mb-5 contact-info">
+            <div class="col-md-12 mb-4">
+                <h2 class="h4">联系方式</h2>
+            </div>
+            <div class="w-100"></div>
+            <div class="col-md-3">
+                <p><span>联系地址:</span>同济大学嘉定校区<br>上海市嘉定区曹安公路4800号</p>
+            </div>
+            <div class="col-md-3">
+                <p><span>联系电话:</span> <a href="tel://1234567920">+ 1235 2355 98</a></p>
+            </div>
+            <div class="col-md-3">
+                <p><span>电子邮件:</span> <a href="mailto:dean@tongji.edu.cn">dean@tongji.edu.cn</a></p>
+            </div>
+            <div class="col-md-3">
+                <p><span>我们的网站:</span> <a href="../Home">Adventure</a></p>
+            </div>
+        </div>
+    </div>
 
-<address>
-    <strong>Support:</strong>   <a href="mailto:Support@example.com">Support@example.com</a><br />
-    <strong>Marketing:</strong> <a href="mailto:Marketing@example.com">Marketing@example.com</a>
-</address>
+</section>
+
+<section class="ftco-section ftco-counter img" style="background-image: url(../images/bg_1.jpg);" data-stellar-background-ratio="0.5">
+    <div class="container">
+        <div class="row justify-content-center mb-5 pb-3">
+            <div class="col-md-7 text-center heading-section heading-section-white ftco-animate">
+                <h2 class="mb-4">投诉与反馈</h2>
+                <p>我们十分重视Adventure的每一位客户对每一次的民宿体验和旅行活动的感受</p>
+                <p>如果您对于某一次住宿体验或者是旅行活动有任何不满，请填写下列信息联系我们</p>
+</div>
+        </div>
+        <div class="row block-9">
+            <div class="col-sm-6 col-sm-offset-3 form-box">
+                <form action="#">
+                    <div class="form-group">
+                        <input type="text" class="form-control" placeholder="您的姓名">
+                    </div>
+                    <div class="form-group">
+                        <input type="text" class="form-control" placeholder="您的电子邮箱">
+                    </div>
+                    <div class="form-group">
+                        <input type="text" class="form-control" placeholder="订单号">
+                    </div>
+                    <div class="form-group">
+                        <textarea name="" id="" cols="30" rows="7" class="form-control" placeholder="投诉缘由"></textarea>
+                    </div>
+                    <div class="form-group">
+                        <input type="submit" value="Send Message" class="btn btn-primary py-3 px-5">
+                    </div>
+                </form>
+
+            </div>
+
+            <div class="col-md-6">
+                <div id="map"></div>
+            </div>
+        </div>
+    </div>
+</section>
+

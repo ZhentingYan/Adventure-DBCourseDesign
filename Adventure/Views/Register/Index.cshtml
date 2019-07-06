@@ -1,15 +1,13 @@
-﻿
-
-@{
+﻿@{
     ViewBag.Title = "注册";
     Layout = "~/Views/Login/Login_Layout.cshtml";
 }
 
 <script>
     function turnToLogin() {
-        window.location = '/Login';
+        window.location.href = "/Login";
     }
-</script>
+    </script>
 <div class="hero-wrap js-fullheight" style="background-image: url('../images/Login_bg.jpg');">
     <div class="overlay"></div>
     <div class="container">
@@ -50,7 +48,7 @@
                                                 <textarea name="form-about-yourself" placeholder="About yourself..."
                                                           class="form-about-yourself form-control" id="form-about-yourself"></textarea>
                                             </div>
-                                            <button type="button" class="btn text-center" onclick="turnToLogin()">已经有账户?</button>
+                                            <button type="button" class="btn btn-next" onclick="turnToLogin()">已经有账户?</button>
                                             <button type="button" class="btn btn-next">下一页</button>
                                         </div>
                                     </fieldset>
