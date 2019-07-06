@@ -76,3 +76,4 @@ D:\DatabaseCourseDesign-Adventure\Adventure\Adventure\obj\Debug\Adventure.csproj
 D:\DatabaseCourseDesign-Adventure\Adventure\Adventure\obj\Debug\Adventure.csproj.CopyComplete
 D:\DatabaseCourseDesign-Adventure\Adventure\Adventure\obj\Debug\Adventure.dll
 D:\DatabaseCourseDesign-Adventure\Adventure\Adventure\obj\Debug\Adventure.pdb
+D:\DatabaseCourseDesign-Adventure\Adventure\Adventure\bin\Oracle.ManagedDataAccess.dll

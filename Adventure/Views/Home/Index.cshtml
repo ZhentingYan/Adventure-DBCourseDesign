@@ -1,13 +1,27 @@
 ﻿@{
     ViewBag.Title = "度假屋、民宿、体验与旅行故事";
 }
+<script>
+    $(document).ready(function () {
+        $.get("Home/getCount",
+            function (e) {
+                var jsonData = JSON.parse(e.data);
+                $("#customerCount").attr("data-number", jsonData.customerCount);
+                $("#activityCount").attr("data-number", jsonData.activityCount);
+                $("#homestayCount").attr("data-number", jsonData.homestayCount);
+                $("#reviewCount").attr("data-number", jsonData.reviewCount);
+
+            });
+    })
+
+</script>
 <div class="hero-wrap js-fullheight" style="background-image: url('images/bg_1.jpg');">
     <div class="overlay"></div>
     <div class="container">
         <div class="row no-gutters slider-text js-fullheight align-items-center justify-content-start" data-scrollax-parent="true">
             <div class="col-md-9 ftco-animate mb-5 pb-5 text-center text-md-left" data-scrollax=" properties: { translateY: '70%' }">
-                <h1 class="mb-4" data-scrollax="properties: { translateY: '30%', opacity: 1.6 }">Discover <br>A new Place</h1>
-                <p data-scrollax="properties: { translateY: '30%', opacity: 1.6 }">Find great places to stay, eat, shop, or visit from local experts</p>
+                <h1 class="mb-4" data-scrollax="properties: { translateY: '30%', opacity: 1.6 }">探索 <br>一段新的旅程</h1>
+                <p data-scrollax="properties: { translateY: '30%', opacity: 1.6 }">寻找一个新的城市，新的生活，品味多样人生</p>
             </div>
         </div>
     </div>
@@ -18,9 +32,9 @@
         <div class="row no-gutters">
             <div class="col-md-12 nav-link-wrap">
                 <div class="nav nav-pills justify-content-center text-center" id="v-pills-tab" role="tablist" aria-orientation="vertical">
-                    <a class="nav-link active" id="v-pills-1-tab" data-toggle="pill" href="#v-pills-1" role="tab" aria-controls="v-pills-1" aria-selected="true">Flight</a>
+                    <a class="nav-link active" id="v-pills-1-tab" data-toggle="pill" href="#v-pills-1" role="tab" aria-controls="v-pills-1" aria-selected="true">民宿</a>
 
-                    <a class="nav-link" id="v-pills-2-tab" data-toggle="pill" href="#v-pills-2" role="tab" aria-controls="v-pills-2" aria-selected="false">Hotel</a>
+                    <a class="nav-link" id="v-pills-2-tab" data-toggle="pill" href="#v-pills-2" role="tab" aria-controls="v-pills-2" aria-selected="false">体验活动</a>
 
                     <a class="nav-link" id="v-pills-3-tab" data-toggle="pill" href="#v-pills-3" role="tab" aria-controls="v-pills-3" aria-selected="false">Car Rent</a>
                 </div>
@@ -34,48 +48,39 @@
                             <div class="row">
                                 <div class="col-md align-items-end">
                                     <div class="form-group">
-                                        <label for="#">From</label>
-                                        <div class="form-field">
-                                            <div class="icon"><span class="icon-my_location"></span></div>
-                                            <input type="text" class="form-control" placeholder="From">
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-md align-items-end">
-                                    <div class="form-group">
-                                        <label for="#">Where</label>
+                                        <label for="#">目的地</label>
                                         <div class="form-field">
                                             <div class="icon"><span class="icon-map-marker"></span></div>
-                                            <input type="text" class="form-control" placeholder="Where">
+                                            <input type="text" class="form-control" placeholder="您的目的地">
                                         </div>
                                     </div>
                                 </div>
                                 <div class="col-md align-items-end">
                                     <div class="form-group">
-                                        <label for="#">Check In</label>
+                                        <label for="#">入住时间</label>
                                         <div class="form-field">
                                             <div class="icon"><span class="icon-map-marker"></span></div>
-                                            <input type="text" class="form-control checkin_date" placeholder="Check In">
+                                            <input type="text" class="form-control checkin_date" placeholder="您的入住时间">
                                         </div>
                                     </div>
                                 </div>
                                 <div class="col-md align-items-end">
                                     <div class="form-group">
-                                        <label for="#">Check Out</label>
+                                        <label for="#">退房时间</label>
                                         <div class="form-field">
                                             <div class="icon"><span class="icon-map-marker"></span></div>
-                                            <input type="text" class="form-control checkout_date" placeholder="From">
+                                            <input type="text" class="form-control checkout_date" placeholder="您的退房时间">
                                         </div>
                                     </div>
                                 </div>
                                 <div class="col-md align-items-end">
                                     <div class="form-group">
-                                        <label for="#">Travelers</label>
+                                        <label for="#">入住人数</label>
                                         <div class="form-field">
                                             <div class="select-wrap">
                                                 <div class="icon"><span class="ion-ios-arrow-down"></span></div>
                                                 <select name="" id="" class="form-control">
-                                                    <option value="">1</option>
+                                                    <option value="" selected>1</option>
                                                     <option value="">2</option>
                                                     <option value="">3</option>
                                                     <option value="">4</option>
@@ -88,7 +93,7 @@
                                 <div class="col-md align-self-end">
                                     <div class="form-group">
                                         <div class="form-field">
-                                            <input type="submit" value="Search" class="form-control btn btn-primary">
+                                            <input type="submit" value="搜索" class="form-control btn btn-primary">
                                         </div>
                                     </div>
                                 </div>
@@ -101,30 +106,30 @@
                             <div class="row">
                                 <div class="col-md align-items-end">
                                     <div class="form-group">
-                                        <label for="#">Check In</label>
+                                        <label for="#">开始日期</label>
                                         <div class="form-field">
                                             <div class="icon"><span class="icon-map-marker"></span></div>
-                                            <input type="text" class="form-control checkin_date" placeholder="Check In">
+                                            <input type="text" class="form-control checkin_date" placeholder="活动开始日期">
                                         </div>
                                     </div>
                                 </div>
                                 <div class="col-md align-items-end">
                                     <div class="form-group">
-                                        <label for="#">Check Out</label>
+                                        <label for="#">结束日期</label>
                                         <div class="form-field">
                                             <div class="icon"><span class="icon-map-marker"></span></div>
-                                            <input type="text" class="form-control checkout_date" placeholder="From">
+                                            <input type="text" class="form-control checkout_date" placeholder="活动结束日期">
                                         </div>
                                     </div>
                                 </div>
                                 <div class="col-md align-items-end">
                                     <div class="form-group">
-                                        <label for="#">Guest</label>
+                                        <label for="#">人数</label>
                                         <div class="form-field">
                                             <div class="select-wrap">
                                                 <div class="icon"><span class="ion-ios-arrow-down"></span></div>
                                                 <select name="" id="" class="form-control">
-                                                    <option value="">1</option>
+                                                    <option value="" selected>1</option>
                                                     <option value="">2</option>
                                                     <option value="">3</option>
                                                     <option value="">4</option>
@@ -137,48 +142,7 @@
                                 <div class="col-md align-self-end">
                                     <div class="form-group">
                                         <div class="form-field">
-                                            <input type="submit" value="Search" class="form-control btn btn-primary">
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </form>
-                    </div>
-
-                    <div class="tab-pane fade" id="v-pills-3" role="tabpanel" aria-labelledby="v-pills-effect-tab">
-                        <form action="#" class="search-destination">
-                            <div class="row">
-                                <div class="col-md align-items-end">
-                                    <div class="form-group">
-                                        <label for="#">Where</label>
-                                        <div class="form-field">
-                                            <div class="icon"><span class="icon-map-marker"></span></div>
-                                            <input type="text" class="form-control" placeholder="Where">
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-md align-items-end">
-                                    <div class="form-group">
-                                        <label for="#">Check In</label>
-                                        <div class="form-field">
-                                            <div class="icon"><span class="icon-map-marker"></span></div>
-                                            <input type="text" class="form-control checkin_date" placeholder="Check In">
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-md align-items-end">
-                                    <div class="form-group">
-                                        <label for="#">Check Out</label>
-                                        <div class="form-field">
-                                            <div class="icon"><span class="icon-map-marker"></span></div>
-                                            <input type="text" class="form-control checkout_date" placeholder="From">
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-md align-self-end">
-                                    <div class="form-group">
-                                        <div class="form-field">
-                                            <input type="submit" value="Search" class="form-control btn btn-primary">
+                                            <input type="submit" value="搜索" class="form-control btn btn-primary">
                                         </div>
                                     </div>
                                 </div>
@@ -196,20 +160,20 @@
         <div class="row">
             <div class="col-md-4">
                 <div class="intro ftco-animate">
-                    <h3><span>01</span> Travel</h3>
-                    <p>A small river named Duden flows by their place and supplies it with the necessary regelialia. It is a paradisematic country, in which roasted parts of sentences fly into your mouth.</p>
+                    <h3><span>01</span> 出租您的空闲房源</h3>
+                    <p>不论您出租的是哪种类型的房屋或房间，Adventure都可以让您轻松、安全地接待旅行者。 可订日期、价格、房屋守则、与房客的互动方式等，完全由您掌控。</p>
                 </div>
             </div>
             <div class="col-md-4">
                 <div class="intro ftco-animate">
-                    <h3><span>02</span> Experience</h3>
-                    <p>A small river named Duden flows by their place and supplies it with the necessary regelialia. It is a paradisematic country, in which roasted parts of sentences fly into your mouth.</p>
+                    <h3><span>02</span> 开展您的体验</h3>
+                    <p>Adventure体验是由当地人设计并带队进行的活动。它不只是普通的旅游项目或课程，而且它们将让参与者亲历独特的当地生活。无需家有空房，任何人都可借此机会与他人分享自己的业余爱好和技能专长。</p>
                 </div>
             </div>
             <div class="col-md-4">
                 <div class="intro ftco-animate">
-                    <h3><span>03</span> Relax</h3>
-                    <p>A small river named Duden flows by their place and supplies it with the necessary regelialia. It is a paradisematic country, in which roasted parts of sentences fly into your mouth.</p>
+                    <h3><span>03</span> 寻找您的旅程</h3>
+                    <p>Adventure为您提供丰富的体验与房源选择。何不走出去看看大千世界？欢迎来到Adventure开启奇妙之旅！</p>
                 </div>
             </div>
         </div>
@@ -220,28 +184,28 @@
     <div class="container">
         <div class="row justify-content-center mb-5 pb-3">
             <div class="col-md-7 heading-section text-center ftco-animate">
-                <h2 class="mb-4">See our latest vacation ideas</h2>
+                <h2 class="mb-4">查看我们为您精选的推荐</h2>
             </div>
         </div>
         <div class="row">
             <div class="col-md-4 ftco-animate">
                 <a href="#" class="destination-entry img" style="background-image: url(images/destination-1.jpg);">
                     <div class="text text-center">
-                        <h3>Beachfront Scape</h3>
+                        <h4>台州市-不容错过的东海日出</h4>
                     </div>
                 </a>
             </div>
             <div class="col-md-4 ftco-animate">
                 <a href="#" class="destination-entry img" style="background-image: url(images/destination-2-1.jpg);">
                     <div class="text text-center">
-                        <h3>Group Holidays</h3>
+                        <h4>曼谷-有座四合院，奇妙又惊艳</h4>
                     </div>
                 </a>
             </div>
             <div class="col-md-4 ftco-animate">
                 <a href="#" class="destination-entry img" style="background-image: url(images/destination-3.jpg);">
                     <div class="text text-center">
-                        <h3>City Breaks</h3>
+                        <h4>上海-一秒穿越到18世纪的欧洲</h4>
                     </div>
                 </a>
             </div>
@@ -253,10 +217,12 @@
     <div class="one-half img" style="background-image: url(images/about.jpg);"></div>
     <div class="one-half ftco-animate">
         <div class="heading-section ftco-animate ">
-            <h2 class="mb-4">The Best Travel Agency</h2>
+            <h3 class="mb-4">Adventure-最棒的旅行供应商</h3>
         </div>
         <div>
-            <p>On her way she met a copy. The copy warned the Little Blind Text, that where it came from it would have been rewritten a thousand times and everything that was left from its origin would be the word "and" and the Little Blind Text should turn around and return to its own, safe country. But nothing the copy said could convince her and so it didn’t take long until a few insidious Copy Writers ambushed her, made her drunk with Longe and Parole and dragged her into their agency, where they abused her for their.</p>
+            <p>
+                在全球多个城市，Adventure拥有世界一流的客户服务和日益增长的用户社区，为人们提供了一个最简单有效的途径，让他们可以利用闲置空间赚钱，并将它们展示给成百上千万受众，为您带来独一无二的住宿体验。
+            </p>
         </div>
     </div>
 </section>
@@ -462,32 +428,32 @@
                     <div class="col-md-3 d-flex justify-content-center counter-wrap ftco-animate">
                         <div class="block-18 text-center">
                             <div class="text">
-                                <strong class="number" data-number="1200">0</strong>
-                                <span>Happy Customers</span>
+                                <strong id="customerCount" class="number" data-number="1200">0</strong>
+                                <span>我们的顾客</span>
                             </div>
                         </div>
                     </div>
                     <div class="col-md-3 d-flex justify-content-center counter-wrap ftco-animate">
                         <div class="block-18 text-center">
                             <div class="text">
-                                <strong class="number" data-number="1200">0</strong>
-                                <span>Destination Places</span>
+                                <strong id="homestayCount" class="number" data-number="1200">0</strong>
+                                <span>我们的民宿房源</span>
                             </div>
                         </div>
                     </div>
                     <div class="col-md-3 d-flex justify-content-center counter-wrap ftco-animate">
                         <div class="block-18 text-center">
                             <div class="text">
-                                <strong class="number" data-number="1200">0</strong>
-                                <span>Hotels</span>
+                                <strong id="activityCount" class="number" data-number="1200">0</strong>
+                                <span>我们的体验活动</span>
                             </div>
                         </div>
                     </div>
                     <div class="col-md-3 d-flex justify-content-center counter-wrap ftco-animate">
                         <div class="block-18 text-center">
                             <div class="text">
-                                <strong class="number" data-number="1200">0</strong>
-                                <span>Restaurant</span>
+                                <strong id="reviewCount" class="number" data-number="1200">0</strong>
+                                <span>我们收获的好评</span>
                             </div>
                         </div>
                     </div>
@@ -929,29 +895,6 @@
                             <div><a href="#">October 3, 2018</a></div>
                             <div><a href="#">Admin</a></div>
                             <div><a href="#" class="meta-chat"><span class="icon-chat"></span> 3</a></div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-</section>
-
-<section class="ftco-section-parallax">
-    <div class="parallax-img d-flex align-items-center">
-        <div class="container">
-            <div class="row d-flex justify-content-center">
-                <div class="col-md-7 text-center heading-section heading-section-white ftco-animate">
-                    <h2>Subcribe to our Newsletter</h2>
-                    <p>Far far away, behind the word mountains, far from the countries Vokalia and Consonantia, there live the blind texts. Separated they live in</p>
-                    <div class="row d-flex justify-content-center mt-5">
-                        <div class="col-md-8">
-                            <form action="#" class="subscribe-form">
-                                <div class="form-group d-flex">
-                                    <input type="text" class="form-control" placeholder="Enter email address">
-                                    <input type="submit" value="Subscribe" class="submit px-3">
-                                </div>
-                            </form>
                         </div>
                     </div>
                 </div>
