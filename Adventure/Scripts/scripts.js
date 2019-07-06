@@ -51,20 +51,98 @@ jQuery(document).ready(function() {
     		$(this).prev().fadeIn();
     	});
     });
-    
-    // submit
-    $('.registration-form').on('submit', function(e) {
-    	
+	$('.registration-form .btn-register').on('submit', function(e) {
+    	var next_step=true;
     	$(this).find('input[type="text"], input[type="password"], textarea').each(function() {
     		if( $(this).val() == "" ) {
     			e.preventDefault();
-    			$(this).addClass('input-error');
+				$(this).addClass('input-error');
+				next_step=false;
     		}
     		else {
     			$(this).removeClass('input-error');
     		}
-    	});
-    	
+		});
+		if(next_step){
+			var originPasswd=$("#form-password").val();
+			var repeatPasswd=$("#form-repeat-password").val();
+
+			if(originPasswd!=repeatPasswd)
+				alert("两次密码输入不一致！");
+			else if($("#form-username").val().length<5)
+				alert("用户名输入太短！");
+			else{
+				alert("注册提交了");
+
+			$.ajax({
+				type: "post",
+				url: "Register/registerCheck",
+				data: { 
+					userID: $("#form-username").val(), 
+					userpwd: $("#form-password").val(), 
+					userIntroduction:$("#form-about-yourself").val(), 
+					userFirstName:$("#form-first-name").val(),
+					userLastName:$("#form-last-name").val(),  
+					userMail:$("#form-email").val(),  
+					userPhoneNum:$("#form-phoneNumber").val(),
+					userCountry:$("#form-country").val(),
+					userGender:$("#form-gender").val()
+					},
+				async: false,
+				dataType: 'json',
+				success: function (d) {
+					if (d.Result == '0') {//登录成功  
+						//location.href = 'DataMain.aspx?logper=' + $("#ipt_username").find("option:selected").text();
+						alert("注册成功！");
+						//location.href = 'Home/Index';
+					}
+					else {
+						//登录失败                
+						alert(d.Message);
+					}
+				},
+				error: function (a) { console.log(a); }
+			});
+		}
+		}
+    });
+    // submit
+    $('.registration-form .btn-login').on('submit', function(e) {
+    	var next_step=true;
+    	$(this).find('input[type="text"], input[type="password"], textarea').each(function() {
+    		if( $(this).val() == "" ) {
+    			e.preventDefault();
+				$(this).addClass('input-error');
+				next_step=false;
+    		}
+    		else {
+    			$(this).removeClass('input-error');
+    		}
+		});
+		if(next_step){
+			$.ajax({
+				type: "post",
+				url: "Login/CheckLogin",
+				data: { 
+					userID: $("#form-username").val(), 
+					userpwd: $("#form-password").val(), 
+					},
+				async: false,
+				dataType: 'json',
+				success: function (d) {
+					if (d.Result == '0') {//登录成功  
+						//location.href = 'DataMain.aspx?logper=' + $("#ipt_username").find("option:selected").text();
+						alert("登陆成功！");
+						//location.href = 'Home/Index';
+					}
+					else {
+						//登录失败                
+						alert(d.Message);
+					}
+				},
+				error: function (a) { console.log(a); }
+			});
+		}
     });
     
     
