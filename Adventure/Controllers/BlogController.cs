@@ -12,7 +12,10 @@ namespace Adventure.Controllers
         public ActionResult Index()
         {
             if (Session["user"] == null)
+            {
+                Session["user"] = 123456;
                 return Redirect("~/Login/index");
+            }
             else
             {
                 ViewBag.title = "旅行故事";

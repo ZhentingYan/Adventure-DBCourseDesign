@@ -155,6 +155,7 @@
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\HomeStayController.cs" />
     <Compile Include="Controllers\LoginController.cs" />
+    <Compile Include="Controllers\OrderController.cs" />
     <Compile Include="Controllers\RegisterController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -173,15 +174,19 @@
     <Content Include="Content\bootstrap\bootstrap-grid.css" />
     <Content Include="Content\bootstrap\bootstrap-reboot.css" />
     <Content Include="Content\css\bootstrap-reboot.css" />
+    <Content Include="Content\css\jquery-ui.css" />
     <Content Include="Content\css\mixins\_text-hide.css" />
+    <Content Include="Content\css\Orderstyle.css" />
     <Content Include="Content\flaticon.css" />
     <Content Include="Content\form-elements.css" />
     <Content Include="Content\icomoon.css" />
     <Content Include="Content\ionicons.min.css" />
+    <Content Include="Content\jquery-ui.css" />
     <Content Include="Content\jquery.timepicker.css" />
     <Content Include="Content\Loginstyle.css" />
     <Content Include="Content\magnific-popup.css" />
     <Content Include="Content\open-iconic-bootstrap.min.css" />
+    <Content Include="Content\Orderstyle.css" />
     <Content Include="Content\owl.carousel.min.css" />
     <Content Include="Content\owl.theme.default.min.css" />
     <Content Include="Content\style.css" />
@@ -216,6 +221,14 @@
     <Content Include="images\image_5.jpg" />
     <Content Include="images\image_6.jpg" />
     <Content Include="images\loc.png" />
+    <Content Include="images\Order\bg.jpg" />
+    <Content Include="images\Order\cal.png" />
+    <Content Include="images\Order\cal1.png" />
+    <Content Include="images\Order\date-icon.png" />
+    <Content Include="images\Order\down.png" />
+    <Content Include="images\Order\left.png" />
+    <Content Include="images\Order\menu.png" />
+    <Content Include="images\Order\right.png" />
     <Content Include="images\person_1.jpg" />
     <Content Include="images\person_2.jpg" />
     <Content Include="images\person_3.jpg" />
@@ -253,6 +266,9 @@
     <Content Include="fonts\open-iconic\open-iconic.otf" />
     <Content Include="fonts\open-iconic\open-iconic.ttf" />
     <Content Include="fonts\open-iconic\open-iconic.woff" />
+    <Content Include="fonts\Cabin-Regular.ttf" />
+    <Content Include="fonts\Nunito-Regular.ttf" />
+    <Content Include="fonts\Oswald-Light.ttf" />
     <None Include="Scripts\jquery-3.3.1.intellisense.js" />
     <Content Include="Scripts\google-map.js" />
     <Content Include="Scripts\jquery-1.11.1.js" />
@@ -264,6 +280,8 @@
     <Content Include="Scripts\jquery-3.3.1.slim.min.js" />
     <None Include="Scripts\jquery.validate-vsdoc.js" />
     <Content Include="Scripts\jquery-migrate-3.0.1.min.js" />
+    <Content Include="Scripts\jquery-ui.js" />
+    <Content Include="Scripts\jquery-ui.min.js" />
     <Content Include="Scripts\jquery.animateNumber.min.js" />
     <Content Include="Scripts\jquery.backstretch.js" />
     <Content Include="Scripts\jquery.backstretch.min.js" />
@@ -278,6 +296,7 @@
     <Content Include="Scripts\jquery.waypoints.min.js" />
     <Content Include="Scripts\main.js" />
     <Content Include="Scripts\modernizr-2.8.3.js" />
+    <Content Include="Scripts\modernizr.custom.79639.js" />
     <Content Include="Scripts\owl.carousel.min.js" />
     <Content Include="Scripts\placeholder.js" />
     <Content Include="Scripts\popper.min.js" />
@@ -303,12 +322,14 @@
     <Content Include="Views\Login\Index.cshtml" />
     <Content Include="Views\Login\Login_Layout.cshtml" />
     <Content Include="Views\Register\Index.cshtml" />
+    <Content Include="Views\Order\Order_Layout.cshtml" />
+    <Content Include="Views\Order\Index.cshtml" />
+    <Content Include="Views\Blog\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="Models\" />
     <Folder Include="Views\Activity\" />
-    <Folder Include="Views\Blog\" />
     <Folder Include="Views\HomeStay\" />
   </ItemGroup>
   <ItemGroup>

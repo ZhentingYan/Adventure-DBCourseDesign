@@ -6,13 +6,14 @@ using System.Web.Mvc;
 
 namespace Adventure.Controllers
 {
-    public class LoginController : Controller
+    public class OrderController : Controller
     {
-        // GET: Login
-        public ActionResult Index()
+        // GET: Order
+
+        [HttpGet]
+        public ActionResult Index(int homeStayID=-1)
         {
-           // if (Session["user"] != null)
-               // Session.Abandon();
+            ViewBag.homestayID = homeStayID;
             return View();
         }
     }

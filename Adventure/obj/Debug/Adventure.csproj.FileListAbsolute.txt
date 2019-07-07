@@ -1,3 +1,7 @@
+/Volumes/Shared Disk/DatabaseCourseDesign-Adventure/Adventure/Adventure/obj/Debug/Adventure.csprojAssemblyReference.cache
+/Volumes/Shared Disk/DatabaseCourseDesign-Adventure/Adventure/Adventure/obj/Debug/Adventure.csproj.CoreCompileInputs.cache
+/Volumes/Shared Disk/DatabaseCourseDesign-Adventure/Adventure/Adventure/obj/Debug/Adventure.dll
+/Volumes/Shared Disk/DatabaseCourseDesign-Adventure/Adventure/Adventure/obj/Debug/Adventure.pdb
 D:\DatabaseCourseDesign-Adventure\Adventure\Adventure\bin\ApplicationInsights.config
 D:\DatabaseCourseDesign-Adventure\Adventure\Adventure\bin\Adventure.dll.config
 D:\DatabaseCourseDesign-Adventure\Adventure\Adventure\bin\Adventure.dll
@@ -40,6 +44,7 @@ D:\DatabaseCourseDesign-Adventure\Adventure\Adventure\bin\Microsoft.AspNet.Telem
 D:\DatabaseCourseDesign-Adventure\Adventure\Adventure\bin\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.dll
 D:\DatabaseCourseDesign-Adventure\Adventure\Adventure\bin\Microsoft.Web.Infrastructure.dll
 D:\DatabaseCourseDesign-Adventure\Adventure\Adventure\bin\Newtonsoft.Json.dll
+D:\DatabaseCourseDesign-Adventure\Adventure\Adventure\bin\Oracle.ManagedDataAccess.dll
 D:\DatabaseCourseDesign-Adventure\Adventure\Adventure\bin\System.Diagnostics.DiagnosticSource.dll
 D:\DatabaseCourseDesign-Adventure\Adventure\Adventure\bin\System.Web.Helpers.dll
 D:\DatabaseCourseDesign-Adventure\Adventure\Adventure\bin\System.Web.Mvc.dll
@@ -71,9 +76,8 @@ D:\DatabaseCourseDesign-Adventure\Adventure\Adventure\bin\zh-Hans\System.Web.Raz
 D:\DatabaseCourseDesign-Adventure\Adventure\Adventure\bin\zh-Hans\System.Web.WebPages.resources.dll
 D:\DatabaseCourseDesign-Adventure\Adventure\Adventure\bin\zh-Hans\System.Web.WebPages.Deployment.resources.dll
 D:\DatabaseCourseDesign-Adventure\Adventure\Adventure\bin\zh-Hans\System.Web.WebPages.Razor.resources.dll
-D:\DatabaseCourseDesign-Adventure\Adventure\Adventure\obj\Debug\Adventure.csprojAssemblyReference.cache
 D:\DatabaseCourseDesign-Adventure\Adventure\Adventure\obj\Debug\Adventure.csproj.CoreCompileInputs.cache
 D:\DatabaseCourseDesign-Adventure\Adventure\Adventure\obj\Debug\Adventure.csproj.CopyComplete
 D:\DatabaseCourseDesign-Adventure\Adventure\Adventure\obj\Debug\Adventure.dll
 D:\DatabaseCourseDesign-Adventure\Adventure\Adventure\obj\Debug\Adventure.pdb
-D:\DatabaseCourseDesign-Adventure\Adventure\Adventure\bin\Oracle.ManagedDataAccess.dll
+D:\DatabaseCourseDesign-Adventure\Adventure\Adventure\obj\Debug\Adventure.csprojAssemblyReference.cache
