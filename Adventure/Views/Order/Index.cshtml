@@ -5,75 +5,65 @@
 <script>
     $(document).ready(function () {
       
-        var homeStayID = "@ViewBag.homeStayID";
-        if (homeStayID == "-1") {
-            alert("Do not access this order page with out any argument!");
-            window.location.href="/Home";
-        }
+        var productID = "@ViewBag.productID";
+        var accessWay = "@ViewBag.accessWay";
+        
+            if (productID == "-1" || accessWay == "-1" ) {
+                alert("Illegal Access!");
+                window.location.href = "/Home";
+            } 
     })
 </script>
-<h1 class="book" style="margin-top:80px">确认您的订单</h1>
+@{ 
+    var orderType = "";
+    var productID = ViewBag.productID;
+    var accessWay = ViewBag.accessWay;
+    if (ViewBag.accessWay == 1)
+    {
+        orderType = "homestay";
+    }
+    else { orderType = "activity"; }
+}
+<h1 class="book" style="margin-top:80px">Confirm your @orderType order</h1>
 
 <div class="reg">
 
-    <h1>Book Your Suite!</h1>
+    <h1>赶快确认下列信息，开启您的奇妙之旅！</h1>
 
     <div class="members">
         <div class="adult">
-            <h2>No. of Adults</h2>
-            <div class="dropdown-button">
-                <select class="dropdown" tabindex="10" data-settings='{"wrapperClass":"flat"}'>
-                    <option value="">0</option>
-                    <option value="1">1</option>
-                    <option value="2">2</option>
-                    <option value="3">3</option>
-                    <option value="4">4</option>
-                    <option value="5">5</option>
-                </select>
-            </div>
+            <h2>产品编号:@productID</h2>
+            <h2>产品名称:@productID</h2>
+            <h2>产品单价:@productID 元</h2>
         </div>
 
-        <div class="child">
-            <h2>No. of Children</h2>
-            <div class="dropdown-button">
-                <select class="dropdown" tabindex="10" data-settings='{"wrapperClass":"flat"}'>
-                    <option value="">0</option>
-                    <option value="1">1</option>
-                    <option value="2">2</option>
-                    <option value="3">3</option>
-                    <option value="4">4</option>
-                </select>
-            </div>
-        </div>
         <div class="clear"></div>
     </div>
 
-    <div class="suite">
+    <div class="members">
+        <h2>人数</h2>
         <div class="dropdown-button">
-            <h2>Suite</h2>
             <select class="dropdown" tabindex="10" data-settings='{"wrapperClass":"flat"}'>
-                <option value="1">-</option>
-                <option value="1">Single Room</option>
-                <option value="2">Premium Single Room</option>
-                <option value="2">Double Room</option>
-                <option value="2">Premium Double Room</option>
-                <option value="3">Deluxe Suite</option>
-                <option value="4">Executive Suite</option>
-                <option value="4">Ocean View Suite</option>
-                <option value="4">Presidential Suite</option>
-                <option value="3">The Penthouse</option>
+                <option value="">0</option>
+                <option value="1">1</option>
+                <option value="2">2</option>
+                <option value="3">3</option>
+                <option value="4">4</option>
+                <option value="5">5</option>
             </select>
         </div>
+
+        <div class="clear"></div>
     </div>
 
-    <div class="book-pag">
-        <h2>Select Date</h2>
+    <div class="book-pag" style="margin-top:20px">
+        <h2>选择日期</h2>
         <div class="book-pag-frm1">
-            <label>Check In</label>
+            <label>开始时间</label>
             <input class="date" id="datepicker1" type="text" value="Date" onfocus="this.value = '';" onblur="if (this.value == '') {this.value = '';}" required="">
         </div>
         <div class="book-pag-frm2">
-            <label>Check Out</label>
+            <label>结束时间</label>
             <input class="date" id="datepicker2" type="text" value="Date" onfocus="this.value = '';" onblur="if (this.value == '') {this.value = '';}" required="">
         </div>
         <div class="clear"></div>
@@ -83,26 +73,28 @@
 
     <script src="~/Scripts/jquery-ui.js"></script>
     <script>
-							  $(function() {
-							    $( "#datepicker,#datepicker1,#datepicker2" ).datepicker();
-							  });
+        $(function () {
+            $("#datepicker,#datepicker1,#datepicker2").datepicker();
+        });
     </script>
     <!--//Date Picker-->
 
-    <div class="rs">
-        <div class="check_box"> <div class="radio"> <label><input type="checkbox" name="radio" checked=""><i></i>Enable Room Service</label> </div></div>
-    </div>
 
     <div class="food">
-        <h2>Choose Cuisine</h2>
+        <h2>选择支付方式</h2>
         <div class="radio-btns">
-            <div class="check_box"> <div class="radio"> <label><input type="radio" name="radio" checked=""><i></i>Local</label> </div></div>
-            <div class="check_box"> <div class="radio"> <label><input type="radio" name="radio"><i></i>Multi</label> </div></div>
+            <div class="check_box"> <div class="radio"> <label><input type="radio" name="radio" checked=""><i></i>支付宝</label> </div></div>
+            <div class="check_box"> <div class="radio"> <label><input type="radio" name="radio"><i></i>微信支付</label> </div></div>
+            <div class="check_box"> <div class="radio"> <label><input type="radio" name="radio"><i></i>银联支付</label> </div></div>
+            <div class="check_box"> <div class="radio"> <label><input type="radio" name="radio"><i></i>京东钱包</label> </div></div>
+            <div class="check_box"> <div class="radio"> <label><input type="radio" name="radio"><i></i>Paypal</label> </div></div>
+            <div class="check_box"> <div class="radio"> <label><input type="radio" name="radio"><i></i>云闪付</label> </div></div>
+
         </div>
     </div>
 
     <div class="submit">
-        <input type="submit" class="book" value="BOOK NOW">
+        <input type="submit" class="book" value="提交预定">
     </div>
 
 </div>

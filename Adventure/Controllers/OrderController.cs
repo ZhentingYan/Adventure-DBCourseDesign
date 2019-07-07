@@ -11,9 +11,10 @@ namespace Adventure.Controllers
         // GET: Order
 
         [HttpGet]
-        public ActionResult Index(int homeStayID=-1)
+        public ActionResult Index(int productID= -1,int accessWay=-1)
         {
-            ViewBag.homestayID = homeStayID;
+            ViewBag.productID = productID;
+            ViewBag.accessWay = accessWay;
             return View();
         }
     }

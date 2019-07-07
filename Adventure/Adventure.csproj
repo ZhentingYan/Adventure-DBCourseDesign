@@ -222,6 +222,7 @@
     <Content Include="images\image_6.jpg" />
     <Content Include="images\loc.png" />
     <Content Include="images\Order\bg.jpg" />
+    <Content Include="images\Order\bg_back.jpg" />
     <Content Include="images\Order\cal.png" />
     <Content Include="images\Order\cal1.png" />
     <Content Include="images\Order\date-icon.png" />
@@ -271,8 +272,6 @@
     <Content Include="fonts\Oswald-Light.ttf" />
     <None Include="Scripts\jquery-3.3.1.intellisense.js" />
     <Content Include="Scripts\google-map.js" />
-    <Content Include="Scripts\jquery-1.11.1.js" />
-    <Content Include="Scripts\jquery-1.11.1.min.js" />
     <Content Include="Scripts\jquery-3.2.1.min.js" />
     <Content Include="Scripts\jquery-3.3.1.js" />
     <Content Include="Scripts\jquery-3.3.1.min.js" />
