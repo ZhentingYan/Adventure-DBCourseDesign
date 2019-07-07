@@ -7,6 +7,23 @@
     function turnToLogin() {
         window.location.href = "/Login";
     }
+    $(document).ready(function () {
+
+
+        var flag = "@ViewBag.flag";
+        var errorMessage = "@ViewBag.errorMessage";
+        if (flag == "1") {
+            alert(errorMessage);
+                @{ ViewBag.flag = null;}
+            window.location.href = "/Home";
+        } else {
+            if (flag != "") {
+                      @{ ViewBag.flag = null; }
+                alert(errorMessage);
+
+            }
+        }
+    })
     </script>
 <div class="hero-wrap js-fullheight" style="background-image: url('../images/Login_bg.jpg');">
     <div class="overlay"></div>
@@ -22,7 +39,7 @@
                         <div class="row">
                             <div class="col-sm-6 col-sm-offset-3 form-box">
 
-                                <form role="form" action="@Url.Action("AddUser")" method="post" class="registration-form">
+                                <form role="form" action="@Url.Action("")" method="post" class="registration-form">
 
                                     <fieldset>
                                         <div class="form-top">
@@ -65,8 +82,8 @@
                                         </div>
                                         <div class="form-bottom">
                                             <div class="form-group">
-                                                <label class="sr-only" for="form-first-name">用户名</label>
-                                                <input type="text" name="form-first-name" placeholder="User Name..." class="form-control" id="form-username">
+                                                <label class="sr-only" for="form-username">用户名</label>
+                                                <input type="text" name="form-username" placeholder="User Name..." class="form-control" id="form-username">
                                             </div>
                                             <div class="form-group">
                                                 <label class="sr-only" for="form-email">邮箱</label>
@@ -98,26 +115,26 @@
                                         </div>
                                         <div class="form-bottom">
                                             <div class="form-group">
-                                                <label class="sr-only" for="form-facebook">性别</label>
-                                                <select name="" id="form-gender" class="form-control">
+                                                <label class="sr-only" for="form-gender">性别</label>
+                                                <select name="form-gender" id="form-gender" class="form-control">
                                                     <option value="1" selected>男</option>
                                                     <option value="2">女</option>
                                                 </select>
                                             </div>
                                             <div class="form-group">
-                                                <label class="sr-only" for="form-twitter">手机号码</label>
-                                                <input type="text" name="form-twitter" placeholder="Phone Number..." class="form-control" id="form-phoneNumber">
+                                                <label class="sr-only" for="form-phoneNumber">手机号码</label>
+                                                <input type="text" name="form-phoneNumber" placeholder="Phone Number..." class="form-control" id="form-phoneNumber">
                                             </div>
                                             <div class="form-group">
-                                                <label class="sr-only" for="form-google-plus">国家</label>
-                                                <input type="text" name="form-google-plus" placeholder="Your Country..." class="form-control" id="form-country">
+                                                <label class="sr-only" for="form-country">国家</label>
+                                                <input type="text" name="form-country" placeholder="Your Country..." class="form-control" id="form-country">
                                             </div>
                                             <div class="form-group">
-                                                <label class="sr-only" for="form-google-plus">语言</label>
-                                                <input type="text" name="form-google-plus" placeholder="Your Language..." class="form-control" id="form-language">
+                                                <label class="sr-only" for="form-language">语言</label>
+                                                <input type="text" name="form-language" placeholder="Your Language..." class="form-control" id="form-language">
                                             </div>
                                             <button type="button" class="btn btn-previous">上一页</button>
-                                            <button type="submit" class="btn btn-register">提交注册</button>
+                                            <button type="submit" class="btn">提交注册</button>
                                         </div>
                                     </fieldset>
 

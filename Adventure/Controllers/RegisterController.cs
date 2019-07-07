@@ -20,12 +20,12 @@ namespace Adventure.Controllers
             return View();
         }
         [HttpPost]
-        public ActionResult AddUser(FormCollection form)
+        public ActionResult Index(FormCollection form)
         {
             SqlSugarClient db = new SqlSugarClient(
                 new ConnectionConfig()
                 {
-                    ConnectionString = "User Id=system;Password=Homestay123;Data Source = (DESCRIPTION = (ADDRESS = (PROTOCOL = TCP)(HOST = localhost)(PORT = 1521))(CONNECT_DATA =(SERVER = DEDICATED)(SERVICE_NAME = orcl)))",
+                    ConnectionString = "User Id=system;Password=tkh603;Data Source=(DESCRIPTION = (ADDRESS = (PROTOCOL = TCP)(HOST = localhost)(PORT = 1521))" + "(CONNECT_DATA = (SERVER = DEDICATED) (SERVICE_NAME = orcl)))",
                     DbType = DbType.Oracle,//设置数据库类型
                     IsAutoCloseConnection = true,//自动释放数据务，如果存在事务，在事务结束后释放
                     InitKeyType = InitKeyType.SystemTable //从实体特性中读取主键自增列信息
@@ -35,37 +35,56 @@ namespace Adventure.Controllers
             {
                 var data = new User()
                 {
-                    user_id = "Hello",
+                    user_id = form["form-username"],
                     head_icon = "../images/headicon/default.png",
                     first_name = form["form-first-name"],
                     last_name = form["form-last-name"],
-                    pass_word = form["form-password"],
+                    pass_word = GetMD5(form["form-password"]),
                     gender = Convert.ToInt16(form["form-gender"]),
                     email_address = form["form-email"],
                     phone_number = form["form-phoneNumber"],
                     main_language = form["form-language"],
                     country = form["form-country"],
                     self_introduction = form["form-about-yourself"],
-                    bonus_points = 100
+                    bonus_points = 0
                 };
 
                 if (db.Insertable(data).ExecuteCommand() == 1)
                 {
-                    isSuccess.Add("isAdd", "Y");
+                    ViewBag.errorMessage = "注册成功,欢迎探索Adventure!";
+                    ViewBag.flag = 1;
+                    return View();
                 }
                 else
                 {
-                    isSuccess.Add("isAdd", "N");
+                    ViewBag.errorMessage = "注册失败!";
+                    ViewBag.flag = 0;
+                    return View();
                 }
             }
             catch (Exception ex)
             {
-                throw ex;
+                ViewBag.errorMessage = "注册失败!";
+                ViewBag.flag = 0;
+                return View();
+
             }
             finally { }
 
-            return Content(JsonConvert.SerializeObject(isSuccess, Formatting.Indented));
+            //return Content(JsonConvert.SerializeObject(isSuccess, Formatting.Indented));
 
+        }
+        public static string GetMD5(string str)
+        {
+            byte[] b = System.Text.Encoding.Default.GetBytes(str);
+            b = new System.Security.Cryptography.MD5CryptoServiceProvider().ComputeHash(b);
+            string ret = " ";
+            for (int i = 0; i < b.Length; i++)
+            {
+                ret += b[i].ToString("x").PadLeft(2, '0');
+            }
+            var a = 0;
+            return ret;
         }
     }
 }
