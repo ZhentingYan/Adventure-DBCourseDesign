@@ -11,9 +11,8 @@ namespace Adventure.Controllers
         // GET: Blog
         public ActionResult Index()
         {
-            if (Session["user"] == null)
+            if (Session["user_id"] == null)
             {
-                Session["user"] = 123456;
                 return Redirect("~/Login/index");
             }
             else

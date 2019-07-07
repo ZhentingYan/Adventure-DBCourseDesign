@@ -13,9 +13,17 @@ namespace Adventure.Controllers
         [HttpGet]
         public ActionResult Index(int productID= -1,int accessWay=-1)
         {
-            ViewBag.productID = productID;
-            ViewBag.accessWay = accessWay;
-            return View();
+            if (Session["user_id"] == null)
+            {
+                return Redirect("~/Login/index");
+            }
+            else
+            {
+                ViewBag.productID = productID;
+                ViewBag.accessWay = accessWay;
+                return View();
+            }
+
         }
     }
 }

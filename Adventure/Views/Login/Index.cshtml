@@ -22,13 +22,7 @@
             }
         });
         var originPasswd = $("#form-password").val();
-        var repeatPasswd = $("#form-repeat-password").val();
-        if (originPasswd != repeatPasswd) {
-            alert("两次密码输入不一致！");
-            $("#form-repeat-password").addClass('input-error');
-            $("#form-password").addClass('input-error');
-            next_step = false;
-        } else if (!reUser.test($("#form-username").val())) {
+         if (!reUser.test($("#form-username").val())) {
             $("#form-username").addClass('input-error');
             alert("用户名输入有误！");
             next_step = false;
@@ -36,21 +30,23 @@
         if (next_step) {
             $.ajax({
                 type: "post",
-                url: "Login/CheckLogin",
+                url: "../Login/getUser",
                 data: {
                     userID: $("#form-username").val(),
-                    userpwd: $("#form-password").val(),
+                    userPwd: $("#form-password").val(),
                 },
                 async: false,
                 dataType: 'json',
                 success: function (d) {
-                    if (d.Result == '0') {//登录成功  
-                        //location.href = 'DataMain.aspx?logper=' + $("#ipt_username").find("option:selected").text();
+                    var loginState = d.isLogin;
+                    if (loginState == true) {//登录成功  
+                        console.log(d);
                         alert("登陆成功！欢迎探索Adventure");
-                        //location.href = 'Home/Index';
+                        location.href = '/Home';
                     }
                     else {
                         //登录失败                
+                        console.log(d);
                         alert("登陆失败!请检查用户名密码！");
                     }
                 },
@@ -98,11 +94,6 @@
                                             <div class="form-group">
                                                 <label class="sr-only" for="form-password">密码</label>
                                                 <input type="password" name="form-password" placeholder="Password..." class="form-password form-control" id="form-password">
-                                            </div>
-                                            <div class="form-group">
-                                                <label class="sr-only" for="form-repeat-password">确认密码</label>
-                                                <input type="password" name="form-repeat-password" placeholder="Repeat password..."
-                                                       class="form-repeat-password form-control" id="form-repeat-password">
                                             </div>
                                             <button type="button" class="btn btn-previous" onclick="turnToRegister()">注册</button>
                                             <button type="button" class="btn" onclick="loginCheck()">提交登陆</button>

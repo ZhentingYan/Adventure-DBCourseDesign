@@ -1,0 +1,166 @@
+﻿@{
+    ViewBag.Title = "我的信息";
+    Layout = "~/Views/Login/Login_Layout.cshtml";
+}
+
+<script>
+    function turnToLogin() {
+        window.location.href = "/Login";
+    }
+   
+</script>
+<div class="hero-wrap js-fullheight" style="background-image: url('../images/Login_bg.jpg');">
+    <div class="overlay"></div>
+    <div class="container">
+        <div class="row no-gutters slider-text js-fullheight align-items-center justify-content-center" data-scrollax-parent="true">
+            <div class="col-md-9 text-center ftco-animate" data-scrollax=" properties: { translateY: '70%' }">
+                <div class="top-content">
+                    <div class="container">
+                        <div class="row">
+                            <div class="col-sm-8 " style="margin-top:60px">
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-sm-6 col-sm-offset-3 form-box">
+
+                                <form role="form" action="@Url.Action("")" method="post" class="registration-form">
+
+                                    <fieldset>
+                                        <div class="form-top">
+                                            <div class="form-top-left">
+                                                <h3>Step 1 / 4</h3>
+                                                <h4>首先是你的基本信息</h4>
+                                            </div>
+                                            <div class="form-top-right">
+                                                <i class="fa fa-user"></i>
+                                            </div>
+                                        </div>
+                                        <div class="form-bottom">
+                                            <div class="form-group">
+                                                <label class="sr-only" for="form-first-name">您的姓氏</label>
+                                                <input type="text" disabled="disabled" name="form-first-name" placeholder="First name..." class="form-first-name form-control" id="form-first-name">
+                                            </div>
+                                            <div class="form-group">
+                                                <label class="sr-only" for="form-last-name">您的名字</label>
+                                                <input type="text" disabled="disabled" name="form-last-name" placeholder="Last name..." class="form-last-name form-control" id="form-last-name">
+                                            </div>
+                                            <div class="form-group">
+                                                <label class="sr-only" for="form-about-yourself">自我介绍</label>
+                                                <textarea name="form-about-yourself" disabled="disabled" placeholder="About yourself..."
+                                                          class="form-about-yourself form-control" id="form-about-yourself"></textarea>
+                                            </div>
+                                            <button type="button" class="btn btn-next" onclick="turnToLogin()">编辑我的信息</button>
+                                            <button type="button" class="btn btn-next">下一页</button>
+                                        </div>
+                                    </fieldset>
+
+                                    <fieldset>
+                                        <div class="form-top">
+                                            <div class="form-top-left">
+                                                <h3>Step 2 / 4</h3>
+                                                <h4>您在Adventure的账户信息</h4>
+                                            </div>
+                                            <div class="form-top-right">
+                                                <i class="fa fa-key"></i>
+                                            </div>
+                                        </div>
+                                        <div class="form-bottom">
+                                            <div class="form-group">
+                                                <label class="sr-only" for="form-username">用户名</label>
+                                                <input type="text" name="form-username"disabled="disabled" placeholder="User Name..." class="form-control" id="form-username">
+                                            </div>
+                                            <div class="form-group">
+                                                <label class="sr-only" for="form-email">邮箱</label>
+                                                <input type="text" name="form-email"disabled="disabled" placeholder="Email..." class="form-email form-control" id="form-email">
+                                            </div>
+                                            <div class="form-group">
+                                                <label class="sr-only" for="form-password">密码</label>
+                                                <input type="password" name="form-password" disabled="disabled" placeholder="Password..." class="form-password form-control" id="form-password">
+                                            </div>
+                                            <div class="form-group">
+                                                <label class="sr-only" for="form-repeat-password">确认密码</label>
+                                                <input type="password" name="form-repeat-password" placeholder="Repeat password..."
+                                                       class="form-repeat-password form-control" disabled="disabled" id="form-repeat-password">
+                                            </div>
+                                            <button type="button" class="btn btn-previous">上一页</button>
+                                            <button type="button" class="btn btn-next">下一页</button>
+                                        </div>
+                                    </fieldset>
+
+                                    <fieldset>
+                                        <div class="form-top">
+                                            <div class="form-top-left">
+                                                <h3>Step 3 / 4</h3>
+                                                <h4>您的详细信息</h4>
+                                            </div>
+                                            <div class="form-top-right">
+                                                <i class="fa fa-twitter"></i>
+                                            </div>
+                                        </div>
+                                        <div class="form-bottom">
+                                            <div class="form-group">
+                                                <label class="sr-only" for="form-gender">性别</label>
+                                                <select name="form-gender" disabled="disabled" id="form-gender" class="form-control">
+                                                    <option value="1" selected>男</option>
+                                                    <option value="2">女</option>
+                                                </select>
+                                            </div>
+                                            <div class="form-group">
+                                                <label class="sr-only" for="form-phoneNumber">手机号码</label>
+                                                <input type="text" name="form-phoneNumber" disabled="disabled" placeholder="Phone Number..." class="form-control" id="form-phoneNumber">
+                                            </div>
+                                            <div class="form-group">
+                                                <label class="sr-only" for="form-country">国家</label>
+                                                <input type="text" name="form-country" disabled="disabled" placeholder="Your Country..." class="form-control" id="form-country">
+                                            </div>
+                                            <div class="form-group">
+                                                <label class="sr-only" for="form-language">语言</label>
+                                                <input type="text" name="form-language" disabled="disabled" placeholder="Your Language..." class="form-control" id="form-language">
+                                            </div>
+                                            <button type="button" class="btn btn-previous">上一页</button>
+                                            <button type="submit" class="btn">提交注册</button>
+                                        </div>
+                                    </fieldset>
+
+                                    <fieldset>
+                                        <div class="form-top">
+                                            <div class="form-top-left">
+                                                <h3>Step 4 / 4</h3>
+                                                <h4>您在Adventure的个性头像</h4>
+                                            </div>
+                                            <div class="form-top-right">
+                                                <i class="fa fa-twitter"></i>
+                                            </div>
+                                        </div>
+                                        <div class="form-bottom">
+                                            <div class="form-group">
+                                                <label class="sr-only" for="form-gender">性别</label>
+                                                <select name="form-gender" disabled="disabled" id="form-gender" class="form-control">
+                                                    <option value="1" selected>男</option>
+                                                    <option value="2">女</option>
+                                                </select>
+                                            </div>
+
+                                            <button type="button" class="btn btn-previous">上一页</button>
+                                            <button type="submit" disabled="disabled" class="btn">提交修改</button>
+                                        </div>
+                                    </fieldset>
+                                </form>
+
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+
+
+

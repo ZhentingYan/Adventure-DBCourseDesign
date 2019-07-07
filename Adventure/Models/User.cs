@@ -11,8 +11,10 @@ using SqlSugar;
 namespace Adventure.Models
 {
     [SugarTable("users")]
+
     public class User
     {
+        [SugarColumn(IsPrimaryKey = true, IsIdentity = true)]
         public string user_id { get; set; }
         public string head_icon { get; set; }
         public string first_name { get; set; }

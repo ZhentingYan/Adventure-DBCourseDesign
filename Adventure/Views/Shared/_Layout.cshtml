@@ -59,7 +59,7 @@
                     <li class="nav-item">
                         @Html.ActionLink("联系我们", "Contact", "Home", new { area = "" }, new { @class = "navbar-brand" })
                     </li>
-                    @if (Session["user"] == null)
+                    @if (Session["user_id"] == null)
                     {
                         <li>
                             @Html.ActionLink("登陆/注册", "Index", "Login", new { area = "" }, new { @class = "navbar-brand" })
@@ -118,7 +118,7 @@
                             <li>
                                 @Html.ActionLink("联系我们", "Contact", "Home", new { area = "" }, new { @class = "py-2 d-block" })
                             </li>
-                            @if (Session["user"] == null)
+                            @if (Session["user_id"] == null)
                                 {
                                     <li>
                                         @Html.ActionLink("登陆/注册", "Index", "Login", new { area = "" }, new { @class = "py-2 d-block" })
