@@ -164,7 +164,14 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Models\Activity.cs" />
+    <Compile Include="Models\comment.cs" />
+    <Compile Include="Models\Homestay.cs" />
+    <Compile Include="Models\Order.cs" />
+    <Compile Include="Models\Story.cs" />
     <Compile Include="Models\User.cs" />
+    <Compile Include="Models\User_Activity_Order.cs" />
+    <Compile Include="Models\User_HomeStay_Order.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

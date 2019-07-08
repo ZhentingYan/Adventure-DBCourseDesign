@@ -62,7 +62,7 @@ namespace Adventure.Controllers
 
                 var data = new User()
                 {
-                    user_id = (string)Session["form-username"],
+                    user_id=(string)Session["user_id"],
                     head_icon = fileSave,
                     first_name = Request.Form["form-first-name"],
                     last_name = Request.Form["form-last-name"],
@@ -76,7 +76,7 @@ namespace Adventure.Controllers
                     bonus_points = (int)Session["bonus_points"]
                 };
                 //db.Updateable(data).IgnoreColumns(it=>new {it.user_id, it.bonus_points}).ExecuteCommand()== 1
-                if (db.Updateable(data).ExecuteCommand()==1)
+                if (db.Updateable(data).IgnoreColumns(it => new {  it.bonus_points }).ExecuteCommand() == 1)
                 {
                     var getUserbyUserID = db.Queryable<User>().Where(it => it.user_id == Request.Form["form-username"]).ToList();
                     ViewBag.errorMessage = "更新成功！";
@@ -106,7 +106,8 @@ namespace Adventure.Controllers
             {
                 ViewBag.errorMessage = "更新失败!";
                 ViewBag.flag = 0;
-                throw ex;
+                return View();
+
             }
             finally { }
             //return View("Index");
