@@ -25,7 +25,7 @@ namespace Adventure.Controllers
             SqlSugarClient db = new SqlSugarClient(
                 new ConnectionConfig()
                 {
-                    ConnectionString = "User Id=system;Password=tkh603;Data Source=(DESCRIPTION = (ADDRESS = (PROTOCOL = TCP)(HOST = localhost)(PORT = 1521))" + "(CONNECT_DATA = (SERVER = DEDICATED) (SERVICE_NAME = orcl)))",
+                    ConnectionString = System.Web.Configuration.WebConfigurationManager.AppSettings["ConnectionString"],
                     DbType = DbType.Oracle,//设置数据库类型
                     IsAutoCloseConnection = true,//自动释放数据务，如果存在事务，在事务结束后释放
                     InitKeyType = InitKeyType.SystemTable //从实体特性中读取主键自增列信息
@@ -36,7 +36,7 @@ namespace Adventure.Controllers
                 var data = new User()
                 {
                     user_id = form["form-username"],
-                    head_icon = "../images/headicon/default.png",
+                    head_icon = "../images/headicon/default.jpg",
                     first_name = form["form-first-name"],
                     last_name = form["form-last-name"],
                     pass_word = GetMD5(form["form-password"]),

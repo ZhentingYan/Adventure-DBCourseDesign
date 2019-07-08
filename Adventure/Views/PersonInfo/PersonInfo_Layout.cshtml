@@ -25,7 +25,10 @@
 
     <link rel="stylesheet" href="~/Content/flaticon.css">
     <link rel="stylesheet" href="~/Content/icomoon.css">
+    <link rel="stylesheet" href="~/Content/Loginstyle.css">
+
     <link rel="stylesheet" href="~/Content/style.css">
+
     <script src="~/Scripts/jquery.min.js"></script>
     <script src="~/Scripts/jquery-migrate-3.0.1.min.js"></script>
 
@@ -67,7 +70,7 @@
                     }
                     else
                     {
-                            <li class="dropdown navbar-brand">
+                        <li class="dropdown navbar-brand">
                             <a href="#" data-toggle="dropdown " class="dropdown-toggle">My Adventure</a>
                             <ul class="dropdown-menu">
                                 <li>
@@ -89,11 +92,11 @@
                                     @Html.ActionLink("登出", "Index", "Login", new { area = "" }, new { @class = "text-center" })
                                 </li>
                             </ul>
-                            </li>
+                        </li>
 
                     }
-                   </ul>
-</div>
+                </ul>
+            </div>
         </div>
     </nav>
     <!-- END nav -->
@@ -137,17 +140,17 @@
                                 @Html.ActionLink("联系我们", "Contact", "Home", new { area = "" }, new { @class = "py-2 d-block" })
                             </li>
                             @if (Session["user_id"] == null)
-                                {
-                                    <li>
-                                        @Html.ActionLink("登陆/注册", "Index", "Login", new { area = "" }, new { @class = "py-2 d-block" })
-                                    </li>
-                                }
-                                else
-                                {
-                                    <li>
-                                        @Html.ActionLink("注销登陆", "Index", "Login", new { area = "" }, new { @class = "py-2 d-block" })
-                                    </li>
-                                }
+                            {
+                                <li>
+                                    @Html.ActionLink("登陆/注册", "Index", "Login", new { area = "" }, new { @class = "py-2 d-block" })
+                                </li>
+                            }
+                            else
+                            {
+                                <li>
+                                    @Html.ActionLink("注销登陆", "Index", "Login", new { area = "" }, new { @class = "py-2 d-block" })
+                                </li>
+                            }
                         </ul>
                     </div>
                 </div>
@@ -207,6 +210,10 @@
     <script src="~/Scripts/google-map.js"></script>
     <script src="~/Scripts/main.js"></script>
     <script src="~/Scripts/range.js"></script>
+    <script src="~/Scripts/jquery.backstretch.min.js"></script>
+    <script src="~/Scripts/retina-1.1.0.min.js"></script>
+    <script src="~/Scripts/Infoscripts.js"></script>
 
 </body>
 </html>
+
