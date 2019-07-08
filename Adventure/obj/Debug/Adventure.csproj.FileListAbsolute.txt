@@ -402,3 +402,7 @@ C:\Users\Asus\Desktop\新建文件夹\zz\Adventure\Adventure\obj\Debug\Adventure
 C:\Users\Asus\Desktop\新建文件夹\zz\Adventure\Adventure\obj\Debug\Adventure.csproj.CopyComplete
 C:\Users\Asus\Desktop\新建文件夹\zz\Adventure\Adventure\obj\Debug\Adventure.dll
 C:\Users\Asus\Desktop\新建文件夹\zz\Adventure\Adventure\obj\Debug\Adventure.pdb
+D:\DatabaseCourseDesign-Adventure\Adventure\Adventure\bin\EntityFramework.dll
+D:\DatabaseCourseDesign-Adventure\Adventure\Adventure\bin\EntityFramework.SqlServer.dll
+D:\DatabaseCourseDesign-Adventure\Adventure\Adventure\bin\EntityFramework.xml
+D:\DatabaseCourseDesign-Adventure\Adventure\Adventure\bin\EntityFramework.SqlServer.xml

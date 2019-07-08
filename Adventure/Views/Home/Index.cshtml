@@ -3,13 +3,18 @@
 }
 <script>
     $(document).ready(function () {
-        $.get("Home/getCount",
+        $.get("../Home/getCount",
             function (e) {
                 var jsonData = JSON.parse(e.data);
                 $("#customerCount").attr("data-number", jsonData.customerCount);
                 $("#activityCount").attr("data-number", jsonData.activityCount);
                 $("#homestayCount").attr("data-number", jsonData.homestayCount);
                 $("#reviewCount").attr("data-number", jsonData.reviewCount);
+
+            });
+        $.get("../Home/getCommentTop5",
+            function (e) {
+                console.log(e);
 
             });
     })
