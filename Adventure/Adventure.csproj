@@ -168,6 +168,9 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Content\Activity\paper-bootstrap-wizard.css" />
+    <Content Include="Content\Activity\responsive.css" />
+    <Content Include="Content\Activity\style.css" />
     <Content Include="Content\ajax-loader.gif" />
     <Content Include="Content\animate.css" />
     <Content Include="Content\aos.css" />
@@ -339,10 +342,12 @@
     <Content Include="Views\Blog\Index.cshtml" />
     <Content Include="Views\PersonInfo\Index.cshtml" />
     <Content Include="Views\PersonInfo\PersonInfo_Layout.cshtml" />
+    <Content Include="Views\Activity\Index.cshtml" />
+    <Content Include="Views\Activity\Publish.cshtml" />
+    <Content Include="Views\Activity\SingleActivity.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="Views\Activity\" />
     <Folder Include="Views\HomeStay\" />
   </ItemGroup>
   <ItemGroup>

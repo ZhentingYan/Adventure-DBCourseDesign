@@ -1,0 +1,167 @@
+﻿
+@{
+    ViewBag.Title = "体验活动详情";
+}
+
+<link rel="stylesheet" href="~/Content/Activity/style.css" />
+<link rel="stylesheet" href="~/Content/Activity/responsive.css" />
+
+<script>
+
+</script>
+
+<div class="hero-wrap js-fullheight" style="background-image: url('../../images/bg_1.jpg');">
+    <div class="overlay"></div>
+    <div class="container">
+        <div class="row no-gutters slider-text js-fullheight align-items-center justify-content-center" data-scrollax-parent="true">
+            <div class="col-md-9 text-center ftco-animate" data-scrollax=" properties: { translateY: '70%' }">
+                <p class="breadcrumbs" data-scrollax="properties: { translateY: '30%', opacity: 1.6 }">
+                    <span class="mr-2"> @Html.ActionLink("主页", "Index", "Home")</span>
+                    <span class="mr-2"> @Html.ActionLink("活动", "Index", "Activity")</span>
+                </p>
+                <h1 class="mb-3 bread" data-scrollax="properties: { translateY: '30%', opacity: 1.6 }">体验详情</h1>
+            </div>
+        </div>
+    </div>
+</div>
+
+<section class="blog_area single-post-area">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 posts-list">
+                <div class="single-post row">
+                    <!-- 图片 -->
+                    <div class="col-lg-12">
+                        <div class="feature-img">
+                            <img id="picture" class="img-fluid" src="~/images/image_5.jpg" alt="">
+                        </div>
+                    </div>
+                    <!-- END -->
+                    <!-- 最左栏 -->
+                    <div class="col-lg-3  col-md-3">
+                        <div class="blog_info text-right">
+                            <div class="post_tag">
+                                <span>食物 </span>
+                                <span>娱乐 </span>
+                                <span>科技 </span>
+                                <br />
+                                <span>健康 </span>
+                                <span>运动 </span>
+                                <span>生活 </span>
+                            </div>
+                            <ul class="blog_meta list_style">
+                                <li><b id="place">上海</b></li>
+                                <li><b>人数限制：<span id="max">4</span></b></li>
+                            </ul>
+                        </div>
+                    </div>
+                    <!-- END -->
+                    <!-- 主区域 -->
+                    <div class="col-lg-9 col-md-9 blog_details">
+                        <h2 id="act-title">法式风情｜上海老城早午餐与隐秘探店</h2>
+                        <br />
+                        <hr />
+                        <br />
+                        <p id="act-content" class="excert">
+                            「写在2019年伊始」
+                            这个体验是非常私人化的，不像一些传统导游项目会介绍很多历史硬知识。
+                            在一切都试图商业化的今天，一条成熟的游览线路，背景故事，干货信息都是可以被批量化的，路线可以copy，导游可以培训，但体验和经历是无法copy的。
+                            我开发体验之初，就希望这个体验带上更多我的个人经历：
+                            一个真实的人在上海生活四年后的一点点体会，这其中交叉了很多上海的片段，也有去各国旅行归来后的感想。
+                            去过很多地方旅行，如果是陌生的国家，我总是会想，如果我在这里有个朋友就好了，做再多功课，都不及有位朋友。
+                            这就是我想要带给你的：我想做你的“当地朋友”，我会真心地分享我的体验给你，关于工作，关于旅行，关于上海，如果你想要知道更多，就问我更多吧！
+                            如今已在Airbnb累计接待体验700人次，体验评价500多，我其实每次分享的东西都会因客人而略有不同，与不同的人分享和交流，怎能次次相同呢。
+                            —————————— 我们会在一家早午餐店碰面，并用30～40分钟的时间一起吃美味的食物，在食物的香气里认识彼此，谈谈旅行的趣闻和对上海的好奇心。
+                            早午餐结束后，我们会用一个半小时的时间，探索法租界里的一些小街小巷，
+                            在这个过程中，我们会去到一些隐秘的特色小店，你可以给自己买个礼物，或者拍拍照片。
+                            也可以在独立画廊里欣赏下艺术品，在名人的旧居里看看时间的光影，历史的气息。跟住在这儿的邻居擦肩，感受下法租界特有的悠闲生活氛围。
+                            体验结束后每个人都可以拿到lily的上海地图（JPEG电子版）一份：里面包含了我精选的咖啡馆，餐厅，酒吧，夜店，茶馆等；以及我们的拍立得合影一张。
+                            体验通常人数较多，是来自世界各地，说着不同语言的朋友。
+                            如大家都可以用英文交流，主要语言将会是英文，如果你对中文更有信心，我会做双语介绍，并充当你的翻译，请尽管放心预订并且表达自己哦！
+                        </p>
+                        <br />
+                        <hr />
+                    </div>
+                    <!-- END -->
+                    <!-- 评价 -->
+                    <div class="comments-area">
+                        <h4>参与者评价</h4>
+                        <!-- 一个评价 -->
+                        <div class="comment-list">
+                            <div class="single-comment justify-content-between d-flex">
+                                <div class="user justify-content-between d-flex">
+                                    <div class="thumb">
+                                        <img style="width:60px; height:60px;" src="~/images/person_1.jpg" alt="">
+                                    </div>
+                                    <div class="desc">
+                                        <h5 >Emilly Blunt</h5>
+                                        <!-- <p class="date">December 4, 2017 at 3:12 pm </p> -->
+                                        <p class="comment">
+                                            Never say goodbye till the end comes!
+                                            Never say goodbye till the end comes!
+                                            Never say goodbye till the end comes!
+                                            Never say goodbye till the end comes!
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- END -->
+                    </div>
+                    <!-- END -->
+                </div>
+            </div>
+            <!-- 发起人介绍 -->
+            <div class="col-lg-4">
+                <div class="blog_right_sidebar">
+                    <aside class="single_sidebar_widget author_widget">
+                        <img id="avatar" class="author_img rounded-circle col-lg-4" src="~/images/image_6.jpg" alt="">
+                        <h4 id="name">Lily</h4>
+                        <p>体验达人</p>
+                        <p id="introduction">
+                            我是lily，自由工作者，大学胶片摄影工作室三年工作经验，拍照至今已八年有余，
+                            大学毕业后来上海生活工作，15年底成为Airbnb房东，17年初加入体验达人的队伍，18年初正式辞职，加入自由职业大军，
+                            目前以摄影体验达人的身份带领很多来上海玩的朋友们游玩最具魅力的上海老城，
+                            我想要与大家分享我这些年来工作身份的转变，旅行，生活带给我的影响，以及，对生活的热情，对上海的爱。
+                        </p>
+                        <div class="br"></div>
+                    </aside>
+                    <aside class="single_sidebar_widget post_category_widget">
+                        <h4 class="widget_title">选择预定时间</h4>
+                        <ul class="list_style cat-list">
+                            <!-- 一个活动时间 -->
+                            <li>
+                                <!-- 跳转到订单界面 -->
+                                <a href="@Url.Action("Index","Order",new{productID = 120, accessWay = 2})" class="d-flex justify-content-between">
+                                    <p>10/01（开始时间） - 10/03（结束时间）</p>
+                                    <p>￥99</p>
+                                </a>
+                            </li>
+                            <!-- END -->
+                        </ul>
+                        <div class="br"></div>
+                    </aside>
+                    <aside class="single-sidebar-widget newsletter_widget">
+                        <div class="quotes">
+                            <h4>活动注意事项</h4>
+                            <div id="awareness">
+                                活动内容可能被折叠啦，请戳上面“阅读更多”详细了解这个体验内容。
+                                除神秘甜品外，所有食物和购物费用不包含在内。
+                                因为是户外活动，因此如果遇到极端天气（中到大雨，台风，沙尘暴等），活动有可能取消并退款。
+                                请准时到达会面地点，为保证体验完整性，迟到超过30分钟者（错过早午餐部分的）将不予接待。
+                            </div>
+                            <br />
+                            <h4>取消预订政策</h4>
+                            <div id="cancel">
+                                所有体验预订都可以在支付确认后的24小时内取消并获得全额退款。
+                            </div>
+                        </div>
+                        <div class="br"></div>
+                    </aside>
+                </div>
+            </div>
+            <!-- END -->
+        </div>
+    </div>
+</section>
+
