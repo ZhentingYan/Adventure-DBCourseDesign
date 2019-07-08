@@ -43,7 +43,9 @@ namespace Adventure.Controllers
             }
             catch (Exception ex)
             {
-                throw ex;
+                ViewBag.errorMessage = "活动发布失败";
+                ViewBag.flag = 0;
+                return Redirect("~/Activity/Publish");
             }
             finally { }
             return View();
@@ -127,12 +129,12 @@ namespace Adventure.Controllers
                     cancellation_policy = Request.Form["activity_cancel"]
 
                 };
-                int productID=db.Insertable(data).ExecuteReturnIdentity();
-                if (productID>=1)
+                if (db.Insertable(data).ExecuteCommand() >= 1)
                 {
+                    int productID = db.Queryable<Activity>().Max(it => it.activity_id);
                     ViewBag.errorMessage = "活动发布成功!活动ID:"+productID;
                     ViewBag.flag = 1;
-                    return Redirect("~/Home");
+                    return Redirect("~/Activity/SingleActivity?productID="+productID);
                 }
                 else
                 {
@@ -145,7 +147,6 @@ namespace Adventure.Controllers
             {
                 ViewBag.errorMessage = "活动发布失败";
                 ViewBag.flag = 0;
-                throw ex;
                 return Redirect("~/Activity/Publish");
 
             }

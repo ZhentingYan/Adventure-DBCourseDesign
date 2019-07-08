@@ -1,0 +1,205 @@
+﻿
+@{
+    ViewBag.Title = "Admin_Layout";
+}
+
+<!DOCTYPE html>
+<html lang="en">
+<!-- BEGIN HEAD -->
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta content="width=device-width, initial-scale=1" name="viewport" />
+    <meta name="description" content="Responsive Admin Template" />
+    <meta name="author" content="SmartUniversity" />
+    <title>后台管理</title>
+    <!-- google font -->
+    <link href="https://fonts.googleapis.com/css?family=Poppins:300,400,500,600,700" rel="stylesheet" type="text/css" />
+    <!-- icons -->
+    <link href="~/plugins/simple-line-icons/simple-line-icons.min.css" rel="stylesheet" type="text/css" />
+    <link href="~/plugins/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css" />
+    <!--bootstrap -->
+    <link href="~/plugins/bootstrap/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
+    <link href="~/plugins/summernote/summernote.css" rel="stylesheet">
+    <!-- morris chart -->
+    <link href="~/plugins/morris/morris.css" rel="stylesheet" type="text/css" />
+    <!-- Material Design Lite CSS -->
+    <link rel="stylesheet" href="~/plugins/material/material.min.css">
+    <link rel="stylesheet" href="~/Content/css/material_style.css">
+    <!-- data tables -->
+    <link href="~/plugins/datatables/plugins/bootstrap/dataTables.bootstrap4.min.css" rel="stylesheet" type="text/css" />
+    <!-- animation -->
+    <link href="~/Content/css/pages/animate_page.css" rel="stylesheet">
+    <!-- Template Styles -->
+    <link href="~/Content/css/plugins.min.css" rel="stylesheet" type="text/css" />
+    <link href="~/Content/css/style.css" rel="stylesheet" type="text/css" />
+    <link href="~/Content/css/responsive.css" rel="stylesheet" type="text/css" />
+    <link href="~/Content/css/theme-color.css" rel="stylesheet" type="text/css" />
+    <!-- dropzone -->
+    <link href="~/plugins/dropzone/dropzone.css" rel="stylesheet" media="screen">
+    <!-- Date Time item CSS -->
+    <link rel="stylesheet" href="~/plugins/material-datetimepicker/bootstrap-material-datetimepicker.css" />
+    <!-- favicon -->
+    <link rel="shortcut icon" href="~/images/img/favicon.ico" />
+</head>
+<!-- END HEAD -->
+<body class="page-header-fixed sidemenu-closed-hidelogo page-content-white page-md header-white dark-sidebar-color logo-dark">
+    <div class="page-wrapper">
+        <!-- start header -->
+        <div class="page-header navbar navbar-fixed-top">
+            <div class="page-header-inner ">
+                <!-- logo start -->
+                <div class="page-logo">
+                    <a href="index.html">
+                        <img alt="" src="~/images/img/logo.png"><!--TODO:ICON-->
+                        <span class="logo-default">后台管理</span>
+                    </a>
+                </div>
+                <!-- logo end -->
+                <ul class="nav navbar-nav navbar-left in">
+                    <li><a href="#" class="menu-toggler sidebar-toggler"><i class="icon-menu"></i></a></li>
+                </ul>
+
+                <!-- start mobile menu -->
+                <a href="javascript:;" class="menu-toggler responsive-toggler" data-toggle="collapse" data-target=".navbar-collapse">
+                    <span></span>
+                </a>
+                <!-- end mobile menu -->
+            </div>
+        </div>
+        <!-- end header -->
+        <!-- start page container -->
+        <div class="page-container">
+            @RenderBody()
+        </div>
+        <!-- end page container -->
+        <!-- start footer -->
+        <div class="page-footer">
+            <div class="scroll-to-top">
+                <i class="icon-arrow-up"></i>
+            </div>
+            <footer class="ftco-footer ftco-bg-dark ftco-section" style="color:#FFFFFF">
+                <div class="container">
+                    <div class="row mb-5">
+                        <div class="col-md">
+                            <div class="ftco-footer-widget mb-4">
+                                <h2 class="ftco-heading-2">Adventure</h2>
+                                <p>我们是一家联系旅游人士和家有空房出租的房主的服务型网站，致力于为您提供多样的住宿信息和旅行方案</p>
+                                <ul class="ftco-footer-social list-unstyled float-md-left float-lft mt-3">
+                                    <li class="ftco-animate"><a href="#"><span class="icon-twitter"></span></a></li>
+                                    <li class="ftco-animate"><a href="#"><span class="icon-facebook"></span></a></li>
+                                    <li class="ftco-animate"><a href="#"><span class="icon-instagram"></span></a></li>
+                                </ul>
+                            </div>
+                        </div>
+                        <div class="col-md" style="color:#FFFFFF">
+                            <div class="ftco-footer-widget mb-4 ml-md-4">
+                                <h2 class="ftco-heading-2">更多信息</h2>
+                                <ul class="list-unstyled">
+                                    <li>
+                                        @Html.ActionLink("主页", "Index", "Home", new { area = "" }, new { @class = "py-2 d-block" })
+                                    </li>
+                                    <li>
+                                        @Html.ActionLink("关于我们", "About", "Home", new { area = "" }, new { @class = "py-2 d-block" })
+                                    </li>
+                                    <li>
+                                        @Html.ActionLink("体验活动", "Index", "Activity", new { area = "" }, new { @class = "py-2 d-block" })
+                                    </li>
+                                    <li>
+                                        @Html.ActionLink("民宿", "Index", "Homestay", new { area = "" }, new { @class = "py-2 d-block" })
+                                    </li>
+                                    <li>
+                                        @Html.ActionLink("旅行故事", "Index", "Blog", new { area = "" }, new { @class = "py-2 d-block" })
+                                    </li>
+                                    <li>
+                                        @Html.ActionLink("联系我们", "Contact", "Home", new { area = "" }, new { @class = "py-2 d-block" })
+                                    </li>
+                                    @if (Session["user_id"] == null)
+                                    {
+                                        <li>
+                                            @Html.ActionLink("登陆/注册", "Index", "Login", new { area = "" }, new { @class = "py-2 d-block" })
+                                        </li>
+                                    }
+                                    else
+                                    {
+                                        <li>
+                                            @Html.ActionLink("注销登陆", "Index", "Login", new { area = "" }, new { @class = "py-2 d-block" })
+                                        </li>
+                                    }
+                                </ul>
+                            </div>
+                        </div>
+                        <div class="col-md" style="color:#FFFFFF">
+                            <div class="ftco-footer-widget mb-4">
+                                <h2 class="ftco-heading-2">友情链接</h2>
+                                <ul class="list-unstyled">
+                                    <li><a href="http://www.tongji.edu.cn" class="py-2 d-block">同济大学主页</a></li>
+                                    <li><a href="http://sse.tongji.edu.cn" class="py-2 d-block">同济大学软件学院</a></li>
+                                    <li><a href="http://www.airbnb.com" class="py-2 d-block">爱彼迎Airbnb</a></li>
+                                    <li><a href="http://www.booking.com" class="py-2 d-block">缤客Booking</a></li>
+                                </ul>
+                            </div>
+                        </div>
+                        <div class="col-md">
+                            <div class="ftco-footer-widget mb-4">
+                                <h2 class="ftco-heading-2">有任何疑问？</h2>
+                                <div class="block-23 mb-3">
+                                    <ul>
+                                        <li><span class="icon icon-globe"></span><span class="text">上海市嘉定区曹安公路4800号 同济大学嘉定校区</span></li>
+                                        <li><span class="icon icon-phone"></span><span class="text">86-21-69589585,69589332(FAX)</span></li>
+                                        <li><a href="http://www.tongji.edu.cn"><span class="icon icon-globe"></span><span class="text">www.tongji.edu.cn</span></a></li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-12 text-center">
+                            <p>
+                                Copyright &copy;
+                                <script>document.write(new Date().getFullYear());</script> Adventure, Tongji Uni. All rights reserved.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </footer>
+        </div>
+        <!-- end footer -->
+    </div>
+    
+    <!-- start js include path -->
+    <script src="~/plugins/jquery/jquery.min.js"></script>
+    <script src="~/plugins/popper/popper.min.js"></script>
+    <script src="~/plugins/jquery-blockui/jquery.blockui.min.js"></script>
+    <script src="~/plugins/jquery-slimscroll/jquery.slimscroll.min.js"></script>
+    <!-- bootstrap -->
+    <script src="~/plugins/bootstrap/js/bootstrap.min.js"></script>
+    <script src="~/plugins/sparkline/jquery.sparkline.min.js"></script>
+    <script src="~/Scripts/js/pages/sparkline/sparkline-data.js"></script>
+    <!-- Common js-->
+    <script src="~/Scripts/js/app.js"></script>
+    <script src="~/Scripts/js/layout.js"></script>
+    <script src="~/Scripts/js/theme-color.js"></script>
+    <!-- data tables -->
+    <script src="~/plugins/datatables/jquery.dataTables.min.js"></script>
+    <script src="~/plugins/datatables/plugins/bootstrap/dataTables.bootstrap4.min.js"></script>
+    <script src="~/Scripts/js/pages/table/table_data.js"></script>
+    <!-- material -->
+    <script src="~/plugins/material/material.min.js"></script>
+    <script src="~/Scripts/js/pages/material_select/getmdl-select.js"></script>
+    <script src="~/plugins/material-datetimepicker/moment-with-locales.min.js"></script>
+    <script src="~/plugins/material-datetimepicker/bootstrap-material-datetimepicker.js"></script>
+    <script src="~/plugins/material-datetimepicker/datetimepicker.js"></script>
+    <!-- dropzone -->
+    <script src="~/plugins/dropzone/dropzone.js"></script>
+    <script src="~/plugins/dropzone/dropzone-call.js"></script>
+    <!-- animation -->
+    <script src="~/Scripts/js/pages/ui/animations.js"></script>
+    <!-- morris chart -->
+    <script src="~/plugins/morris/morris.min.js"></script>
+    <script src="~/plugins/morris/raphael-min.js"></script>
+    <script src="~/Scripts/js/pages/chart/morris/morris_home_data.js"></script>
+    <!-- end js include path -->
+</body>
+</html>
+

@@ -5,7 +5,22 @@
 <link rel="stylesheet" href="~/Content/Activity/paper-bootstrap-wizard.css" />
 
 <script>
+    $(document).ready(function () {
 
+
+        var flag = "@ViewBag.flag";
+        var errorMessage = "@ViewBag.errorMessage";
+        if (flag == "1") {
+            alert(errorMessage);
+                @{ ViewBag.flag = null;}
+        } else {
+            if (flag != "") {
+                      @{ ViewBag.flag = null; }
+                alert(errorMessage);
+
+            }
+        }
+    })
 </script>
 
 <style type="text/css">
