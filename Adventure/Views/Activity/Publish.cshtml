@@ -13,6 +13,7 @@
         if (flag == "1") {
             alert(errorMessage);
                 @{ ViewBag.flag = null;}
+            window.location.href = "../Activity/SingleActivity?productID=@ViewBag.productID";
         } else {
             if (flag != "") {
                       @{ ViewBag.flag = null; }
@@ -45,7 +46,7 @@
                             <hr />
                         </div>
 
-                        <form id="new-act" action="PublishAccess" method="post" enctype="multipart/form-data">
+                        <form id="new-act" action="" method="post" enctype="multipart/form-data">
                             <!-- 创建新活动 -->
                             <div>
                                 <div class="row">
@@ -109,21 +110,46 @@
                                 <div class="row">
                                     <div class="col-sm-5 col-sm-offset-1" style="margin-left:auto; margin-right:auto;">
                                         <div class="form-group">
+                                            <label id="product_label">产品ID:</label>
+                                            <input type="text" id="submitProduct" class="form-control" name="productID" hidden>
+                                        </div>
+                                        <div class="form-group">
+
+                                            <label id="product_name">产品名称:</label>
+                                        </div>
+
+                                    </div>
+                                    </div>
+
+                                <div class="row">
+                                    <div class="col-sm-5 col-sm-offset-1" style="margin-left:auto; margin-right:auto;">
+                                        <div class="form-group">
                                             <label>开始时间</label>
-                                            <input type="date" id="start-time" class="form-control" name="???" required="required">
+                                            <input type="date" id="start-time" class="form-control" name="start_time" required="required">
                                         </div>
                                     </div>
                                     <div class="col-sm-5 col-sm-offset-1" style="margin-left:auto; margin-right:auto;">
                                         <div class="form-group">
                                             <label>结束时间</label>
-                                            <input type="date" id="end-time" class="form-control time-input" name="???" required="required">
+                                            <input type="date" id="end-time" class="form-control time-input" name="end_time" required="required">
                                         </div>
                                     </div>
                                     <div class="col-sm-5 col-sm-offset-1" style="margin-left:auto; margin-right:auto;">
                                         <div class="form-group">
-                                            <label>价格/人</label>
+                                            <label>限定人数</label>
                                             <div class="input-group">
-                                                <input type="number" class="form-control" name="???" required="required"
+                                                <input type="number" class="form-control" name="limit_num" required="required"
+                                                       onkeyup="if (this.value.length == 1) { this.value = this.value.replace(/[^1-9]/g, '') }else { this.value = this.value.replace(/\D/g, '') }"
+                                                       onafterpaste="if(this.value.length==1){this.value=this.value.replace(/[^1-9]/g,'')}else{this.value=this.value.replace(/\D/g,'')}">
+                                                <span class="input-group-addon"> 人 </span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-5 col-sm-offset-1" style="margin-left:auto; margin-right:auto;">
+                                        <div class="form-group">
+                                            <label>总价</label>
+                                            <div class="input-group">
+                                                <input type="number" class="form-control" name="price" required="required"
                                                        onkeyup="if (this.value.length == 1) { this.value = this.value.replace(/[^1-9]/g, '') }else { this.value = this.value.replace(/\D/g, '') }"
                                                        onafterpaste="if(this.value.length==1){this.value=this.value.replace(/[^1-9]/g,'')}else{this.value=this.value.replace(/\D/g,'')}">
                                                 <span class="input-group-addon"> ￥ </span>
@@ -161,13 +187,16 @@
                             <p class="category">在已有体验活动中选择一个，为其增加活动时间</p>
                         </div>
                         @{
-                            for (int i = 0; i < ViewBag.activityList.Length; i++)
+                            if (ViewBag.activityList != null)
                             {
-                                <label class="activity" style="margin-left:auto; margin-right:auto;">
+                                for (int i = 0; i < ViewBag.activityList.Length; i++)
+                                {
+                                <label class="activity" style="margin-left:auto; margin-right:auto;" productid="@ViewBag.activityList[i].activity_id" productname="@ViewBag.activityList[i].activity_name">
                                     <b>@ViewBag.activityList[i].activity_name</b>
                                 </label>
+                                    }
+                                }
                             }
-                        }
                         <!--
     <label class="activity" style="margin-left:auto; margin-right:auto;">
         <b>法式风情｜上海老城早午餐与隐秘探店</b>
@@ -198,6 +227,13 @@
             $newAct.hide();
             $addInstance.show();
             $(this).addClass('choosed');
+            var productID = $(this).attr('productid');
+            var productName = $(this).attr('productname');
+            $("#product_label").text("产品ID：" + productID);
+            $("#product_name").text("产品名称：" + productName);
+
+            $("#submitProduct").attr('value',productID);
+
             $choosedActivity = $(this);
             document.getElementById('add-instance').reset();
         });

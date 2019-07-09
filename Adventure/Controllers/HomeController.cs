@@ -87,6 +87,51 @@ namespace Adventure.Controllers
                 return View();
             }
             */
+            SqlSugarClient db = new SqlSugarClient(
+            new ConnectionConfig()
+            {
+                ConnectionString = System.Web.Configuration.WebConfigurationManager.AppSettings["ConnectionString"],
+                DbType = DbType.Oracle,//设置数据库类型
+                IsAutoCloseConnection = true,//自动释放数据务，如果存在事务，在事务结束后释放
+                InitKeyType = InitKeyType.Attribute //从实体特性中读取主键自增列信息
+            });
+            String connection = System.Web.Configuration.WebConfigurationManager.AppSettings["ConnectionString"];
+            decimal customerCount, homestayCount, activityCount, reviewCount;
+            using (OracleConnection conn = new OracleConnection(connection))
+            {
+                    conn.Open();
+                    OracleCommand cmd = new OracleCommand("select count(*) from users", conn);//执行一条SQL语句
+                    customerCount = (decimal)cmd.ExecuteScalar();
+                    cmd = new OracleCommand("select count(*) from Homestay", conn);//执行一条SQL语句
+                    homestayCount = (decimal)cmd.ExecuteScalar();
+                    cmd = new OracleCommand("select count(*) from Activity", conn);//执行一条SQL语句
+                    activityCount = (decimal)cmd.ExecuteScalar();
+                    cmd = new OracleCommand("select count(*) from Comments", conn);//执行一条SQL语句
+                    reviewCount = (decimal)cmd.ExecuteScalar();
+                    conn.Close();
+                ViewBag.customerCount = customerCount;
+                ViewBag.homestayCount = homestayCount;
+                ViewBag.activityCount = activityCount;
+                ViewBag.reviewCount = reviewCount;
+
+            }
+            try
+            {
+                List<user_comment> review = db.Queryable<User, Comment>((st, sc) => new object[] {
+                JoinType.Inner,st.user_id==sc.user_id})
+                .Select((st, sc) => new user_comment { user_id = st.user_id, comment_text = sc.comment_text, grade = sc.grade, head_icon = st.head_icon }).ToList();
+                var recommend_house = db.Queryable<Homestay>().Where(it => it.house_grade > 4.0).ToList();
+                var recommend_story = db.Queryable<Story>().Take(5).ToList();
+                var top_experience = db.Queryable<Activity>().OrderBy(it => it.activity_id,OrderByType.Desc).ToArray(); 
+                ViewBag.top_experience = top_experience;
+
+
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            finally { }
             ViewBag.title = "度假屋、民宿、体验与旅行故事";
             return View();
         }
@@ -113,6 +158,7 @@ namespace Adventure.Controllers
                 var recommend_house = db.Queryable<Homestay>().Where(it => it.house_grade > 4.0).ToList();
 
                 var recommend_story = db.Queryable<Story>().Take(5).ToList();
+                var top_experience = db.Queryable<Activity>().Take(5).ToList();
 
 
                 homeInfo.r = review;

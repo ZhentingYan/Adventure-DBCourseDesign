@@ -85,7 +85,7 @@ namespace Adventure.Controllers
         }
        
         [HttpPost]
-        public ActionResult PublishAccess()
+        public ActionResult Publish(FormCollection form)
         {
             var address = Request.Form["activity_place"];
             DateTime dt = DateTime.Now;
@@ -134,20 +134,31 @@ namespace Adventure.Controllers
                     int productID = db.Queryable<Activity>().Max(it => it.activity_id);
                     ViewBag.errorMessage = "活动发布成功!活动ID:"+productID;
                     ViewBag.flag = 1;
-                    return Redirect("~/Activity/SingleActivity?productID="+productID);
+                    ViewBag.productID = productID;
+                    try
+                    {
+                        var myActivityList = db.Queryable<Activity>().Where(it => it.user_id == Session["user_id"]).ToArray();
+                        ViewBag.activityList = myActivityList;
+                    }
+                    catch (Exception ex)
+                    {
+                        throw ex;
+                    }
+                    finally { }
+                    return View();
                 }
                 else
                 {
                     ViewBag.errorMessage = "活动发布失败";
                     ViewBag.flag = 0;
-                    return Redirect("~/Activity/Publish");
+                    return View();
                 }
             }
             catch (Exception ex)
             {
                 ViewBag.errorMessage = "活动发布失败";
                 ViewBag.flag = 0;
-                return Redirect("~/Activity/Publish");
+                return View();
 
             }
             finally { }
