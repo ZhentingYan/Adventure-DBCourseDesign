@@ -5,16 +5,15 @@ using System.Web;
 using SqlSugar;
 namespace Adventure.Models
 {
-    [SugarTable("story")]
-    public class Story
+    [SugarTable("activity_comment")]
+    public class ActivityComment
     {
         [SugarColumn(IsPrimaryKey = true, IsIdentity = true, IsOnlyIgnoreInsert = true)]
-        public int story_id { get; set; }
+        public int activity_comment_id { get; set; }
+        public int activity_order_id { get; set; }
+        public double grade { get; set; }
         public string user_id { get; set; }
-        public string title { get; set; }
-        public string content_s { get; set; }
-        public string pictures { get; set; }
+        public string comment_text { get; set; }
         public DateTime times { get; set; }
-
     }
 }

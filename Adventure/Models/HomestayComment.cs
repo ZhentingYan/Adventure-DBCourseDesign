@@ -3,18 +3,18 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using SqlSugar;
+
 namespace Adventure.Models
 {
-    [SugarTable("story")]
-    public class Story
+    [SugarTable("homestay_comment")]
+    public class HomestayComment
     {
         [SugarColumn(IsPrimaryKey = true, IsIdentity = true, IsOnlyIgnoreInsert = true)]
-        public int story_id { get; set; }
+        public int homestay_comment_id { get; set; }
+        public int homestay_order_id { get; set; }
+        public double grade { get; set; }
         public string user_id { get; set; }
-        public string title { get; set; }
-        public string content_s { get; set; }
-        public string pictures { get; set; }
+        public string comment_text { get; set; }
         public DateTime times { get; set; }
-
     }
 }

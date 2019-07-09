@@ -1,0 +1,164 @@
+﻿@{
+    ViewBag.Title = "心愿单";
+}
+
+
+<div class="hero-wrap js-fullheight" style="background-image: url('../images/Publish_bg.jpg');">
+    <div class="overlay"></div>
+    <div class="container">
+        <div class="row no-gutters slider-text js-fullheight align-items-center justify-content-start" data-scrollax-parent="true">
+            <div class="col-md-9 ftco-animate mb-5 pb-5 text-center text-md-left" data-scrollax=" properties: { translateY: '70%' }">
+                <h1 class="mb-4" data-scrollax="properties: { translateY: '30%', opacity: 1.6 }">心愿单<br>Favourites&History</h1>
+                <p data-scrollax="properties: { translateY: '30%', opacity: 1.6 }">匆匆一览的房源或心仪活动忘记保存?试试我们的心愿单吧！</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- 收藏单 -->
+<section class="ftco-section testimony-section" style="background-color:transparent;background-image: url('../images/bg_1.jpg')">
+    <div class="container">
+        <div class="row justify-content-center mb-5 pb-3">
+            <div class="col-md-7 text-center heading-section heading-section-white ftco-animate">
+                <h2 class="mb-4">心愿单</h2>
+                <p>你会在这里看到你收藏的房源</p>
+            </div>
+        </div>
+        <div class="row ftco-animate">
+            <div class="col-md-12">
+                <div class="carousel-testimony owl-carousel ftco-owl">
+                    <div class="item">
+                        <div class="testimony-wrap p-4 pb-5">
+                            <div class="user-img mb-5" style="background-image: url(../images/person_1.jpg)">
+                            </div>
+                            <div class="text">
+                                <p class="mb-5">Far far away, behind the word mountains, far from the countries Vokalia and Consonantia, there live the blind texts.</p>
+                                <p class="name">Mark Web</p>
+                                <span class="position">Marketing Manager</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="item">
+                        <div class="testimony-wrap p-4 pb-5">
+                            <div class="user-img mb-5" style="background-image: url(../images/person_2.jpg)">
+                            </div>
+                            <div class="text">
+                                <p class="mb-5">Far far away, behind the word mountains, far from the countries Vokalia and Consonantia, there live the blind texts.</p>
+                                <p class="name">Mark Web</p>
+                                <span class="position">Interface Designer</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="item">
+                        <div class="testimony-wrap p-4 pb-5">
+                            <div class="user-img mb-5" style="background-image: url(../images/person_3.jpg)">
+                            </div>
+                            <div class="text">
+                                <p class="mb-5">Far far away, behind the word mountains, far from the countries Vokalia and Consonantia, there live the blind texts.</p>
+                                <p class="name">Mark Web</p>
+                                <span class="position">UI Designer</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="item">
+                        <div class="testimony-wrap p-4 pb-5">
+                            <div class="user-img mb-5" style="background-image: url(../images/person_1.jpg)">
+                            </div>
+                            <div class="text">
+                                <p class="mb-5">Far far away, behind the word mountains, far from the countries Vokalia and Consonantia, there live the blind texts.</p>
+                                <p class="name">Mark Web</p>
+                                <span class="position">Web Developer</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="item">
+                        <div class="testimony-wrap p-4 pb-5">
+                            <div class="user-img mb-5" style="background-image: url(../images/person_1.jpg)">
+                            </div>
+                            <div class="text">
+                                <p class="mb-5">Far far away, behind the word mountains, far from the countries Vokalia and Consonantia, there live the blind texts.</p>
+                                <p class="name">Mark Web</p>
+                                <span class="position">System Analyst</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<!-- 收藏单结束 -->
+<!-- 历史浏览记录 -->
+<section class="ftco-section testimony-section" >
+    <div class="container">
+        <div class="row justify-content-center mb-5 pb-3">
+            <div class="col-md-7 text-center heading-section heading-section-white ftco-animate">
+                <h2 class="mb-4">History</h2>
+                @{
+                    if (ViewBag.activityList != null && ViewBag.activityList.Length >= 1)
+                    {
+                        <p>你会在这里看到你在Adventure浏览过的房源和体验活动记录</p>
+
+                    }
+                    else
+                    {
+                        <p>你还没有浏览任何房源和体验活动哦~快去探索Adventure吧~</p>
+
+                    }
+                }
+            </div>
+        </div>
+        <div class="row ftco-animate">
+            <div class="col-md-12">
+                <div class="carousel-testimony owl-carousel ftco-owl">
+                    @{
+                        if (ViewBag.activityList != null && ViewBag.activityList.Length >= 1)
+                        {
+                            for (int i = 0; i < ViewBag.activityList.Length; i++)
+                            {
+                                <div class="item">
+                                    <div class="testimony-wrap p-4 pb-5">
+                                        <div class="user-img mb-5" style="background-image: url(@ViewBag.activityList[i].activity_pictures)">
+                                        </div>
+                                        <div class="text">
+                                            <a href="~/Activity/SingleActivity?productID=@ViewBag.activityList[i].activity_id">
+                                                <p class="mb-5" style="color:#FFFFFF">@ViewBag.activityList[i].activity_name</p></a>
+                                                <span class="position">@ViewBag.activityList[i].address</span>
+</div>
+                                    </div>
+                                </div>
+                            }
+
+                        }
+                        else
+                        {
+
+                        }
+                        if (ViewBag.homestayList != null && ViewBag.homestayList.Length >= 1)
+                        {
+                            for (int i = 0; i < ViewBag.homestayList.Length; i++)
+                            {
+                                <div class="item">
+                                    <div class="testimony-wrap p-4 pb-5">
+                                        <div class="user-img mb-5" style="background-image: url(@ViewBag.homestayList[i].homestay_pictures)">
+                                        </div>
+                                        <div class="text">
+                                            <a href="~/HomeStay/StayInfo?productID=@ViewBag.HomestayList[i].homestay_id"><p class="mb-5" style="color:#FFFFFF">@ViewBag.homestayList[i].homestay_name</p></a>
+                                            <span class="position">@ViewBag.homestayList[i].address</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            }
+
+                        }
+                        else
+                        {
+
+                        }
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<!-- 历史浏览记录结束 -->

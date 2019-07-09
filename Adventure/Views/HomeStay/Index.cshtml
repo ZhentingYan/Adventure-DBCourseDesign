@@ -1,0 +1,317 @@
+﻿@{
+    ViewBag.Title = "民宿";
+}
+<div class="hero-wrap js-fullheight" style="background-image: url('../images/bg_1.jpg');">
+    <div class="overlay"></div>
+    <div class="container">
+        <div class="row no-gutters slider-text js-fullheight align-items-center justify-content-center" data-scrollax-parent="true">
+            <div class="col-md-9 text-center ftco-animate" data-scrollax=" properties: { translateY: '70%' }">
+                <p class="breadcrumbs" data-scrollax="properties: { translateY: '30%', opacity: 1.6 }"><span class="mr-2"><a href="/">主页</a></span> <span>民宿</span></p>
+                <h1 class="mb-3 bread" data-scrollax="properties: { translateY: '30%', opacity: 1.6 }">民宿</h1>
+            </div>
+        </div>
+    </div>
+</div>
+
+<section class="ftco-section">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-3 sidebar order-md-last ftco-animate">
+                <div class="sidebar-wrap ftco-animate">
+                    <h3 class="heading mb-4">搜素民宿</h3>
+                    <form action="#">
+                        <div class="fields">
+                            <div class="form-group">
+                                <input type="text" class="form-control" placeholder="目的地">
+                            </div>
+                            <div class="form-group">
+                                <div class="select-wrap one-third">
+                                    <div class="icon"><span class="ion-ios-arrow-down"></span></div>
+                                    <select name="" id="" class="form-control" placeholder="Keyword search">
+                                        <option value="">热门城市选择</option>
+                                        <option value="">上海</option>
+                                        <option value="">北京</option>
+                                        <option value="">香港</option>
+                                        <option value="">重庆</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <input type="text" id="checkin_date" class="form-control checkin_date" placeholder="入住时间">
+                            </div>
+                            <div class="form-group">
+                                <input type="text" id="checkout_date" class="form-control checkout_date" placeholder="退房时间">
+                            </div>
+                            <div class="form-group">
+                                <div class="range-slider">
+                                    <span>
+                                        <input type="number" value="200" min="0" max="1200" />	-
+                                        <input type="number" value="500" min="0" max="1200" />
+                                    </span>
+                                    <input value="200" min="0" max="1200" step="10" type="range" />
+                                    <input value="500" min="0" max="1200" step="10" type="range" />
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <input type="submit" value="搜素" class="btn btn-primary py-3 px-5">
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                <div class="sidebar-wrap ftco-animate">
+                    <h3 class="heading mb-4">评分</h3>
+                    <form method="post" class="star-rating">
+                        <div class="form-check">
+                            <input type="checkbox" class="form-check-input" id="exampleCheck1">
+                            <label class="form-check-label" for="exampleCheck1">
+                                <p class="rate"><span><i class="icon-star"></i><i class="icon-star"></i><i class="icon-star"></i><i class="icon-star"></i><i class="icon-star"></i></span></p>
+                            </label>
+                        </div>
+                        <div class="form-check">
+                            <input type="checkbox" class="form-check-input" id="exampleCheck1">
+                            <label class="form-check-label" for="exampleCheck1">
+                                <p class="rate"><span><i class="icon-star"></i><i class="icon-star"></i><i class="icon-star"></i><i class="icon-star"></i><i class="icon-star-o"></i></span></p>
+                            </label>
+                        </div>
+                        <div class="form-check">
+                            <input type="checkbox" class="form-check-input" id="exampleCheck1">
+                            <label class="form-check-label" for="exampleCheck1">
+                                <p class="rate"><span><i class="icon-star"></i><i class="icon-star"></i><i class="icon-star"></i><i class="icon-star-o"></i><i class="icon-star-o"></i></span></p>
+                            </label>
+                        </div>
+                        <div class="form-check">
+                            <input type="checkbox" class="form-check-input" id="exampleCheck1">
+                            <label class="form-check-label" for="exampleCheck1">
+                                <p class="rate"><span><i class="icon-star"></i><i class="icon-star"></i><i class="icon-star-o"></i><i class="icon-star-o"></i><i class="icon-star-o"></i></span></p>
+                            </label>
+                        </div>
+                        <div class="form-check">
+                            <input type="checkbox" class="form-check-input" id="exampleCheck1">
+                            <label class="form-check-label" for="exampleCheck1">
+                                <p class="rate"><span><i class="icon-star"></i><i class="icon-star-o"></i><i class="icon-star-o"></i><i class="icon-star-o"></i><i class="icon-star-o"></i></span></p>
+                            </label>
+                        </div>
+                    </form>
+                </div>
+            </div><!-- END-->
+            <div class="col-lg-9">
+                <div class="row">
+                    <div class="col-sm col-md-6 col-lg-4 ftco-animate">
+                        <div class="destination">
+                            <a href="HomeStay/StayInfo" class="img img-2 d-flex justify-content-center align-items-center" style="background-image: url(../images/hotel-1.jpg);">
+                                <div class="icon d-flex justify-content-center align-items-center">
+                                    <span class="icon-link"></span>
+                                </div>
+                            </a>
+                            <div class="text p-3">
+                                <div class="d-flex">
+                                    <div class="one">
+                                        <h3><a href="#">迪士尼&nbsp·&nbsp上海</a></h3>
+                                        <p class="rate">
+                                            <i class="icon-star"></i>
+                                            <i class="icon-star"></i>
+                                            <i class="icon-star"></i>
+                                            <i class="icon-star"></i>
+                                            <i class="icon-star-o"></i>
+                                            <span>4.0</span>
+                                        </p>
+                                    </div>
+                                    <div class="two">
+                                        <span class="price per-price"><br>¥260<small>/晚</small></span>
+                                    </div>
+                                </div>
+                                <p>距上海迪斯尼国际度假区仅三分钟车程，客房装修以北欧风情为主,宽敞舒适小资,客房内设施齐全,家具摆设别致｡</p>
+                                <hr>
+                                <p class="bottom-area d-flex">
+                                    <span><i class="icon-map-o"></i> Miami, Fl</span>
+                                    <span class="ml-auto"><a href="#">现在预订</a></span>
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm col-md-6 col-lg-4 ftco-animate">
+                        <div class="destination">
+                            <a href="#" class="img img-2 d-flex justify-content-center align-items-center" style="background-image: url(../images/hotel-2.jpg);">
+                                <div class="icon d-flex justify-content-center align-items-center">
+                                    <span class="icon-link"></span>
+                                </div>
+                            </a>
+                            <div class="text p-3">
+                                <div class="d-flex">
+                                    <div class="one">
+                                        <h3><a href="#">迪士尼&nbsp·&nbsp上海</a></h3>
+                                        <p class="rate">
+                                            <i class="icon-star"></i>
+                                            <i class="icon-star"></i>
+                                            <i class="icon-star"></i>
+                                            <i class="icon-star"></i>
+                                            <i class="icon-star-o"></i>
+                                            <span>4.0</span>
+                                        </p>
+                                    </div>
+                                    <div class="two">
+                                        <span class="price per-price"><br>¥240<small>/晚</small></span>
+                                    </div>
+                                </div>
+                                <p>距上海迪斯尼国际度假区仅三分钟车程，客房装修以北欧风情为主,宽敞舒适小资,客房内设施齐全,家具摆设别致｡</p>
+                                <hr>
+                                <p class="bottom-area d-flex">
+                                    <span><i class="icon-map-o"></i> Miami, Fl</span>
+                                    <span class="ml-auto"><a href="#">现在预订</a></span>
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm col-md-6 col-lg-4 ftco-animate">
+                        <div class="destination">
+                            <a href="#" class="img img-2 d-flex justify-content-center align-items-center" style="background-image: url(../images/hotel-3.jpg);">
+                                <div class="icon d-flex justify-content-center align-items-center">
+                                    <span class="icon-link"></span>
+                                </div>
+                            </a>
+                            <div class="text p-3">
+                                <div class="d-flex">
+                                    <div class="one">
+                                        <h3><a href="#">迪士尼&nbsp·&nbsp上海</a></h3>
+                                        <p class="rate">
+                                            <i class="icon-star"></i>
+                                            <i class="icon-star"></i>
+                                            <i class="icon-star"></i>
+                                            <i class="icon-star"></i>
+                                            <i class="icon-star-o"></i>
+                                            <span>4.0</span>
+                                        </p>
+                                    </div>
+                                    <div class="two">
+                                        <span class="price per-price"><br>¥340<small>/晚</small></span>
+                                    </div>
+                                </div>
+                                <p>距上海迪斯尼国际度假区仅三分钟车程，客房装修以北欧风情为主,宽敞舒适小资,客房内设施齐全,家具摆设别致｡</p>
+                                <hr>
+                                <p class="bottom-area d-flex">
+                                    <span><i class="icon-map-o"></i> Miami, Fl</span>
+                                    <span class="ml-auto"><a href="#">现在预订</a></span>
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm col-md-6 col-lg-4 ftco-animate">
+                        <div class="destination">
+                            <a href="#" class="img img-2 d-flex justify-content-center align-items-center" style="background-image: url(images/hotel-4.jpg);">
+                                <div class="icon d-flex justify-content-center align-items-center">
+                                    <span class="icon-link"></span>
+                                </div>
+                            </a>
+                            <div class="text p-3">
+                                <div class="d-flex">
+                                    <div class="one">
+                                        <h3><a href="#">迪士尼&nbsp·&nbsp上海</a></h3>
+                                        <p class="rate">
+                                            <i class="icon-star"></i>
+                                            <i class="icon-star"></i>
+                                            <i class="icon-star"></i>
+                                            <i class="icon-star"></i>
+                                            <i class="icon-star-o"></i>
+                                            <span>4.0</span>
+                                        </p>
+                                    </div>
+                                    <div class="two">
+                                        <span class="price per-price"><br>¥260<small>/晚</small></span>
+                                    </div>
+                                </div>
+                                <p>距上海迪斯尼国际度假区仅三分钟车程，客房装修以北欧风情为主,宽敞舒适小资,客房内设施齐全,家具摆设别致｡</p>
+                                <hr>
+                                <p class="bottom-area d-flex">
+                                    <span><i class="icon-map-o"></i> Miami, Fl</span>
+                                    <span class="ml-auto"><a href="#">现在预订</a></span>
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm col-md-6 col-lg-4 ftco-animate">
+                        <div class="destination">
+                            <a href="#" class="img img-2 d-flex justify-content-center align-items-center" style="background-image: url(images/hotel-5.jpg);">
+                                <div class="icon d-flex justify-content-center align-items-center">
+                                    <span class="icon-link"></span>
+                                </div>
+                            </a>
+                            <div class="text p-3">
+                                <div class="d-flex">
+                                    <div class="one">
+                                        <h3><a href="#">迪士尼&nbsp·&nbsp上海</a></h3>
+                                        <p class="rate">
+                                            <i class="icon-star"></i>
+                                            <i class="icon-star"></i>
+                                            <i class="icon-star"></i>
+                                            <i class="icon-star"></i>
+                                            <i class="icon-star-o"></i>
+                                            <span>4.0</span>
+                                        </p>
+                                    </div>
+                                    <div class="two">
+                                        <span class="price per-price"><br>¥260<small>/晚</small></span>
+                                    </div>
+                                </div>
+                                <p>距上海迪斯尼国际度假区仅三分钟车程，客房装修以北欧风情为主,宽敞舒适小资,客房内设施齐全,家具摆设别致｡</p>
+                                <hr>
+                                <p class="bottom-area d-flex">
+                                    <span><i class="icon-map-o"></i> Miami, Fl</span>
+                                    <span class="ml-auto"><a href="#">现在预订</a></span>
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm col-md-6 col-lg-4 ftco-animate">
+                        <div class="destination">
+                            <a href="#" class="img img-2 d-flex justify-content-center align-items-center" style="background-image: url(images/hotel-5.jpg);">
+                                <div class="icon d-flex justify-content-center align-items-center">
+                                    <span class="icon-link"></span>
+                                </div>
+                            </a>
+                            <div class="text p-3">
+                                <div class="d-flex">
+                                    <div class="one">
+                                        <h3><a href="#">迪士尼&nbsp·&nbsp上海</a></h3>
+                                        <p class="rate">
+                                            <i class="icon-star"></i>
+                                            <i class="icon-star"></i>
+                                            <i class="icon-star"></i>
+                                            <i class="icon-star"></i>
+                                            <i class="icon-star-o"></i>
+                                            <span>4.0</span>
+                                        </p>
+                                    </div>
+                                    <div class="two">
+                                        <span class="price per-price"><br>¥260<small>/晚</small></span>
+                                    </div>
+                                </div>
+                                <p>距上海迪斯尼国际度假区仅三分钟车程，客房装修以北欧风情为主,宽敞舒适小资,客房内设施齐全,家具摆设别致｡</p>
+                                <hr>
+                                <p class="bottom-area d-flex">
+                                    <span><i class="icon-map-o"></i> Miami, Fl</span>
+                                    <span class="ml-auto"><a href="#">现在预订</a></span>
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row mt-5">
+                    <div class="col text-center">
+                        <div class="block-27">
+                            <ul>
+                                <li><a href="#">&lt;</a></li>
+                                <li class="active"><span>1</span></li>
+                                <li><a href="#">2</a></li>
+                                <li><a href="#">3</a></li>
+                                <li><a href="#">4</a></li>
+                                <li><a href="#">5</a></li>
+                                <li><a href="#">&gt;</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div> <!-- .col-md-8 -->
+        </div>
+    </div>
+</section>

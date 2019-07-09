@@ -21,7 +21,7 @@ namespace Adventure.Models
         public int num_of_bathrooms { get; set; }
         public int max_member_limit { get; set; }
         public string introduction { get; set; }
-        public int default_price { get; set; }
+        public double default_price { get; set; }
         public string check_in_method { get; set; }
         public double house_grade { get; set; }
         public string convenience_facilities { get; set; }

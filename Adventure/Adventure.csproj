@@ -172,13 +172,18 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Models\Activity.cs" />
-    <Compile Include="Models\comment.cs" />
+    <Compile Include="Models\ActivityComment.cs" />
+    <Compile Include="Models\ActivityFavorite.cs" />
+    <Compile Include="Models\ActivityInstance.cs" />
+    <Compile Include="Models\ActivityOrder.cs" />
     <Compile Include="Models\Homestay.cs" />
-    <Compile Include="Models\Order.cs" />
+    <Compile Include="Models\HomestayComment.cs" />
+    <Compile Include="Models\HomestayFavorite.cs" />
+    <Compile Include="Models\HomestayOrder.cs" />
+    <Compile Include="Models\Report.cs" />
+    <Compile Include="Models\SpecialPrice.cs" />
     <Compile Include="Models\Story.cs" />
     <Compile Include="Models\User.cs" />
-    <Compile Include="Models\User_Activity_Order.cs" />
-    <Compile Include="Models\User_HomeStay_Order.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -224,6 +229,7 @@
     <Content Include="Content\Orderstyle.css" />
     <Content Include="Content\owl.carousel.min.css" />
     <Content Include="Content\owl.theme.default.min.css" />
+    <Content Include="Content\stayinfo.css" />
     <Content Include="Content\style.css" />
     <Content Include="Content\uploadify\jquery.uploadify-3.1.js" />
     <Content Include="Content\uploadify\jquery.uploadify-3.1.min.js" />
@@ -1127,10 +1133,15 @@
     <Content Include="Views\Admin\ViewActivityOrder.cshtml" />
     <Content Include="Views\Admin\ViewHomestay.cshtml" />
     <Content Include="Views\Admin\ViewHomestayOrder.cshtml" />
+    <Content Include="Views\Activity\EditActivity.cshtml" />
+    <Content Include="Views\HomeStay\Index.cshtml" />
+    <Content Include="Views\HomeStay\Release.cshtml" />
+    <Content Include="Views\HomeStay\Special.cshtml" />
+    <Content Include="Views\HomeStay\StayInfo.cshtml" />
+    <Content Include="Views\Home\Favourites.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="Views\HomeStay\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\bootstrap.min.css.map" />

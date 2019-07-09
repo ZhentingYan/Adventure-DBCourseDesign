@@ -1,0 +1,153 @@
+﻿@{
+    ViewBag.Title = "编辑您的体验活动";
+}
+<link rel="stylesheet" href="~/Content/Activity/paper-bootstrap-wizard.css" />
+<script>
+    $(document).ready(function () {
+
+
+        var flag = "@ViewBag.flag";
+        var errorMessage = "@ViewBag.errorMessage";
+        if (flag == "1") {
+            alert(errorMessage);
+                @{ ViewBag.flag = null;}
+            window.location.href = "../Activity/SingleActivity?productID=@ViewBag.productID";
+        } else {
+            if (flag != "") {
+                      @{ ViewBag.flag = null; }
+                alert(errorMessage);
+
+            }
+        }
+    })
+</script>
+<style type="text/css">
+
+    .choosed {
+        border-style: dashed;
+        border-color: antiquewhite;
+    }
+</style>
+<div class="image-container set-full-height" style="background-image: url('../images/Publish_bg.jpg');">
+    <!-- Big container -->
+    <div class="container">
+        <div class="row">
+                <!-- Wizard container -->
+                <div class="wizard-container" style="margin-top:100px">
+                    <div class="card wizard-card" id="wizard">
+                        <div class="wizard-header">
+                            <h3 class="wizard-title">编辑体验活动</h3>
+                            <hr />
+                        </div>
+                        <form id="new-act" action="submitEdit" method="post" enctype="multipart/form-data">
+                            <!-- 创建新活动 -->
+                            <div>
+                                <div class="row">
+                                    <div class="col-sm-5 col-sm-offset-1" style="margin-left:auto; margin-right:auto;">
+                                        <div class="form-group">
+                                            <label>活动地点</label>
+                                            <input type="text" maxlength="50" class="form-control" name="activity_place" placeholder="" value="@ViewBag.ActivityDetail.address" required="required">
+                                            <input type="text" maxlength="50" class="form-control" name="activity_ID" placeholder="" hidden value="@ViewBag.ActivityDetail.activity_id">
+
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-5 col-sm-offset-1" style="margin-left:auto; margin-right:auto;">
+                                        <div class="form-group">
+                                            <label>活动标题</label>
+                                            <input type="text" maxlength="100" class="form-control" name="activity_title" placeholder="" required="required" value="@ViewBag.ActivityDetail.activity_name">
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-5 col-sm-offset-1" style="margin-left:auto; margin-right:auto;">
+                                        <div class="form-group">
+                                            <label>名额</label>
+                                            <input type="number" class="form-control" name="activity_capacity" required="required" value="@ViewBag.ActivityDetail.max_member_limit"
+                                                   onkeyup="if (this.value.length == 1) { this.value = this.value.replace(/[^1-9]/g, '') }else { this.value = this.value.replace(/\D/g, '') }"
+                                                   onafterpaste="if(this.value.length==1){this.value=this.value.replace(/[^1-9]/g,'')}else{this.value=this.value.replace(/\D/g,'')}">
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-5 col-sm-offset-1" style="margin-left:auto; margin-right:auto;">
+                                        <div class="form-group">
+                                            <label>活动内容</label>
+                                            <textarea maxlength="400" class="form-control" name="activity_content" required="required">@ViewBag.ActivityDetail.act_content</textarea>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-5 col-sm-offset-1" style="margin-left:auto; margin-right:auto;">
+                                        <div class="form-group">
+                                            <label>活动注意事项</label>
+                                            <textarea maxlength="150" class="form-control" name="activity_note" required="required">@ViewBag.ActivityDetail.note</textarea>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-5 col-sm-offset-1" style="margin-left:auto; margin-right:auto;">
+                                        <div class="form-group">
+                                            <label>取消预订政策</label>
+                                            <textarea maxlength="150" class="form-control" name="activity_cancel" required="required">@ViewBag.ActivityDetail.cancellation_policy</textarea>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-5 col-sm-offset-1" style="margin-left:auto; margin-right:auto;">
+                                        <div class="form-group">
+                                            <label>图片/一张</label>
+                                            <input type="file" accept="image/*" class="form-control" name="myfile" required="required">
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-8 col-sm-offset-2" style="margin-left:auto; margin-right:auto;">
+                                        <div class="form-group">
+                                            <button type="submit" class="form-control">发布</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- 创建新活动 END -->
+                        </form>
+                    </div>
+                </div>
+                <!-- wizard container -->
+        </div>
+        <!-- row -->
+    </div>
+    <!--  big container -->
+</div>
+<script>$(function () {
+        var $newAct = $('#new-act');
+        var $addInstance = $('#add-instance');
+        var $choosedActivity;
+        $newAct.show();
+        $addInstance.hide();
+
+        $('.activity').on('click', function () {
+            $('.activity').removeClass('choosed');
+            $newAct.hide();
+            $addInstance.show();
+            $(this).addClass('choosed');
+            var productID = $(this).attr('productid');
+            var productName = $(this).attr('productname');
+            $("#product_label").text("产品ID：" + productID);
+            $("#product_name").text("产品名称：" + productName);
+
+            $("#submitProduct").attr('value',productID);
+
+            $choosedActivity = $(this);
+            document.getElementById('add-instance').reset();
+        });
+
+        $('#delete-button').on('click', function () {
+            $newAct.show();
+            $addInstance.hide();
+            $choosedActivity.removeClass('choosed');
+            document.getElementById('new-act').reset();
+        });
+    });
+
+    $(function () {
+        var date = new Date();
+        var today = date.getFullYear();
+        today += "-";
+        today += date.getMonth() + 1 < 10 ? "0" + (date.getMonth() + 1) : (date.getMonth() + 1);
+        today += "-";
+        today += date.getDate() < 10 ? "0" + date.getDate() : date.getDate();
+        $('#start-time').attr('min', today);
+        $('#end-time').attr('min', today);
+
+        $('#start-time').change(function () {
+            $('#end-time').attr('min', $(this).val());
+        });
+    });</script>

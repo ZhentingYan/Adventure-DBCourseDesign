@@ -40,7 +40,7 @@ namespace Adventure.Controllers
                 fileSave = "../images/headicon/" + dt.ToFileTime().ToString() + Request.Files["filedata"].FileName.Substring(Request.Files["filedata"].FileName.LastIndexOf("\\") + 1);
 
             }else{
-                fileSave = "../iamges/headicon/default.jpg";
+                fileSave = (string)Session["head_icon"];
             }
             if (System.IO.File.Exists(filePath))
             {

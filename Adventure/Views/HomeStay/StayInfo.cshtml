@@ -1,0 +1,226 @@
+﻿@{
+    ViewBag.Title = "房源详情";
+}
+<script>
+    $(document).ready(function () {
+
+        var productID = "@ViewBag.productID";
+
+            if (productID == "-1") {
+                alert("未知产品ID!");
+                window.location.href = "/Home";
+            }
+    })
+</script>
+<head>
+    <meta charset="UTF-8">
+    <link href="../Content/stayinfo.css" rel="stylesheet" type="text/css" />
+</head>
+<div class="hero-wrap js-fullheight" style="background-image: url('../../images/bg_1.jpg');">
+    <div class="overlay"></div>
+    <div class="container">
+        <div class="row no-gutters slider-text js-fullheight align-items-center justify-content-center" data-scrollax-parent="true">
+            <div class="col-md-9 text-center ftco-animate" data-scrollax=" properties: { translateY: '70%' }">
+                <p class="breadcrumbs" data-scrollax="properties: { translateY: '30%', opacity: 1.6 }">
+                    <span class="mr-2"> @Html.ActionLink("主页", "Index", "Home")</span>
+                    <span class="mr-2"> @Html.ActionLink("房源", "Index", "Activity")</span>
+                </p>
+                <h1 class="mb-3 bread" data-scrollax="properties: { translateY: '30%', opacity: 1.6 }">房源详情</h1>
+            </div>
+        </div>
+    </div>
+</div>
+<section class="homestay_area singlehomestay">
+    <!--start property head title-->
+    <div id="property-title-wrap" class="table-block" >
+        <div class="container">
+            <div class="head-title-left table-col v-top full-width white-space-normal">
+                <h2 class="property-title"> <br>@ViewBag.HomeStayDetail.homestay_name </h2>
+                <address class="property-address">
+                    <i class="fa fa-map-marker fa-right-5"></i> @ViewBag.HomeStayDetail.address
+                </address>
+            </div>
+        </div>
+    </div>
+    <!--end property head title-->
+    <!--start property detail wrap-->
+    <main id="ced-page-body" class="property-detail-wrap">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-8 col-md-8 col-sm-12 col-xs-12 ced-content-area">
+                    <!--start detail top-->
+                    <div id="property-media">
+                        <a href="#" class="single-gallery" data-toggle="modal" data-target=".property-lightbox">
+                            <img src="@ViewBag.HomeStayDetail.homestay_pictures" alt="Property Image" width="980" height="700">
+                        </a>
+                    </div>
+                    <!--end detail top-->
+                    <section class="section-property-content">
+                        <article class="property-article property-description">
+                            <header class="article-head">
+                                <h3 class="heading">简介</h3>
+                            </header>
+                            <div class="article-body">
+                                <p>
+                                    @ViewBag.HomeStayDetail.introduction
+                                </p>
+                            </div>
+                        </article>
+                        <article class="property-article property-features">
+                            <header class="article-head">
+                                <h3 class="heading">便利设施</h3>
+                            </header>
+                            <div class="article-body">
+                                <p>
+                                    @ViewBag.HomeStayDetail.convenience_facilities
+                                </p>
+                            </div>
+                        </article>
+                        <article class="property-article property-detail">
+                            <header class="article-head">
+                                <h3 class="heading">详细信息</h3>
+                            </header>
+                            <div class="article-body">
+                                <div class="table-responsive">
+                                    <table class="table table-bordered detail-table">
+                                        <tr>
+                                            <td class="detail-title">房源ID</td>
+                                            <td>@ViewBag.HomeStayDetail.homestay_id</td>
+                                            <td class="detail-title">卧室数量</td>
+                                            <td>@ViewBag.HomeStayDetail.num_of_bedrooms</td>
+                                        </tr>
+                                        <tr>
+                                            <td class="detail-title"> 默认价格</td>
+                                            <td> @ViewBag.HomeStayDetail.default_price</td>
+                                            <td class="detail-title"> 卫生间数量</td>
+                                            <td> @ViewBag.HomeStayDetail.num_of_bathrooms</td>
+                                        </tr>
+                                        <tr>
+                                            <td class="detail-title"> 床数量</td>
+                                            <td>@ViewBag.HomeStayDetail.num_of_beds</td>
+                                            <td class="detail-title"> 人数限制</td>
+                                            <td> @ViewBag.HomeStayDetail.max_member_limit</td>
+                                        </tr>
+                                        <tr>
+                                            <td class="detail-title"> 房源种类</td>
+                                            <td> @ViewBag.HomeStayDetail.homestay_type</td>
+                                            <td class="detail-title"> 最晚预订日期</td>
+                                            <td> @ViewBag.HomeStayDetail.latest_schedulable_date</td>
+                                        </tr>
+                                        <tr>
+                                            <td class="detail-title"> 入住方式</td>
+                                            <td> @ViewBag.HomeStayDetail.check_in_method </td>
+                                        </tr>
+                                    </table>
+                                </div>
+                            </div>
+                        </article>
+                        <article class="property-article property-features">
+                            <header class="article-head">
+                                <h3 class="heading">房屋守则</h3>
+                            </header>
+                            <div class="article-body">
+                                <p>
+                                    @ViewBag.HomeStayDetail.house_regulations
+                                </p>
+                            </div>
+                        </article>
+                        <article class="property-article property-features">
+                            <header class="article-head">
+                                <h3 class="heading">取消预定政策</h3>
+                            </header>
+                            <div class="article-body">
+                                <p>
+                                    @ViewBag.HomeStayDetail.cancellation_policy
+                                </p>
+                            </div>
+                        </article>
+                        <article class="property-article property-contact-info">
+                            <header class="article-head">
+                                <h3 class="heading">房东信息</h3>
+                            </header>
+                            <div class="article-body">
+                                <div class="media">
+                                    <div class="media-left">
+                                        <a href="agent-single-v1.html" class="media-object">
+                                            <img src="@ViewBag.Landlord.head_icon" class="agent-img img-rounded" alt="image"
+                                                 width="162" height="162">
+                                        </a>
+                                    </div>
+                                    <div class="media-body">
+                                        <div class="info-head">
+                                            <h4 class="media-heading"> @ViewBag.Landlord.first_name @ViewBag.Landlord.last_name</h4>
+                                            <p class="position text-primary">@ViewBag.Landlord.email_address</p>
+                                            <p>
+                                                @ViewBag.Landlord.self_introduction
+                                            </p>
+                                            <ul class="other-info list-style-none no-padding">
+                                                <li><span>Phone :</span> @ViewBag.Landlord.phone_number</li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </article>
+                    </section>
+                </div>
+                <div class="col-lg-4 col-md-4 col-sm-6 col-xs-12 col-md-offset-0 col-sm-offset-3 ced-sidebar-area">
+                    <aside id="sidebar">
+                        <!--Widget Contact-->
+                        <div class="widget widget_agent_contact">
+                            <div class="widget-body">
+                                <div class="form-small">
+                                    <div class="media agent-media">
+                                        <div class="media-body media-middle">
+                                            <h3 class="heading">¥@ViewBag.HomeStayDetail.default_price<small>/晚</small></h3>
+                                            <p class="rate">
+                                                <i class="icon-star"></i>
+                                                <i class="icon-star"></i>
+                                                <i class="icon-star"></i>
+                                                <i class="icon-star"></i>
+                                                <i class="icon-star"></i>
+                                                <span>@ViewBag.HomeStayDetail.house_grade</span>
+                                            </p>
+                                        </div>
+                                    </div>
+                                    <form>
+                                        <div class="form-group">
+                                            <label for="#">入住时间</label>
+                                            <input type="text" id="checkin_date" class="form-control checkin_date" placeholder="入住时间">
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="#">退房时间</label>
+                                            <input type="text" id="checkout_date" class="form-control checkout_date" placeholder="退房时间">
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="#">入住人数</label>
+                                            <div class="form-field">
+                                                <div class="select-wrap">
+                                                    <div class="icon"><span class="ion-ios-arrow-down"></span></div>
+                                                    <select name="" id="" class="form-control">
+                                                        <option value="" selected>1</option>
+                                                        <option value="">2</option>
+                                                        <option value="">3</option>
+                                                        <option value="">4</option>
+                                                        <option value="">5</option>
+                                                    </select>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <ul class="list_style cat-list">
+                                            <li>
+                                                <a href="@Url.Action("Index","Order",new{productID = 120, accessWay = 1})" class="d-flex justify-content-between">
+                                                    <p>立即预订</p>
+                                                </a>
+                                            </li>
+                                            </ul>
+</form>
+                                </div>
+                            </div>
+                        </div>
+                    </aside>
+                </div>
+            </div>
+        </div>
+    </main>
+</section>

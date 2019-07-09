@@ -48,17 +48,8 @@
                     <!-- 最左栏 -->
                     <div class="col-lg-3  col-md-3">
                         <div class="blog_info text-right">
-                            <div class="post_tag">
-                                <span>食物 </span>
-                                <span>娱乐 </span>
-                                <span>科技 </span>
-                                <br />
-                                <span>健康 </span>
-                                <span>运动 </span>
-                                <span>生活 </span>
-                            </div>
                             <ul class="blog_meta list_style">
-                                <li><b id="place">上海</b></li>
+                                <li><b id="place">地点：@ViewBag.ActivityDetail.address</b></li>
                                 <li><b>人数限制：<span id="max">@ViewBag.ActivityDetail.max_member_limit</span></b></li>
                             </ul>
                         </div>
@@ -110,10 +101,16 @@
                 <div class="blog_right_sidebar">
                     <aside class="single_sidebar_widget author_widget">
                         <img id="avatar" class="author_img rounded-circle col-lg-4" src="@ViewBag.Publisher.head_icon" alt="">
-                        <h4 id="name">@ViewBag.Publisher.first_name@ViewBag.Publisher.last_name</h4>
-                        <p>体验达人</p>
-                        <p id="introduction">
+                        <h4 id="name" style="margin-top:10px;">@ViewBag.Publisher.first_name@ViewBag.Publisher.last_name</h4>
+                        <p style="margin-top:10px">体验达人</p>
+                        <p id="introduction" style="margin-top:10px;">
                             @ViewBag.Publisher.self_introduction
+                        </p>
+                        <p id="contactway" style="margin-top:10px">
+                            联系方式:@ViewBag.Publisher.phone_number
+                        </p>
+                        <p id="language" style="margin-top:10px">
+                            沟通语言:@ViewBag.Publisher.main_language
                         </p>
                         <div class="br"></div>
                     </aside>
