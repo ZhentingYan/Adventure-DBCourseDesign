@@ -1,0 +1,150 @@
+﻿
+@{
+    ViewBag.Title = "checkMyAOrder";
+    Layout = "~/Views/Admin/Admin_Layout.cshtml";
+}
+
+<script>
+    function cancelCheck(status, id) {
+        var next_step = false;
+        var cancelstate = status;
+        if (cancelstate == -1) {
+            next_step = true;
+        }
+        if (next_step) {
+            var statu = confirm("您是否要取消订单？");
+            if (!statu) {
+                return false;
+            } else {
+                $.ajax({
+                    type: "post",
+                    url: "~/Activity/IcancelActivityOrder",
+                    data: {
+                        toDeleteID: id
+                    },
+                    async: false,
+                    dataType: 'json',
+                    success: function (d) {//取消成功
+                        console.log(d);
+                        alert("取消成功！");
+                        location.href = '~/Admin/checkMyAOrder';
+                    },
+                    error: function (a) {
+                        console.log(a);
+                        alert("取消失败!");
+                    }
+                });
+            }
+        } else {
+            alert("订单不允许取消！");
+        }
+
+    }
+</script>
+
+<!--start page content-->
+<div class="page-content-wrapper">
+    <div class="page-content">
+        <div class="page-bar">
+            <div class="page-title-breadcrumb">
+                <div class=" pull-left">
+                    <div class="page-title">查看民宿订单</div>
+                </div>
+                <ol class="breadcrumb page-breadcrumb pull-right">
+                    <li>
+                        <i class="fa fa-home"></i>&nbsp;<a class="parent-item" href="/Home/Index">主页</a>&nbsp;<i class="fa fa-angle-right"></i>
+                    </li>
+                    <li>
+                        <a class="parent-item" href="">民宿订单</a>&nbsp;<i class="fa fa-angle-right"></i>
+                    </li>
+                    <li class="active">所有订单</li>
+                </ol>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-12">
+                <div class="card card-box">
+                    <div class="card-head">
+                        <header>所有订单</header>
+                        <div class="tools">
+                            <a class="fa fa-repeat btn-color box-refresh" href="javascript:;"></a>
+                            <a class="t-collapse btn-color fa fa-chevron-down" href="javascript:;"></a>
+                            <a class="t-close btn-color fa fa-times" href="javascript:;"></a>
+                        </div>
+                    </div>
+                    <div class="card-body ">
+                        <div class="table-scrollable">
+                            <table class="table table-hover table-checkable order-column full-width" id="example4">
+                                <thead>
+                                    <tr>
+                                        <th class="center"> 订单号 </th>
+                                        <th class="center"> 顾客ID </th>
+                                        <th class="center"> 创建时间 </th>
+                                        <th class="center"> 开始时间 </th>
+                                        <th class="center"> 结束时间 </th>
+                                        <th class="center"> 费用总额 </th>
+                                        <th class="center"> 平台费用 </th>
+                                        <th class="center"> 订单状态 </th>
+                                        <th class="center"> 操作 </th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @{
+                                        if (ViewBag.returnList != null)
+                                        {
+                                            for (int i = 0; i < ViewBag.returnList.Length; i++)
+                                            {
+                                                <tr class="odd gradeX">
+                                                    <td class="center">@ViewBag.returnList[i].activity_order_id</td>
+                                                    <td class="center">@ViewBag.returnList[i].customer_id</td>
+                                                    <td class="center">@ViewBag.returnList[i].create_time</td>
+                                                    <td class="center">@ViewBag.returnList[i].start_time</td>
+                                                    <td class="center">@ViewBag.returnList[i].end_time</td>
+                                                    <td class="center">@ViewBag.returnList[i].total_price</td>
+                                                    <td class="center">@ViewBag.returnList[i].platform_fee</td>
+
+                                                    @{ if (ViewBag.returnList[i].status == -2)
+                                                        {
+                                                            <td class="center">已取消</td>
+                                                        }
+                                                        else if (ViewBag.returnList[i].status == -1)
+                                                        {
+                                                            <td class="center">可取消</td>
+                                                        }
+                                                        else if (ViewBag.returnList[i].status == 0)
+                                                        {
+                                                            <td class="center">正在进行</td>
+                                                        }
+                                                        else
+                                                        {
+                                                            <td class="center">已完成</td>
+                                                        }
+                                                    }
+
+                                                    <td class="center">
+                                                        <a href="~/Activity/SingleActivity?productID=@ViewBag.returnList[i].activity_order_id" class="btn btn-tbl-edit btn-xs">
+                                                            <i class="fa fa-pencil"></i>
+                                                        </a>
+                                                        <a href="~/Admin/EditActivityOrder" class="btn btn-tbl-edit btn-xs">
+                                                            <i class="fa fa-pencil"></i>
+                                                        </a>
+                                                        <a class="btn btn-tbl-delete btn-xs" onclick="cancelCheck(@ViewBag.returnList[i].status,@ViewBag.returnList[i].activity_order_id)">
+                                                            <i class="fa fa-trash-o "></i>
+                                                        </a>
+                                                    </td>
+
+                                                </tr>
+                                            }
+                                        }
+                                    }
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!--end page content-->

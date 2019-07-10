@@ -1,0 +1,330 @@
+﻿
+@{
+    ViewBag.Title = "编辑我的房源";
+}
+<meta charset="UTF-8">
+<link href="../Content/stayinfo.css" rel="stylesheet" type="text/css" />
+<script>
+    $(document).ready(function () {
+
+
+        var flag = "@ViewBag.flag";
+        var errorMessage = "@ViewBag.errorMessage";
+        if (flag == "1") {
+            alert(errorMessage);
+                @{ ViewBag.flag = null;}
+        } else {
+            if (flag != "") {
+                      @{ ViewBag.flag = null; }
+                alert(errorMessage);
+
+            }
+        }
+    })
+</script>
+
+<div class="image-container set-full-height" style="background-image: url('../images/Release_bg1.jpg');">
+    <main id="dashboard-body-area">
+        <div class="dashboard-table" style="padding-top:100px">
+            <div class="dashboard-content-area">
+                <form id="new-homestay" action="homestayEdit" method="post" enctype="multipart/form-data">
+                    <div class="validate-errors alert alert-danger alert-dismissible" role="alert">
+                        <button type="button" class="close" data-hide="alert" aria-label="Close">
+                            <i class="fa fa-close"></i>
+                        </button>
+                        <strong>Error!</strong> Please fill out the following required fields.
+                    </div>
+                    <div class="validate-errors-gal alert alert-danger alert-dismissible" role="alert">
+                        <button type="button" class="close" data-hide="alert" aria-label="Close">
+                            <i class="fa fa-close"></i>
+                        </button>
+                        <strong>Error!</strong> Upload at least one image.
+                    </div>
+                    <div class="form-step">
+                        <!--step information-->
+                        <div class="dashboard-block white-bg">
+                            <div class="block-head">
+                                <div class="head-title">
+                                    <h3 style="font-family:'PingFang SC';font-weight:bold;font-size:24px">基本信息</h3>
+                                </div>
+                                <div class="head-right">
+                                    <div class="steps-count">
+                                        <span class="text-primary">Step</span> <span class="step-counter">1</span>/<span class="total-steps">5</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="dashboard-block-body">
+                                <div class="listing-form-row row">
+                                    <div class="col-sm-12">
+                                        <div class="form-group">
+                                            <label for="homestay_name">名称</label>
+                                            <input type="text" name="form-homestay_name" class="form-control required"
+                                                   maxlength="100" required="required" id="form-homestay_name" value="@ViewBag.HomestayDetail.homestay_name">
+                                            <input type="text" name="form-homestay_id" class="form-control required"
+                                                   maxlength="100"  id="form-homestay_id" hidden value="@ViewBag.HomestayDetail.homestay_id"placeholder="输入你的民宿名称">
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-12">
+                                        <div class="form-group">
+                                            <label for="introduction">描述</label>
+                                            <input name="form-introduction" class="form-control" id="form-introduction" rows="6"
+                                                      maxlength="1000" required="required"value="@ViewBag.HomestayDetail.introduction"></input>
+                                        </div>
+                                    </div>
+                                </div>
+                                <hr class="form-row-separator">
+                                <div class="listing-form-row row">
+                                    <div class="col-sm-4">
+                                        <div class="form-group">
+                                            <label for="bedroom_number">卧室数量</label>
+                                            <select name="form-num_of_bedrooms" class="selectpicker" required="required" value="@ViewBag.HomestayDetail.num_of_bedrooms"id="form-num_of_bedrooms"
+                                                    title="Select">
+                                                <option>1</option>
+                                                <option>2</option>
+                                                <option>3</option>
+                                                <option>4</option>
+                                                <option>5</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-4">
+                                        <div class="form-group">
+                                            <label for="bed_number">床的数量</label>
+                                            <select name="form-num_of_beds" class="selectpicker" required="required" value="@ViewBag.HomestayDetail.num_of_beds" id="form-num_of_beds"
+                                                    data-live-search="false" data-live-search-style="begins" title="Select">
+                                                <option>1</option>
+                                                <option>2</option>
+                                                <option>3</option>
+                                                <option>4</option>
+                                                <option>5</option>
+                                                <option>6</option>
+                                                <option>7</option>
+                                                <option>8</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-4">
+                                        <div class="form-group">
+                                            <label for="bathroom_number">卫生间数量</label>
+                                            <select name="form-num_of_bathrooms" class="selectpicker"  value="@ViewBag.HomestayDetail.num_of_bathrooms"required="required" id="form-num_of_bathrooms"
+                                                    title="Select">
+                                                <option>1</option>
+                                                <option>2</option>
+                                                <option>3</option>
+                                                <option>4</option>
+                                                <option>5</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-4">
+                                        <div class="form-group">
+                                            <label for="type">民宿种类</label>
+                                            <select name="form-homestay_type" class="selectpicker" required="required" value="@ViewBag.HomestayDetail.homestay_type" id="form-homestay_type"
+                                                    title="Select">
+                                                <option>公寓型住宅</option>
+                                                <option>独栋房</option>
+                                                <option>别墅</option>
+                                                <option>酒店</option>
+                                                <option>度假村</option>
+                                                <option>农家乐</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-4">
+                                        <div class="form-group">
+                                            <label for="max_number">最大入住人数</label>
+                                            <select name="form-max_member_limit" class="selectpicker" required="required" value="@ViewBag.HomestayDetail.max_member_limit"id="form-max_member_limit"
+                                                    title="Select">
+                                                <option>1</option>
+                                                <option>2</option>
+                                                <option>3</option>
+                                                <option>4</option>
+                                                <option>5</option>
+                                                <option>6</option>
+                                                <option>7</option>
+                                                <option>8</option>
+                                                <option>9</option>
+                                                <option>10</option>
+                                                <option>11</option>
+                                                <option>12</option>
+                                                <option>13</option>
+                                                <option>14</option>
+                                                <option>15</option>
+                                                <option>16</option>
+                                                <option>17</option>
+                                                <option>18</option>
+                                                <option>19</option>
+                                                <option>20</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div>
+                                <hr class="form-row-separator">
+                                <div class="listing-form-row row">
+                                    <div class="col-sm-4">
+                                        <div class="form-group">
+                                            <label for="property_price">默认价格（每晚）</label>
+                                            <input type="text" name="form-default_price" class="form-control"
+                                                   id="form-default_price" maxlength="7" required="required"  value="@ViewBag.HomestayDetail.default_price">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-step form-step-gal">
+                        <!--step Media-->
+                        <div class="dashboard-block white-bg">
+                            <div class="block-head">
+                                <div class="head-title">
+                                    <h3 style="font-family:'PingFang SC';font-weight:bold;font-size:24px">民宿图片</h3>
+                                </div>
+                                <div class="head-right">
+                                    <div class="steps-count">
+                                        <span class="text-primary">Step</span> <span class="step-counter">2</span>/<span class="total-steps">5</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="dashboard-block-body">
+                                <div class="listing-form-row row">
+                                    <div class="col-sm-12 col-xs-12">
+                                        <div class="upload-property-media">
+                                            <div class="media-drag-drop">
+                                                <i class="fa fa-upload"></i>
+                                                <h4 class="drag-title">请将图片上传至此</h4>
+                                                <div class="form-group">
+                                                    <input type="file" accept="image/*" class="form-control" name="myfile"  value="@ViewBag.HomestayDetail.homestay_pictures">
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-step">
+                        <!--step location-->
+                        <div class="dashboard-block white-bg">
+                            <div class="block-head">
+                                <div class="head-title">
+                                    <h3 style="font-family:'PingFang SC';font-weight:bold;font-size:28px">位置信息</h3>
+                                </div>
+                                <div class="head-right">
+                                    <div class="steps-count">
+                                        <span class="text-primary">Step</span> <span class="step-counter">3</span>/<span class="total-steps">5</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="dashboard-block-body">
+                                <div class="listing-form-row row">
+                                    <div class="col-sm-12">
+                                        <div class="form-group">
+                                            <label for="address">地址</label>
+                                            <input type="text" name="form-address" class="form-control required" id="form-address" maxlength="50" required="required"
+                                                    value="@ViewBag.HomestayDetail.address">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-step">
+                        <!--step property detail-->
+                        <div class="dashboard-block white-bg">
+                            <div class="block-head">
+                                <div class="head-title">
+                                    <h3 style="font-family:'PingFang SC';font-weight:bold;font-size:24px">入住须知</h3>
+                                </div>
+                                <div class="head-right">
+                                    <div class="steps-count">
+                                        <span class="text-primary">Step</span> <span class="step-counter">4</span>/<span class="total-steps">5</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="dashboard-block-body">
+                                <div class="listing-form-row row">
+                                    <div class="col-sm-6">
+                                        <div class="form-group">
+                                            <label for="property_id">民宿守则</label>
+                                            <input name="form-house_regulations" class="form-control" id="form-house_regulations" maxlength="150" required="required"
+                                                   value="@ViewBag.HomestayDetail.house_regulations">
+                                        </div>
+                                    </div>
+                                    <br>
+                                    <div class="col-sm-6">
+                                        <div class="form-group">
+                                            <label for="property_area">取消预订政策</label>
+                                            <input name="form-cancellation_policy" class="form-control" id="form-cancellation_policy" maxlength="150" required="required"
+                                                   value="@ViewBag.HomestayDetail.cancellation_policy">
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-6">
+                                        <div class="form-group">
+                                            <label>最晚预订时间</label>
+                                            <input type="date" id="start-time" class="form-control" name="form-latest_schedulable_date" required="required" value="@ViewBag.HomestayDetail.latest_schedulable_date">
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-6">
+                                        <div class="form-group">
+                                            <label for="property_area">入住方式</label>
+                                            <input name="form-check_in_method" class="form-control" id="form-check_in_method" maxlength="20" required="required" value="@ViewBag.HomestayDetail.check_in_method"
+                                                   >
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-step">
+                        <!--step features-->
+                        <div class="dashboard-block white-bg">
+                            <div class="block-head">
+                                <div class="head-title">
+                                    <h3 style="font-family:'PingFang SC';font-weight:bold;font-size:24px">便利设施</h3>
+                                </div>
+                                <div class="head-right">
+                                    <div class="steps-count">
+                                        <span class="text-primary">Step</span> <span class="step-counter">5</span>/<span class="total-steps">5</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="dashboard-block-body">
+                                <div class="col-sm-12">
+                                    <div class="form-group">
+                                        <label for="description">便利设施</label>
+                                        <input name="form-convenience_facilities" class="form-control" id="form-convenience_facilities" rows="6" cols="10"maxlength="500" required="required"
+                                                   value="@ViewBag.HomestayDetail.convenience_facilities">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="steps-nav">
+                        <div class="pull-left">
+                            <button type="button" id="back" class="btn btn-default btn-step-back action" onclick="location.href='../HomeStay/Index'">返回</button>
+                        </div>
+                        <div class="pull-right">
+                            <button type="submit" class="btn btn-step-next btn-primary btn-long action">
+                                提交<i class="fa fa-left-8 fa-angle-right"></i>
+                            </button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </main>
+
+</div>
+<script>
+    $(function () {
+        var date = new Date();
+        var today = date.getFullYear();
+        today += "-";
+        today += date.getMonth() + 1 < 10 ? "0" + (date.getMonth() + 1) : (date.getMonth() + 1);
+        today += "-";
+        today += date.getDate() < 10 ? "0" + date.getDate() : date.getDate();
+        $('#latest_schedulable_date').attr('min', today);
+    });
+</script>
+

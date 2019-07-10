@@ -163,7 +163,7 @@
                                             {
                                                 <li>
                                                     <!-- 跳转到订单界面 -->
-                                                    <a href="@Url.Action("Index","Order",new{productID =ViewBag.activityInstance[i].activity_id, accessWay = 2})" class="d-flex justify-content-between">
+                                                    <a href="@Url.Action("Index","Order",new{productID =ViewBag.activityInstance[i].activity_id, instanceID = ViewBag.activityInstance[i].activity_instance_id})" class="d-flex justify-content-between">
                                                         <p>@ViewBag.activityInstance[i].start_time.ToString("yyyy-MM-dd")-@ViewBag.activityInstance[i].end_time.ToString("yyyy-MM-dd")</p>
                                                         <p>￥@ViewBag.activityInstance[i].price</p>
                                                     </a>

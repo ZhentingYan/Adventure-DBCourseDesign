@@ -57,6 +57,13 @@
         }
 
     }
+       $(document).ready(function () {
+        var message="@Session["message"]";
+        if (message!= "") {
+            alert(message);
+            @{Session["message"] = null;}
+        }
+    })
 </script>
 
 <div class="hero-wrap js-fullheight" style="background-image: url('../images/Login_bg.jpg');">

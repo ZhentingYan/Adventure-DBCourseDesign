@@ -1,25 +1,27 @@
 ﻿
 @{
-    ViewBag.Title = "查看我的房源";
-    Layout = "~/Views/Admin/Admin_Layout.cshtml";
+                /**/
+
+                ViewBag.Title = "checkMyHomestayOrder";
+                Layout = "~/Views/Admin/Admin_Layout.cshtml";
 }
 
-<!-- start page content -->
+<!--start page content-->
 <div class="page-content-wrapper">
     <div class="page-content">
         <div class="page-bar">
             <div class="page-title-breadcrumb">
                 <div class=" pull-left">
-                    <div class="page-title">查看房源</div>
+                    <div class="page-title">查看民宿订单</div>
                 </div>
                 <ol class="breadcrumb page-breadcrumb pull-right">
                     <li>
                         <i class="fa fa-home"></i>&nbsp;<a class="parent-item" href="/Home/Index">主页</a>&nbsp;<i class="fa fa-angle-right"></i>
                     </li>
                     <li>
-                        <a class="parent-item" href="">房源</a>&nbsp;<i class="fa fa-angle-right"></i>
+                        <a class="parent-item" href="">民宿订单</a>&nbsp;<i class="fa fa-angle-right"></i>
                     </li>
-                    <li class="active">查看房源</li>
+                    <li class="active">所有订单</li>
                 </ol>
             </div>
         </div>
@@ -27,7 +29,7 @@
             <div class="col-md-12">
                 <div class="card card-box">
                     <div class="card-head">
-                        <header>查看房源</header>
+                        <header>所有订单</header>
                         <div class="tools">
                             <a class="fa fa-repeat btn-color box-refresh" href="javascript:;"></a>
                             <a class="t-collapse btn-color fa fa-chevron-down" href="javascript:;"></a>
@@ -39,40 +41,42 @@
                             <table class="table table-hover table-checkable order-column full-width" id="example4">
                                 <thead>
                                     <tr>
-                                        <th class="center"> 民宿ID </th>
+                                        <!--TODO:-->
+                                        <th class="center"> 订单号 </th>
+                                        <th class="center"> 顾客ID </th>
                                         <th class="center"> 民宿名称 </th>
-                                        <th class="center"> 地理位置 </th>
-                                        <th class="center"> 民宿种类 </th>
-                                        <th class="center"> 默认价格 </th>
-                                        <th class="center"> 查看详情 </th>
+                                        <th class="center"> 入住时间 </th>
+                                        <th class="center"> 退房时间 </th>
+                                        <th class="center"> 费用总额 </th>
+                                        <th class="center"> 平台费用 </th>
+                                        <th class="center"> 订单状态 </th>
                                         <th class="center"> 操作 </th>
-
                                     </tr>
                                 </thead>
                                 <tbody>
                                     @{
-                                        if (ViewBag.homestayList != null)
+                                        if (ViewBag.returnList != null)
                                         {
-                                            for (int i = 0; i < ViewBag.homestayList.Length; i++)
+                                            for (int i = 0; i < ViewBag.returnList.Length; i++)
                                             {
                                     <tr class="odd gradeX">
-                                        <td class="center">@ViewBag.homestayList[i].homestay_id</td>
-                                        <td class="center">@ViewBag.homestayList[i].homestay_name</td>
-                                        <td class="center">@ViewBag.homestayList[i].address</td>
-                                        <td class="center">@ViewBag.homestayList[i].homestay_type</td>
-                                        <td class="center">@ViewBag.homestayList[i].default_price</td>
+                                        <td class="center">@ViewBag.returnList[i].homestay_order_id</td>
+                                        <td class="center">@ViewBag.returnList[i].customer_id</td>
+                                        <td class="center">@ViewBag.returnList[i].homestay_name</td>
+                                        <td class="center">@ViewBag.returnList[i].start_time</td>
+                                        <td class="center">@ViewBag.returnList[i].end_time</td>
+                                        <td class="center">@ViewBag.returnList[i].total_price</td>
+                                        <td class="center">@ViewBag.returnList[i].platform_fee</td>
+                                        <!--这里需要更改状态，我要晕厥了-->
+                                        <td class="center">@ViewBag.returnList[i].status</td>
                                         <td class="center">
-                                            <a href="/HomeStay/StayInfo?productID=@ViewBag.homestayList[i].homestay_id" class="btn btn-tbl-edit btn-xs">
+                                            <a href="/HomeStay/StayInfo?productID=@ViewBag.returnList[i].homestay_id" class="btn btn-tbl-edit btn-xs">
                                                 <i class="fa fa-exclamation-circle"></i>
                                             </a>
-                                        </td>
-                                        <td class="center">
+                                            <!--TODO:comment-->
+                                            <!--这里需要删除，我要晕厥了-->
 
-                                            <a href="/HomeStay/EditHomestay?productID=@ViewBag.homestayList[i].homestay_id" class="btn btn-tbl-edit btn-xs">
-                                                <i class="fa fa-pencil"></i>
-                                            </a>
-
-                                            <a href="#" class="btn btn-tbl-delete btn-xs" onclick="Delete(@ViewBag.homestayList[i].homestay_id)">
+                                            <a href="#" class="btn btn-tbl-delete btn-xs" onclick="">
                                                 <i class="fa fa-trash-o "></i>
                                             </a>
                                         </td>
@@ -86,9 +90,8 @@
                     </div>
                 </div>
             </div>
-
         </div>
     </div>
-    </div>
-    <!-- end page content -->
+</div>
 
+<!--end page content-->

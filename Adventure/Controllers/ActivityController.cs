@@ -120,12 +120,54 @@ namespace Adventure.Controllers
 
 
         // GET: Activity
+        [HttpGet]
         public ActionResult Index()
         {
 
             return View();
         }
+        [HttpPost]
+        public ActionResult Index(FormCollection form)
+        {
+            SqlSugarClient db = new SqlSugarClient(
+                            new ConnectionConfig()
+                            {
+                                ConnectionString = System.Web.Configuration.WebConfigurationManager.AppSettings["ConnectionString"],
+                                DbType = DbType.Oracle,//设置数据库类型
+                    IsAutoCloseConnection = true,//自动释放数据务，如果存在事务，在事务结束后释放
+                    InitKeyType = InitKeyType.Attribute //从实体特性中读取主键自增列信息
+                });
+            try
+            {
+                DateTime dt_start_time, dt_end_time;
+                DateTimeFormatInfo dtFormat = new DateTimeFormatInfo();
+                dtFormat.ShortDatePattern = "yyyy/MM/dd";
+                dt_start_time = Convert.ToDateTime(form["form-start-time"], dtFormat);
+                dt_end_time = Convert.ToDateTime(form["form-end-time"], dtFormat);
+                string key = form["form-address"].ToLower();
+                int numNeed = Convert.ToInt32(form["form-member-num"]);
 
+                var availableID = new List<int>();
+                var available = db.Queryable<ActivityInstance>().Where(it => (DateTime.Compare(dt_start_time, it.end_time) >= 0 || DateTime.Compare(dt_end_time, it.start_time) <= 0) && it.is_booked == 0).ToArray();
+                for (int i = 0; i < available.Length; i++)
+                {
+                    if (availableID.Contains(available[i].activity_id) == false)
+                    {
+                        availableID.Add(available[i].activity_id);
+                    }
+                }
+
+                var returnlist = db.Queryable<Activity>().Where(it => availableID.Contains(it.activity_id) == true && it.max_member_limit <= numNeed && it.address.ToLower().Contains(key)).ToArray();
+                ViewBag.searchResult = returnlist;
+                ViewBag.isSearch = 1;
+            }
+            catch (Exception ex)
+            {
+                ViewBag.isSearch = 0;
+                throw ex;
+            }
+            return View();
+        }
         // GET: Single Activity
         public ActionResult SingleActivity(int productID=-1)
         {
@@ -288,7 +330,7 @@ namespace Adventure.Controllers
                         if (db.Insertable(data).ExecuteCommand() >= 1)
                         {
 
-                             isSuccess.Add("isSuccess", false);
+                            isSuccess.Add("isSuccess", false);
                             isSuccess.Add("message", "添加成功！");
                             return Content(JsonConvert.SerializeObject(isSuccess, Formatting.Indented));
 

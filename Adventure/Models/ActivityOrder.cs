@@ -11,6 +11,7 @@ namespace Adventure.Models
     {
         [SugarColumn(IsPrimaryKey = true, IsIdentity = true, IsOnlyIgnoreInsert = true)]
         public int activity_order_id { get; set; }
+        public string customer_id { get; set; }
         public int activity_instance_id { get; set; }
         public int status { get; set; }
         public DateTime create_time { get; set; }

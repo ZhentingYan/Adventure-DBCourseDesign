@@ -131,11 +131,11 @@ namespace Adventure.Controllers
                 });
             JObject isSuccess = new JObject();
 
-            
+
             DateTimeFormatInfo dtFormat = new DateTimeFormatInfo();
             dtFormat.ShortDatePattern = "yyyy-MM-dd";
             DateTime dt_last = Convert.ToDateTime(Request.Form["form-latest_schedulable_date"], dtFormat);
-            
+
 
             try
             {
@@ -180,6 +180,7 @@ namespace Adventure.Controllers
             finally { }
         }
 
+        // GET: Special Activity
         public ActionResult Special()
         {
             if (Session["user_id"] == null)
@@ -188,8 +189,146 @@ namespace Adventure.Controllers
             }
             else
             {
+                SqlSugarClient db = new SqlSugarClient(
+            new ConnectionConfig()
+            {
+                ConnectionString = System.Web.Configuration.WebConfigurationManager.AppSettings["ConnectionString"],
+                DbType = DbType.Oracle,//设置数据库类型
+                IsAutoCloseConnection = true,//自动释放数据务，如果存在事务，在事务结束后释放
+                InitKeyType = InitKeyType.Attribute //从实体特性中读取主键自增列信息
+            });
+                JObject isSuccess = new JObject();
+                try
+                {
+                    var myHomestayList = db.Queryable<Homestay>().Where(it => it.user_id == Session["user_id"]).ToArray();
+                    ViewBag.homestayList = myHomestayList;
+                }
+                catch (Exception ex)
+                {
+                    throw ex;
+                }
+                finally { }
+                ViewBag.Message = "Publish your special price.";
                 return View();
             }
+        }
+
+
+
+
+        public ActionResult EditHomestay(int productID = -1)
+        {
+            ViewBag.productID = productID;
+            SqlSugarClient db = new SqlSugarClient(
+            new ConnectionConfig()
+            {
+                ConnectionString = System.Web.Configuration.WebConfigurationManager.AppSettings["ConnectionString"],
+                DbType = DbType.Oracle,//设置数据库类型
+                IsAutoCloseConnection = true,//自动释放数据务，如果存在事务，在事务结束后释放
+                InitKeyType = InitKeyType.Attribute //从实体特性中读取主键自增列信息
+            });
+            JObject isSuccess = new JObject();
+            try
+            {
+                var getHomestaySpecific = db.Queryable<Homestay>().InSingle(productID);
+                ViewBag.HomestayDetail = getHomestaySpecific;
+                Session["homestay_pic"] = getHomestaySpecific.homestay_pictures;
+                var Publisher = db.Queryable<User>().InSingle(getHomestaySpecific.user_id);
+                ViewBag.Publisher = Publisher;
+                if (getHomestaySpecific.user_id != (string)Session["user_id"])
+                    return Redirect("~/Home");
+
+            }
+            catch (Exception ex)
+            {
+                ViewBag.errorMessage = "读取房源信息失败!";
+                ViewBag.flag = 0;
+                return Redirect("~/Home");
+            }
+            finally { }
+            return View();
+        }
+
+        [HttpPost]
+        public ActionResult homestayEdit(FormCollection form)
+        {
+            DateTime dt = DateTime.Now;
+            string folder = Server.MapPath("~/images/Homestay");
+            var filePath = folder + "\\" + dt.ToFileTime().ToString() + Request.Files["myfile"].FileName.Substring(Request.Files["myfile"].FileName.LastIndexOf("\\") + 1);
+            var fileSave = Request.Files["myfile"].FileName;
+            if (Request.Files["myfile"].FileName != "")
+            {
+                fileSave = "../images/Homestay/" + dt.ToFileTime().ToString() + Request.Files["myfile"].FileName.Substring(Request.Files["myfile"].FileName.LastIndexOf("\\") + 1);
+            }
+            else
+            {
+                fileSave = (string)Session["homestay_pic"];
+            }
+            if (System.IO.File.Exists(filePath))
+            {
+                System.IO.File.Delete(filePath);
+            }
+            Request.Files["myfile"].SaveAs(filePath);
+            SqlSugarClient db = new SqlSugarClient(
+                new ConnectionConfig()
+                {
+                    ConnectionString = System.Web.Configuration.WebConfigurationManager.AppSettings["ConnectionString"],
+                    DbType = DbType.Oracle,//设置数据库类型
+                    IsAutoCloseConnection = true,//自动释放数据务，如果存在事务，在事务结束后释放
+                    InitKeyType = InitKeyType.SystemTable //从实体特性中读取主键自增列信息
+                });
+            JObject isSuccess = new JObject();
+
+            DateTimeFormatInfo dtFormat = new DateTimeFormatInfo();
+            dtFormat.ShortDatePattern = "yyyy-MM-dd";
+            DateTime dt_last = Convert.ToDateTime(Request.Form["form-latest_schedulable_date"], dtFormat);
+
+            try
+            {
+                var data = new Homestay()
+                {
+                    homestay_id = Convert.ToInt16(Request.Form["form-homestay_id"]),
+                    user_id = (string)Session["user_id"],
+                    homestay_name = Request.Form["form-homestay_name"],
+                    introduction = Request.Form["form-introduction"],
+                    num_of_bedrooms = Convert.ToInt16(Request.Form["form-num_of_bedrooms"]),
+                    num_of_beds = Convert.ToInt16(Request.Form["form-num_of_beds"]),
+                    num_of_bathrooms = Convert.ToInt16(Request.Form["form-num_of_bathrooms"]),
+                    max_member_limit = Convert.ToInt16(Request.Form["form-max_member_limit"]),
+                    default_price = Convert.ToInt16(Request.Form["form-default_price"]),
+                    address = Request.Form["form-address"],
+                    homestay_pictures = fileSave,
+                    house_regulations = Request.Form["form-house_regulations"],
+                    cancellation_policy = Request.Form["form-cancellation_policy"],
+                    latest_schedulable_date = dt_last,
+                    check_in_method = Request.Form["form-check_in_method"],
+                    convenience_facilities = Request.Form["form-convenience_facilities"],
+                    homestay_type = Request.Form["form-homestay_type"]
+                };
+
+                if (db.Updateable(data).ExecuteCommand() == 1)
+                {
+                    int productID = db.Queryable<Homestay>().Max(it => it.homestay_id);
+                    ViewBag.errorMessage = "房源更新成功!房源ID:" + productID;
+                    ViewBag.flag = 1;
+                    ViewBag.productID = productID;
+                    return Redirect("~/Homestay/Stayinfo?productID=" + Request.Form["form-homestay_id"]);
+                }
+                else
+                {
+                    ViewBag.errorMessage = "房源更新失败";
+                    ViewBag.flag = 0;
+                    return Redirect("~/Homestay/EditHomestay?productID=" + Request.Form["form-homestay_id"]);
+                }
+            }
+            catch (Exception ex)
+            {
+                ViewBag.errorMessage = "房源更新失败";
+                ViewBag.flag = 0;
+                return Redirect("~/Homestay/EditHomestay?productID=" + Request.Form["form-homestay_id"]);
+
+            }
+            finally { }
         }
         [HttpPost]
         public ActionResult AddFavourites(int productID = -1)
@@ -260,6 +399,9 @@ namespace Adventure.Controllers
                 }
             }
         }
+
+
+
         [HttpPost]
         public ActionResult CheckAvailable()
         {
@@ -307,6 +449,91 @@ namespace Adventure.Controllers
                 return Content(JsonConvert.SerializeObject(isSuccess, Formatting.Indented));
 
             }
+        }
+
+
+        [HttpPost]
+        public ActionResult AddSpecial(FormCollection form)
+        {
+
+            SqlSugarClient db = new SqlSugarClient(
+                new ConnectionConfig()
+                {
+                    ConnectionString = System.Web.Configuration.WebConfigurationManager.AppSettings["ConnectionString"],
+                    DbType = DbType.Oracle,//设置数据库类型
+                    IsAutoCloseConnection = true,//自动释放数据务，如果存在事务，在事务结束后释放
+                    InitKeyType = InitKeyType.Attribute //从实体特性中读取主键自增列信息
+                });
+            try
+            {
+                DateTime dt_begin_time, dt_end_time;
+                DateTimeFormatInfo dtFormat = new DateTimeFormatInfo();
+                dtFormat.ShortDatePattern = "yyyy/MM/dd";
+                dt_begin_time = Convert.ToDateTime(form["form-begin_time"], dtFormat);
+                dt_end_time = Convert.ToDateTime(form["form-end_time"], dtFormat);
+
+                var Isconflict = db.Queryable<SpecialPrice>().Where(it => it.end_date >= dt_begin_time && it.beginning_date <= dt_end_time && it.homestay_id == Convert.ToInt32(Request.Form["productID"])).ToArray();
+                if (Isconflict.Length == 0)
+
+                {
+                    var data = new SpecialPrice()
+                    {
+                        homestay_id = Convert.ToInt32(Request.Form["productID"]),
+                        beginning_date = dt_begin_time,
+                        end_date = dt_end_time,
+                        price = Convert.ToDouble(form["form-price"])
+                    };
+
+                    db.Insertable(data).ExecuteCommand();
+                    ViewBag.flag = 1;
+                    Session["message"] = "特殊价格发布成功!";
+                    return Redirect("~/HomeStay/Special");
+                }
+                else
+                {
+                    ViewBag.flag = 0;
+                    Session["message"] = "特殊价格发布失败!";
+                    return Redirect("~/Home");
+                }
+            }
+            catch (Exception ex)
+            {
+                ViewBag.flag = 0;
+                throw ex;
+            }
+
+        }
+
+
+        [HttpPost]
+        public ActionResult RemoveSpecialPrice()
+        {
+            SqlSugarClient db = new SqlSugarClient(
+                new ConnectionConfig()
+                {
+                    ConnectionString = System.Web.Configuration.WebConfigurationManager.AppSettings["ConnectionString"],
+                    DbType = DbType.Oracle,//设置数据库类型
+                    IsAutoCloseConnection = true,//自动释放数据务，如果存在事务，在事务结束后释放
+                    InitKeyType = InitKeyType.Attribute //从实体特性中读取主键自增列信息
+                });
+            try
+            {
+                if (db.Deleteable<Activity>().In(Convert.ToInt32(Request.Form["specialPriceID"])).ExecuteCommand() == 1)
+                {
+                    ViewBag.flag = 1;
+                }
+                else
+                {
+                    ViewBag.flag = 0;
+                }
+            }
+            catch (Exception ex)
+            {
+                ViewBag.flag = 0;
+                throw ex;
+            }
+            finally { }
+            return View();
         }
 
     }

@@ -57,14 +57,14 @@
                 <div class="tab-content p-4 px-5" id="v-pills-tabContent">
 
                     <div class="tab-pane fade show active" id="v-pills-1" role="tabpanel" aria-labelledby="v-pills-nextgen-tab">
-                        <form action="#" class="search-destination">
+                        <form action="/Activity/Index" class="search-destination">
                             <div class="row">
                                 <div class="col-md align-items-end">
                                     <div class="form-group">
                                         <label for="#">目的地</label>
                                         <div class="form-field">
                                             <div class="icon"><span class="icon-map-marker"></span></div>
-                                            <input type="text" class="form-control" placeholder="您的目的地">
+                                            <input type="text" name="destination" class="form-control" placeholder="您的目的地">
                                         </div>
                                     </div>
                                 </div>
@@ -73,7 +73,7 @@
                                         <label for="#">入住时间</label>
                                         <div class="form-field">
                                             <div class="icon"><span class="icon-map-marker"></span></div>
-                                            <input type="text" class="form-control checkin_date" placeholder="您的入住时间">
+                                            <input type="text" name="start_time"  class="form-control checkin_date" placeholder="您的入住时间">
                                         </div>
                                     </div>
                                 </div>
@@ -82,7 +82,7 @@
                                         <label for="#">退房时间</label>
                                         <div class="form-field">
                                             <div class="icon"><span class="icon-map-marker"></span></div>
-                                            <input type="text" class="form-control checkout_date" placeholder="您的退房时间">
+                                            <input type="text" name="end_time"  class="form-control checkout_date" placeholder="您的退房时间">
                                         </div>
                                     </div>
                                 </div>
@@ -92,12 +92,12 @@
                                         <div class="form-field">
                                             <div class="select-wrap">
                                                 <div class="icon"><span class="ion-ios-arrow-down"></span></div>
-                                                <select name="" id="" class="form-control">
-                                                    <option value="" selected>1</option>
-                                                    <option value="">2</option>
-                                                    <option value="">3</option>
-                                                    <option value="">4</option>
-                                                    <option value="">5</option>
+                                                <select name="person_num" id="" class="form-control"  >
+                                                    <option value="1" selected>1</option>
+                                                    <option value="2">2</option>
+                                                    <option value="3">3</option>
+                                                    <option value="4">4</option>
+                                                    <option value="5">5</option>
                                                 </select>
                                             </div>
                                         </div>
@@ -122,7 +122,7 @@
                                         <label for="#">开始日期</label>
                                         <div class="form-field">
                                             <div class="icon"><span class="icon-map-marker"></span></div>
-                                            <input type="text" class="form-control checkin_date" placeholder="活动开始日期">
+                                            <input type="text" name="start_time" class="form-control checkin_date" placeholder="活动开始日期">
                                         </div>
                                     </div>
                                 </div>
@@ -131,22 +131,22 @@
                                         <label for="#">结束日期</label>
                                         <div class="form-field">
                                             <div class="icon"><span class="icon-map-marker"></span></div>
-                                            <input type="text" class="form-control checkout_date" placeholder="活动结束日期">
+                                            <input type="text" name="end_time" class="form-control checkout_date" placeholder="活动结束日期">
                                         </div>
                                     </div>
                                 </div>
                                 <div class="col-md align-items-end">
                                     <div class="form-group">
-                                        <label for="#">人数</label>
+                                        <label name="person_num" for="person_num">人数</label>
                                         <div class="form-field">
                                             <div class="select-wrap">
                                                 <div class="icon"><span class="ion-ios-arrow-down"></span></div>
-                                                <select name="" id="" class="form-control">
-                                                    <option value="" selected>1</option>
-                                                    <option value="">2</option>
-                                                    <option value="">3</option>
-                                                    <option value="">4</option>
-                                                    <option value="">5</option>
+                                                <select  name="person_num" id="person_num" class="form-control">
+                                                    <option value="1" selected>1</option>
+                                                    <option value="2">2</option>
+                                                    <option value="3">3</option>
+                                                    <option value="4">4</option>
+                                                    <option value="5">5</option>
                                                 </select>
                                             </div>
                                         </div>

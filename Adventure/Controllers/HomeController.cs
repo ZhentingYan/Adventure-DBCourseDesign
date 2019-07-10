@@ -121,16 +121,18 @@ namespace Adventure.Controllers
             }
             try
             {
+                /*
                 List<user_comment> review = db.Queryable<User, ActivityComment>((st, sc) => new object[] {
                 JoinType.Inner,st.user_id==sc.user_id})
                 .Select((st, sc) => new user_comment { user_id = st.user_id, comment_text = sc.comment_text,grade=sc.grade,head_icon = st.head_icon }).ToList();
-                var recommend_house = db.Queryable<Homestay>().Where(it => it.house_grade >= 0.0).ToArray();
+                */
+                 var recommend_house = db.Queryable<Homestay>().Where(it => it.house_grade >= 0.0).ToArray();
                 var recommend_story = db.Queryable<Blog>().OrderBy(it => it.story_id, OrderByType.Desc).ToArray();
                 var top_experience = db.Queryable<Activity>().OrderBy(it => it.activity_id,OrderByType.Desc).ToArray(); 
                 ViewBag.top_experience = top_experience;
                 ViewBag.recommend_house = recommend_house;
                 ViewBag.recommend_story = recommend_story;
-                ViewBag.review = review.ToArray();
+                //ViewBag.review = review.ToArray();
             }
             catch (Exception ex)
             {
