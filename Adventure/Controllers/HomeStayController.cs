@@ -9,6 +9,8 @@ using System.Data;
 using Adventure.Models;
 using SqlSugar;
 using DbType = SqlSugar.DbType;
+using System.Globalization;
+
 namespace Adventure.Controllers
 {
     public class HomeStayController : Controller
@@ -24,7 +26,6 @@ namespace Adventure.Controllers
 
         public ActionResult StayInfo(int productID = -1)
         {
-            ViewBag.Message = "The homestay for more information page.";
             ViewBag.productID = productID;
             SqlSugarClient db = new SqlSugarClient(
             new ConnectionConfig()
@@ -43,7 +44,8 @@ namespace Adventure.Controllers
             }
             catch (Exception ex)
             {
-                throw ex;
+                Session["message"] = "无此房源！";
+                return Redirect("~/Home");
             }
             finally { }
             List<int> list = null;
@@ -128,6 +130,13 @@ namespace Adventure.Controllers
                     InitKeyType = InitKeyType.SystemTable //从实体特性中读取主键自增列信息
                 });
             JObject isSuccess = new JObject();
+
+            
+            DateTimeFormatInfo dtFormat = new DateTimeFormatInfo();
+            dtFormat.ShortDatePattern = "yyyy-MM-dd";
+            DateTime dt_last = Convert.ToDateTime(Request.Form["form-latest_schedulable_date"], dtFormat);
+            
+
             try
             {
                 var data = new Homestay()
@@ -144,7 +153,7 @@ namespace Adventure.Controllers
                     homestay_pictures = fileSave,
                     house_regulations = Request.Form["form-house_regulations"],
                     cancellation_policy = Request.Form["form-cancellation_policy"],
-                    //latest_schedulable_date = (Request.Form["form-latest_schedulable_date"]),
+                    latest_schedulable_date = dt_last,
                     check_in_method = Request.Form["form-check_in_method"],
                     convenience_facilities = Request.Form["form-convenience_facilities"],
                     homestay_type = Request.Form["form-homestay_type"],
@@ -153,22 +162,18 @@ namespace Adventure.Controllers
                 if (db.Insertable(data).ExecuteCommand() >= 1)
                 {
                     int productID = db.Queryable<Homestay>().Max(it => it.homestay_id);
-                    ViewBag.errorMessage = "房源发布成功!活动ID:" + productID;
-                    ViewBag.flag = 1;
+                    Session["message"] = "房源发布成功！房源ID:" + productID;
                     return Redirect("~/HomeStay/StayInfo?productID=" + productID);
                 }
                 else
                 {
-                    ViewBag.errorMessage = "房源发布失败";
-                    ViewBag.flag = 0;
+                    Session["message"] = "房源发布失败";
                     return Redirect("~/HomeStay/Release");
                 }
             }
             catch (Exception ex)
             {
-                ViewBag.errorMessage = "房源发布失败";
-                ViewBag.flag = 0;
-                throw ex;
+                Session["message"] = "房源发布失败";
                 return Redirect("~/Homestay/Release");
 
             }
@@ -184,6 +189,123 @@ namespace Adventure.Controllers
             else
             {
                 return View();
+            }
+        }
+        [HttpPost]
+        public ActionResult AddFavourites(int productID = -1)
+        {
+            JObject isSuccess = new JObject();
+
+            SqlSugarClient db = new SqlSugarClient(
+                new ConnectionConfig()
+                {
+                    ConnectionString = System.Web.Configuration.WebConfigurationManager.AppSettings["ConnectionString"],
+                    DbType = DbType.Oracle,//设置数据库类型
+                    IsAutoCloseConnection = true,//自动释放数据务，如果存在事务，在事务结束后释放
+                    InitKeyType = InitKeyType.SystemTable //从实体特性中读取主键自增列信息
+                });
+            if (Session["user_id"] == null || productID == -1)
+            {
+                isSuccess.Add("isSuccess", false);
+                isSuccess.Add("message", "添加失败！你还没有登陆！");
+                return Content(JsonConvert.SerializeObject(isSuccess, Formatting.Indented));
+            }
+            else
+            {
+                DateTime dt_create = DateTime.Now;
+                var queryResult = db.Queryable<HomestayFavorite>().Where(it => it.user_id == (string)Session["user_id"] && it.homestay_id == productID).ToArray();
+                if (queryResult.Length == 0)
+                {
+                    try
+                    {
+                        var data = new HomestayFavorite()
+                        {
+                            user_id = (string)Session["user_id"],
+                            homestay_id = productID,
+                            times = dt_create
+
+                        };
+                        if (db.Insertable(data).ExecuteCommand() >= 1)
+                        {
+
+                            isSuccess.Add("isSuccess", false);
+                            isSuccess.Add("message", "添加成功！");
+                            return Content(JsonConvert.SerializeObject(isSuccess, Formatting.Indented));
+
+                        }
+                        else
+                        {
+
+                            isSuccess.Add("isSuccess", false);
+                            isSuccess.Add("message", "添加失败！这个活动已经在你的心愿单了!");
+                            return Content(JsonConvert.SerializeObject(isSuccess, Formatting.Indented));
+
+                        }
+                    }
+                    catch (Exception ex)
+                    {
+                        isSuccess.Add("isSuccess", false);
+                        isSuccess.Add("message", "添加失败！!");
+                        return Content(JsonConvert.SerializeObject(isSuccess, Formatting.Indented));
+
+                    }
+                    finally { }
+                }
+                else
+                {
+                    isSuccess.Add("isSuccess", false);
+                    isSuccess.Add("message", "添加失败！这个活动已经在你的心愿单了!");
+                    return Content(JsonConvert.SerializeObject(isSuccess, Formatting.Indented));
+
+                }
+            }
+        }
+        [HttpPost]
+        public ActionResult CheckAvailable()
+        {
+            JObject isSuccess = new JObject();
+
+            SqlSugarClient db = new SqlSugarClient(
+                new ConnectionConfig()
+                {
+                    ConnectionString = System.Web.Configuration.WebConfigurationManager.AppSettings["ConnectionString"],
+                    DbType = DbType.Oracle,//设置数据库类型
+                    IsAutoCloseConnection = true,//自动释放数据务，如果存在事务，在事务结束后释放
+                    InitKeyType = InitKeyType.Attribute //从实体特性中读取主键自增列信息
+                });
+            try
+            {
+
+                DateTime dt_start_time, dt_end_time, dt_latest_time;
+                DateTimeFormatInfo dtFormat = new DateTimeFormatInfo();
+                dtFormat.ShortDatePattern = "yyyy/MM/dd";
+                dt_start_time = Convert.ToDateTime(Request.Form["start_date"], dtFormat);
+                dt_end_time = Convert.ToDateTime(Request.Form["end_date"], dtFormat);
+                dt_latest_time = Convert.ToDateTime(Request.Form["latest_time"], dtFormat);
+                //int numNeed = Convert.ToInt32(Request.Form["form-member-num"]);
+
+
+                var available = db.Queryable<HomestayOrder>().Where(it => it.homestay_id == Convert.ToInt32(Request.Form["productID"]) && (DateTime.Compare(dt_start_time, it.end_time) < 0 && DateTime.Compare(dt_end_time, it.start_time) > 0) && it.status <= 0).ToArray();
+                if (available.Length == 0 && DateTime.Compare(dt_end_time, dt_latest_time) <= 0)
+                {
+                    isSuccess.Add("isSuccess", true);
+                    return Content(JsonConvert.SerializeObject(isSuccess, Formatting.Indented));
+
+                }
+                else
+                {
+                    isSuccess.Add("isSuccess", false);
+                    isSuccess.Add("message", "您选择的日期不可预订！");
+                    return Content(JsonConvert.SerializeObject(isSuccess, Formatting.Indented));
+
+                }
+            }
+            catch (Exception ex)
+            {
+                isSuccess.Add("isSuccess", false);
+                isSuccess.Add("message", "您选择的日期不可预订！");
+                return Content(JsonConvert.SerializeObject(isSuccess, Formatting.Indented));
+
             }
         }
 

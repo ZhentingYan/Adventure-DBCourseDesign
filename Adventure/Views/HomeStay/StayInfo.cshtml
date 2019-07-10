@@ -9,8 +9,71 @@
             if (productID == "-1") {
                 alert("未知产品ID!");
                 window.location.href = "/Home";
-            }
+        }
+        var message="@Session["message"]";
+        if (message!= "") {
+            alert(message);
+            @{Session["message"] = null;}
+        }
     })
+
+    function add(productID) {
+        $.ajax({
+            type: "post",
+            url: "../HomeStay/AddFavourites",
+            data: {
+                productID: productID
+            },
+            async: false,
+            dataType: 'json',
+            success: function (d) {
+                var addState = d.isSuccess;
+                if (addState == true) {//登录成功  
+                    console.log(d);
+                    alert(d.message);
+                }
+                else {
+                    //登录失败                
+                    console.log(d);
+                    alert(d.message);
+                }
+            },
+            error: function (a) {
+                console.log(a);
+                alert(a.message);
+            }
+        });
+    }
+        function checkAvailable() {
+            $.ajax({
+                type: "post",
+                url: "../HomeStay/CheckAvailable",
+                data: {
+                    productID:"@ViewBag.HomeStayDetail.homestay_id",
+                    start_date: $("#checkin_date").val(),
+                    end_date: $("#checkout_date").val(),
+                    latest_time:"@ViewBag.HomeStayDetail.latest_schedulable_date.ToString("yyyy-MM-dd")"
+                },
+                async: false,
+                dataType: 'json',
+                success: function (d) {
+                    var addState = d.isSuccess;
+                    if (addState == true) {//登录成功  
+                        console.log(d);
+                        alert(d.message);
+                    }
+                    else {
+                        //登录失败                
+                        console.log(d);
+                        alert(d.message);
+                    }
+                },
+                error: function (a) {
+                    console.log(a);
+                    alert(a.message);
+                }
+            });
+    }
 </script>
 <head>
     <meta charset="UTF-8">
@@ -209,12 +272,18 @@
                                         </div>
                                         <ul class="list_style cat-list">
                                             <li>
-                                                <a href="@Url.Action("Index","Order",new{productID = 120, accessWay = 1})" class="d-flex justify-content-between">
-                                                    <p>立即预订</p>
+                                                <a onclick="add(@ViewBag.HomeStayDetail.homestay_id)" class="d-flex justify-content-center" style="color:#f9be37">
+                                                    <p>添加到心愿单</p>
+                                                </a>
+
+                                            </li>
+                                            <li>
+                                                <a onclick="checkAvailable()" class="d-flex justify-content-center" style="color:#f9be37">
+                                                    立即预定
                                                 </a>
                                             </li>
-                                            </ul>
-</form>
+                                        </ul>
+                                    </form>
                                 </div>
                             </div>
                         </div>

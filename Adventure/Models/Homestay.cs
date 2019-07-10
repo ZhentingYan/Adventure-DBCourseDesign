@@ -25,7 +25,7 @@ namespace Adventure.Models
         public string check_in_method { get; set; }
         public double house_grade { get; set; }
         public string convenience_facilities { get; set; }
-        public string latest_schedulable_date { get; set; }
+        public DateTime latest_schedulable_date { get; set; }
         public string address { get; set; }
         public string house_regulations { get; set; }
         public string cancellation_policy { get; set; }

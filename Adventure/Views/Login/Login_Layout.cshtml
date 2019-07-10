@@ -62,39 +62,10 @@
                     <li class="nav-item">
                         @Html.ActionLink("联系我们", "Contact", "Home", new { area = "" }, new { @class = "navbar-brand" })
                     </li>
-                    @if (Session["user_id"] == null)
-                    {
+
                         <li>
                             @Html.ActionLink("登陆/注册", "Index", "Login", new { area = "" }, new { @class = "navbar-brand" })
                         </li>
-                    }
-                    else
-                    {
-                        <li class="dropdown navbar-brand">
-                            <a href="#" data-toggle="dropdown " class="dropdown-toggle">My Adventure</a>
-                            <ul class="dropdown-menu">
-                                <li>
-                                    @Html.ActionLink(Session["first_name"] + " " + Session["last_name"], "Index", "PersonInfo", new { area = "" }, new { @class = "text-center" })
-                                </li>
-                                <li>
-                                    @Html.ActionLink("我的信息", "Index", "PersonInfo", new { area = "" }, new { @class = "text-center" })
-                                </li>
-                                <li>
-                                    @Html.ActionLink("我的Adventure", "Index", "Admin", new { area = "" }, new { @class = "text-center" })
-                                </li>
-                                <li>
-                                    @Html.ActionLink("发布房源", "Release", "HomeStay", new { area = "" }, new { @class = "text-center" })
-                                </li>
-                                <li>
-                                    @Html.ActionLink("发布体验活动", "Publish", "Activity", new { area = "" }, new { @class = "text-center" })
-                                </li>
-                                <li>
-                                    @Html.ActionLink("登出", "Index", "Login", new { area = "" }, new { @class = "text-center" })
-                                </li>
-                            </ul>
-                        </li>
-
-                    }
                 </ul>
             </div>
         </div>
@@ -139,18 +110,12 @@
                             <li>
                                 @Html.ActionLink("联系我们", "Contact", "Home", new { area = "" }, new { @class = "py-2 d-block" })
                             </li>
-                            @if (Session["user_id"] == null)
-                            {
+
                                 <li>
                                     @Html.ActionLink("登陆/注册", "Index", "Login", new { area = "" }, new { @class = "py-2 d-block" })
                                 </li>
-                            }
-                            else
-                            {
-                                <li>
-                                    @Html.ActionLink("注销登陆", "Index", "Login", new { area = "" }, new { @class = "py-2 d-block" })
-                                </li>
-                            }
+                            
+
                         </ul>
                     </div>
                 </div>

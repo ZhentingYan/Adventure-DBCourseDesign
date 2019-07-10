@@ -182,7 +182,7 @@
     <Compile Include="Models\HomestayOrder.cs" />
     <Compile Include="Models\Report.cs" />
     <Compile Include="Models\SpecialPrice.cs" />
-    <Compile Include="Models\Story.cs" />
+    <Compile Include="Models\Blog.cs" />
     <Compile Include="Models\User.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -193,6 +193,7 @@
     <Content Include="Content\ajax-loader.gif" />
     <Content Include="Content\animate.css" />
     <Content Include="Content\aos.css" />
+    <Content Include="Content\Blogstyle.css" />
     <Content Include="Content\bootstrap-datepicker.css" />
     <Content Include="Content\bootstrap-theme.css" />
     <Content Include="Content\bootstrap-theme.min.css" />
@@ -1139,6 +1140,9 @@
     <Content Include="Views\HomeStay\Special.cshtml" />
     <Content Include="Views\HomeStay\StayInfo.cshtml" />
     <Content Include="Views\Home\Favourites.cshtml" />
+    <Content Include="Views\Admin\ViewBlog.cshtml" />
+    <Content Include="Views\Blog\BlogDetail.cshtml" />
+    <Content Include="Views\Blog\NewBlog.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

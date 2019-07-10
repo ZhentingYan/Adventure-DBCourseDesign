@@ -18,8 +18,12 @@
             if (flag != "") {
                       @{ ViewBag.flag = null; }
                 alert(errorMessage);
-
             }
+        }
+        var message="@Session["message"]";
+        if (message!= "") {
+            alert(message);
+            @{Session["message"] = null;}
         }
     })
 </script>

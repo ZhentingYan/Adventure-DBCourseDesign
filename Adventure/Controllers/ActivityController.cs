@@ -9,6 +9,7 @@ using System.Data;
 using Adventure.Models;
 using SqlSugar;
 using DbType = SqlSugar.DbType;
+using System.Globalization;
 
 namespace Adventure.Controllers
 {
@@ -143,12 +144,13 @@ namespace Adventure.Controllers
                 var getActivitySpecific = db.Queryable<Activity>().InSingle(productID);
                 ViewBag.ActivityDetail = getActivitySpecific;
                 ViewBag.Publisher = db.Queryable<User>().InSingle(getActivitySpecific.user_id);
+                var activityInstance = db.Queryable<ActivityInstance>().Where(it => it.activity_id == productID).ToArray();
+                ViewBag.activityInstance = activityInstance;
             }
             catch (Exception ex)
             {
-                ViewBag.errorMessage = "活动发布失败";
-                ViewBag.flag = 0;
-                return Redirect("~/Activity/Publish");
+                Session["message"] = "无此活动！";
+                return Redirect("~/Home");
             }
             finally { }
             List<int> list = null;
@@ -202,7 +204,123 @@ namespace Adventure.Controllers
                 return View();
             }
         }
-       
+        [HttpPost]
+        public ActionResult AddInstance(FormCollection form)
+        {
+            SqlSugarClient db = new SqlSugarClient(
+                new ConnectionConfig()
+                {
+                    ConnectionString = System.Web.Configuration.WebConfigurationManager.AppSettings["ConnectionString"],
+                    DbType = DbType.Oracle,//设置数据库类型
+                    IsAutoCloseConnection = true,//自动释放数据务，如果存在事务，在事务结束后释放
+                    InitKeyType = InitKeyType.SystemTable //从实体特性中读取主键自增列信息
+                });
+            DateTimeFormatInfo dtFormat = new DateTimeFormatInfo();
+            dtFormat.ShortDatePattern = "yyyy-MM-dd";
+            DateTime startTime = Convert.ToDateTime(Request.Form["start_time"], dtFormat);
+            DateTime endTime = Convert.ToDateTime(Request.Form["end_time"], dtFormat);
+
+            try
+            {
+                var data = new ActivityInstance()
+                {
+                    activity_id = Convert.ToInt16(Request.Form["productID"]),
+                    start_time = startTime,
+                    end_time = endTime,
+                    price = Convert.ToDouble(Request.Form["price"]),
+                    is_booked = 0
+
+                };
+                if (db.Insertable(data).ExecuteCommand() >= 1)
+                {
+                    int instanceID = db.Queryable<ActivityInstance>().Max(it => it.activity_instance_id);
+                    Session["message"] = "活动实例发布成功!活动实例ID:" + instanceID;
+                    return Redirect("~/Activity/Publish");
+                }
+                else
+                {
+                    Session["message"] = "活动实例发布失败!";
+                    return Redirect("~/Activity/Publish");
+                }
+            }
+            catch (Exception ex)
+            {
+                Session["message"] = "活动实例发布失败!";
+                return Redirect("~/Activity/Publish");
+
+            }
+            finally { }
+        }
+        [HttpPost]
+        public ActionResult AddFavourites(int productID=-1)
+        {
+            JObject isSuccess = new JObject();
+
+            SqlSugarClient db = new SqlSugarClient(
+                new ConnectionConfig()
+                {
+                    ConnectionString = System.Web.Configuration.WebConfigurationManager.AppSettings["ConnectionString"],
+                    DbType = DbType.Oracle,//设置数据库类型
+                    IsAutoCloseConnection = true,//自动释放数据务，如果存在事务，在事务结束后释放
+                    InitKeyType = InitKeyType.SystemTable //从实体特性中读取主键自增列信息
+                });
+            if (Session["user_id"]==null || productID == -1)
+            {
+                isSuccess.Add("isSuccess", false);
+                isSuccess.Add("message", "添加失败！你还没有登陆！");
+                return Content(JsonConvert.SerializeObject(isSuccess, Formatting.Indented));
+            }
+            else
+            {
+                DateTime dt_create = DateTime.Now;
+                var queryResult = db.Queryable<ActivityFavorite>().Where(it => it.user_id == (string)Session["user_id"] && it.activity_id == productID).ToArray();
+                if (queryResult.Length == 0)
+                {
+                    try
+                    {
+                        var data = new ActivityFavorite()
+                        {
+                            user_id = (string)Session["user_id"],
+                            activity_id = productID,
+                            times = dt_create
+
+                        };
+                        if (db.Insertable(data).ExecuteCommand() >= 1)
+                        {
+
+                             isSuccess.Add("isSuccess", false);
+                            isSuccess.Add("message", "添加成功！");
+                            return Content(JsonConvert.SerializeObject(isSuccess, Formatting.Indented));
+
+                        }
+                        else
+                        {
+
+                            isSuccess.Add("isSuccess", false);
+                            isSuccess.Add("message", "添加失败！这个活动已经在你的心愿单了!");
+                            return Content(JsonConvert.SerializeObject(isSuccess, Formatting.Indented));
+
+                        }
+                    }
+                    catch (Exception ex)
+                    {
+                        isSuccess.Add("isSuccess", false);
+                        isSuccess.Add("message", "添加失败！!");
+                        return Content(JsonConvert.SerializeObject(isSuccess, Formatting.Indented));
+
+                    }
+                    finally { }
+                }
+                else
+                {
+                    isSuccess.Add("isSuccess", false);
+                    isSuccess.Add("message", "添加失败！这个活动已经在你的心愿单了!");
+                    return Content(JsonConvert.SerializeObject(isSuccess, Formatting.Indented));
+
+                }
+            }
+        }
+
         [HttpPost]
         public ActionResult Publish(FormCollection form)
         {

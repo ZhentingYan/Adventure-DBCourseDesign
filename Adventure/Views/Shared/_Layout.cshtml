@@ -67,7 +67,10 @@
                     }
                     else
                     {
-                            <li class="dropdown navbar-brand">
+                        <li>
+                            @Html.ActionLink("心愿单", "Favourites", "Home", new { area = "" }, new { @class = "navbar-brand" })
+                        </li>
+                        <li class="dropdown navbar-brand">
                             <a href="#" data-toggle="dropdown " class="dropdown-toggle">My Adventure</a>
                             <ul class="dropdown-menu">
                                 <li>
@@ -89,10 +92,10 @@
                                     @Html.ActionLink("登出", "Index", "Login", new { area = "" }, new { @class = "text-center" })
                                 </li>
                             </ul>
-                            </li>
+                        </li>
 
                     }
-                   </ul>
+                </ul>
 </div>
         </div>
     </nav>

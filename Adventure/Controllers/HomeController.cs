@@ -125,7 +125,7 @@ namespace Adventure.Controllers
                 JoinType.Inner,st.user_id==sc.user_id})
                 .Select((st, sc) => new user_comment { user_id = st.user_id, comment_text = sc.comment_text,grade=sc.grade,head_icon = st.head_icon }).ToList();
                 var recommend_house = db.Queryable<Homestay>().Where(it => it.house_grade >= 0.0).ToArray();
-                var recommend_story = db.Queryable<Story>().OrderBy(it => it.story_id, OrderByType.Desc).ToArray();
+                var recommend_story = db.Queryable<Blog>().OrderBy(it => it.story_id, OrderByType.Desc).ToArray();
                 var top_experience = db.Queryable<Activity>().OrderBy(it => it.activity_id,OrderByType.Desc).ToArray(); 
                 ViewBag.top_experience = top_experience;
                 ViewBag.recommend_house = recommend_house;
@@ -152,7 +152,7 @@ namespace Adventure.Controllers
         {
             public List<user_comment> r { get; set; }
             public List<Homestay> h { get; set; }
-            public List<Story> s { get; set; }
+            public List<Blog> s { get; set; }
         }
         public ActionResult About()
         {
@@ -175,6 +175,8 @@ namespace Adventure.Controllers
         }
         public ActionResult Favourites()
         {
+            if (Session["user_id"] == null)
+                return Redirect("~/Home");
             SqlSugarClient db = new SqlSugarClient(
             new ConnectionConfig()
             {
@@ -207,6 +209,29 @@ namespace Adventure.Controllers
                 }
                 ViewBag.activityList = list1.ToArray();
                 ViewBag.homestayList = list2.ToArray();
+                List<Activity> list3 = new List<Activity>();
+                List<Homestay> list4 = new List<Homestay>();
+                var getFavouriteHomestay = db.Queryable<HomestayFavorite>().Where(it => it.user_id == (string)Session["user_id"]).ToArray();
+                var getFavouriteActivity = db.Queryable<ActivityFavorite>().Where(it => it.user_id == (string)Session["user_id"]).ToArray();
+
+                if (getFavouriteActivity != null)
+                {
+                    for (int i = 0; i < getFavouriteActivity.Length; i++)
+                    {
+                        var getActivity = db.Queryable<Activity>().InSingle(getFavouriteActivity[i].activity_id);
+                        list3.Add(getActivity);
+                    }
+                }
+                if (getFavouriteHomestay != null)
+                {
+                    for (int i = 0; i < getFavouriteHomestay.Length; i++)
+                    {
+                        var getHomestay = db.Queryable<Homestay>().InSingle(getFavouriteHomestay[i].homestay_id);
+                        list4.Add(getHomestay);
+                    }
+                }
+                ViewBag.favouriteActivity = list3.ToArray();
+                ViewBag.favouriteHomestay= list4.ToArray();
             }
             catch (Exception ex)
             {

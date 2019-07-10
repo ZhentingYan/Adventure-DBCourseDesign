@@ -1,0 +1,155 @@
+﻿
+@{
+    ViewBag.Title = "旅行故事详情";
+}
+<link rel="stylesheet" href="~/Content/Blogstyle.css" />
+
+@*<script>
+        $(document).ready(function () {
+            $.get("Blog/getBlog",
+                function (e) {
+    // 图片？
+                    var jsonData = JSON.parse(e.data);
+                    $(".blog-detail h1").text(jsonData.blogTitle);
+                    $(".post_data").text(jsonData.blogPostData);
+                    $(".post_city").text(jsonData.blogPostCity);
+                    $(".blog-detail p").text(jsonData.blogContent);
+                    if (jsonData.blogUserId !== Session[user_id]) {
+                        $(".personal-btn").hide();
+                    }
+                });
+        })
+    </script>*@
+
+<script>
+    $(document).ready(function () {
+
+
+
+        if (blogID == "-1") {
+            alert("未知blogID!");
+            window.location.href = "/Blog";
+        }
+        var publisher = "@ViewBag.CurrentBlog.user_id";
+        if (publisher!=Session[user_id]) {
+            $(".personal-btn").hide();
+        }
+    })
+</script>
+
+<script>
+    function changeBlog() {
+        $(".blog-detail").hide();
+        $(".blog-change").show();
+
+    }
+  // var aaa=@ViewBag.CurrentBlog.story_id;
+    function deleteBlog() {
+        $.ajax({
+            type: "POST",
+            url: "/Blog/deleteBlog",
+            dataType: 'json',
+            data: { story_id: @ViewBag.CurrentBlog.story_id},
+            //success: function()
+            //    {
+            //    window.location.href = "../Blog";
+            //},
+            //error: function (msg) {
+            //    alert("删除失败" + msg);
+
+            //}
+        })
+    }
+</script>
+
+<div class="hero-wrap js-fullheight" style="background-image: url(../../images/bg_1.jpg);">
+    <div class="overlay"></div>
+    <div class="container">
+        <div class="row no-gutters slider-text js-fullheight align-items-center justify-content-center" data-scrollax-parent="true">
+            <div class="col-md-9 text-center ftco-animate" data-scrollax=" properties: { translateY: '70%' }">
+                <h1 class="mb-3 bread" data-scrollax="properties: { translateY: '30%', opacity: 1.6 }">旅行故事</h1>
+            </div>
+        </div>
+    </div>
+</div>
+
+@*<div class="blog-detail">
+        <h1>@ViewBag.CurrentBlog.title</h1>
+        <h5><span class="post_date">@ViewBag.CurrentBlog.times</span></h5>
+        <btn id="changeBlog" class="link-btn personal-btn" onclick="changeBlog()">修改</btn>
+        <btn id="deleteBlog" class="link-btn personal-btn" onclick="deleteBlog()">删除</btn>
+        <p align="left">@ViewBag.CurrentBlog.content_s</p>
+    </div>*@
+
+<section class="blog_area single-post-area blog-detail">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 posts-list">
+                <div class="single-post row">
+                    <!-- 图片 -->
+                    <div class="col-lg-12">
+                        <div class="feature-img">
+                            <img id="picture" class="img-fluid" src="@ViewBag.CurrentBlog.pictures" alt="">
+                        </div>
+                    </div>
+
+                    <div class="col-lg-9 col-md-9 blog_details">
+                        <h2 id="act-title">@ViewBag.CurrentBlog.title</h2>
+                        <btn id="changeBlog" class="link-btn personal-btn" onclick="changeBlog()">修改</btn>
+                        <btn id="deleteBlog" class="link-btn personal-btn" onclick="deleteBlog()">删除</btn>
+                        <br />
+                        <hr />
+                        <br />
+                        <p id="act-content" class="excert">
+                            @ViewBag.CurrentBlog.content_s
+                        </p>
+                        <br />
+                        <hr />
+                    </div>
+                    <!-- END -->
+                </div>
+            </div>
+            <!-- 发起人介绍 -->
+            <div class="col-lg-4">
+                <div class="blog_right_sidebar">
+                    <aside class="single_sidebar_widget author_widget">
+                        <img id="avatar" class="author_img rounded-circle col-lg-4" src="@ViewBag.Author.head_icon" alt="">
+                        <h4 id="name">@ViewBag.Author.first_name@ViewBag.Author.last_name</h4>
+                        <p>作者</p>
+                        <p id="introduction">
+                            @ViewBag.Author.self_introduction
+                        </p>
+                        <div class="br"></div>
+                    </aside>
+
+                </div>
+            </div>
+            <!-- END -->
+        </div>
+    </div>
+</section>
+
+<div class="blog-change" style="display:none;width:80%">
+    <form action="~/Blog/ChangeBlog" method="post" id="change-blog-form" enctype="multipart/form-data" style="text-align:center">
+
+        <div style="width:75%;margin:auto;text-align:left">
+            <label for="title">标题</label>
+            <input class="blog-title" type="text" name="changeBlogTitle" id="changeBlogTitle" value="@ViewBag.CurrentBlog.title" size="22">
+        </div>
+
+        <div style="width:75%;margin:auto;text-align:left">
+            <label for="picture">图片</label>
+            <input class="blog-picture" type="file" accept="image/*" name="changeBlogPicture" id="changeBlogPicture" value="@ViewBag.CurrentBlog.pictures" size="22">
+        </div>
+
+        <div style="width:75%;margin:auto;text-align:left">
+            <label for="content">内容</label>
+            <textarea class="blog-position" name="changeBlogContent" id="changeBlogContent" cols="58" rows="10" value="@ViewBag.CurrentBlog.content_s"></textarea>
+        </div>
+
+        <div>
+            <input class="btn" name="changeBlogSubmit" type="submit" id="changeBlogSubmit" value="Submit Comment">
+        </div>
+
+    </form>
+</div>

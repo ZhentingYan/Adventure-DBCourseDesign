@@ -12,6 +12,33 @@
                 window.location.href = "/Home";
             }
     })
+    function add(productID) {
+        $.ajax({
+            type: "post",
+            url: "../Activity/AddFavourites",
+            data: {
+                productID: productID
+            },
+            async: false,
+            dataType: 'json',
+            success: function (d) {
+                var addState = d.isSuccess;
+                if (addState == true) {//登录成功  
+                    console.log(d);
+                    alert(d.message);
+                }
+                else {
+                    //登录失败                
+                    console.log(d);
+                    alert(d.message);
+                }
+            },
+            error: function (a) {
+                console.log(a);
+                alert(a.message);
+            }
+        });
+    }
 </script>
 
 <link rel="stylesheet" href="~/Content/Activity/style.css" />
@@ -115,34 +142,62 @@
                         <div class="br"></div>
                     </aside>
                     <aside class="single_sidebar_widget post_category_widget">
-                        <h4 class="widget_title">选择预定时间</h4>
-                        <ul class="list_style cat-list">
-                            <!-- 一个活动时间 -->
-                            <li>
-                                <!-- 跳转到订单界面 -->
-                                <a href="@Url.Action("Index","Order",new{productID = 120, accessWay = 2})" class="d-flex justify-content-between">
-                                    <p>10/01（开始时间） - 10/03（结束时间）</p>
-                                    <p>￥99</p>
-                                </a>
-                            </li>
-                            <!-- END -->
-                        </ul>
-                        <div class="br"></div>
+                        <a onclick="add(@ViewBag.ActivityDetail.activity_id)"><h4 class="widget_title">添加至心愿单</h4></a>
                     </aside>
-                    <aside class="single-sidebar-widget newsletter_widget">
-                        <div class="quotes">
-                            <h4>活动注意事项</h4>
-                            <div id="awareness">
-                                @ViewBag.ActivityDetail.note
+                        <aside class="single_sidebar_widget post_category_widget">
+                            <h4 class="widget_title" style="margin-top:10px">选择预定时间</h4>
+                            <ul class="list_style cat-list">
+                                <!-- 一个活动时间 -->
+                                @{
+                                    if (ViewBag.activityInstance == null)
+                                    {
+                                        <li><a class="d-flex justify-content-between">当前体验活动无活动实例</a></li>
+                                    }
+                                    else
+                                    {
+                                        int count = 0;
+                                        for (int i = 0; i < ViewBag.activityInstance.Length; i++)
+                                        {
+                                            var bookstate = ViewBag.activityInstance[i].is_booked;
+                                            if (bookstate == 0)
+                                            {
+                                                <li>
+                                                    <!-- 跳转到订单界面 -->
+                                                    <a href="@Url.Action("Index","Order",new{productID =ViewBag.activityInstance[i].activity_id, accessWay = 2})" class="d-flex justify-content-between">
+                                                        <p>@ViewBag.activityInstance[i].start_time.ToString("yyyy-MM-dd")-@ViewBag.activityInstance[i].end_time.ToString("yyyy-MM-dd")</p>
+                                                        <p>￥@ViewBag.activityInstance[i].price</p>
+                                                    </a>
+                                                </li>
+                                                count++;
+                                            }
+
+                                        }
+                                        if (count == 0)
+                                        {
+                                            <li><a class="d-flex justify-content-between">当前体验活动无活动实例,无法预定</a></li>
+
+                                        }
+                                    }
+                                }
+
+                                <!-- END -->
+                            </ul>
+                            <div class="br"></div>
+                        </aside>
+                        <aside class="single-sidebar-widget newsletter_widget">
+                            <div class="quotes">
+                                <h4>活动注意事项</h4>
+                                <div id="awareness">
+                                    @ViewBag.ActivityDetail.note
+                                </div>
+                                <br />
+                                <h4>取消预订政策</h4>
+                                <div id="cancel">
+                                    @ViewBag.ActivityDetail.cancellation_policy
+                                </div>
                             </div>
-                            <br />
-                            <h4>取消预订政策</h4>
-                            <div id="cancel">
-                                @ViewBag.ActivityDetail.cancellation_policy
-                            </div>
-                        </div>
-                        <div class="br"></div>
-                    </aside>
+                            <div class="br"></div>
+                        </aside>
                 </div>
             </div>
             <!-- END -->
