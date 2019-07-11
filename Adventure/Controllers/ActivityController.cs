@@ -124,13 +124,13 @@ namespace Adventure.Controllers
         public ActionResult Index()
         {
             SqlSugarClient db = new SqlSugarClient(
-       new ConnectionConfig()
-       {
-           ConnectionString = System.Web.Configuration.WebConfigurationManager.AppSettings["ConnectionString"],
-           DbType = DbType.Oracle,//设置数据库类型
-            IsAutoCloseConnection = true,//自动释放数据务，如果存在事务，在事务结束后释放
-            InitKeyType = InitKeyType.Attribute //从实体特性中读取主键自增列信息
-        });
+                new ConnectionConfig()
+                {
+                    ConnectionString = System.Web.Configuration.WebConfigurationManager.AppSettings["ConnectionString"],
+                    DbType = DbType.Oracle,//设置数据库类型
+                    IsAutoCloseConnection = true,//自动释放数据务，如果存在事务，在事务结束后释放
+                    InitKeyType = InitKeyType.Attribute //从实体特性中读取主键自增列信息
+                });
             try
             {
                 DateTime dt_start_time, dt_end_time;
@@ -150,26 +150,35 @@ namespace Adventure.Controllers
                         availableID.Add(available[i].activity_id);
                     }
                 }
-
                 var returnlist = db.Queryable<Activity>().Where(it => availableID.Contains(it.activity_id) && it.max_member_limit >= numNeed && it.address.ToLower().Contains(key)).ToArray();
-                ViewBag.returnList = returnlist;
+                if (returnlist.Length == 0)
+                {
+                    var getRecommend = db.Queryable<Activity>().Take(8).ToArray();
+                    ViewBag.returnList = getRecommend;
+                }
+                else
+                {
+                    ViewBag.returnList = returnlist;
+                }
                 ViewBag.isSearch = 1;
             }
             catch (Exception ex)
             {
-                ViewBag.returnList = null;
+                var getRecommend = db.Queryable<Activity>().Take(8).ToArray();
+                ViewBag.returnList = getRecommend;
             }
             return View();
         }
+    
 
         [HttpPost]
         public ActionResult Index(FormCollection form)
         {
             SqlSugarClient db = new SqlSugarClient(
-        new ConnectionConfig()
-        {
-            ConnectionString = System.Web.Configuration.WebConfigurationManager.AppSettings["ConnectionString"],
-            DbType = DbType.Oracle,//设置数据库类型
+                new ConnectionConfig()
+                {
+                    ConnectionString = System.Web.Configuration.WebConfigurationManager.AppSettings["ConnectionString"],
+                    DbType = DbType.Oracle,//设置数据库类型
                     IsAutoCloseConnection = true,//自动释放数据务，如果存在事务，在事务结束后释放
                     InitKeyType = InitKeyType.Attribute //从实体特性中读取主键自增列信息
                 });
@@ -178,10 +187,10 @@ namespace Adventure.Controllers
                 DateTime dt_start_time, dt_end_time;
                 DateTimeFormatInfo dtFormat = new DateTimeFormatInfo();
                 dtFormat.ShortDatePattern = "yyyy/MM/dd";
-                dt_start_time = Convert.ToDateTime(form["start_time"], dtFormat);
-                dt_end_time = Convert.ToDateTime(form["end_time"], dtFormat);
-                string key = form["destination"].ToLower();
-                int numNeed = Convert.ToInt32(form["person_num"]);
+                dt_start_time = Convert.ToDateTime(Request.Form["start_time"], dtFormat);
+                dt_end_time = Convert.ToDateTime(Request.Form["end_time"], dtFormat);
+                string key = Request.Form["destination"].ToLower();
+                int numNeed = Convert.ToInt32(Request.Form["person_num"]);
 
                 var availableID = new List<int>();
                 var available = db.Queryable<ActivityInstance>().Where(it => (dt_start_time <= it.start_time && dt_end_time >= it.end_time) && it.is_booked == 0).ToArray();
@@ -192,19 +201,25 @@ namespace Adventure.Controllers
                         availableID.Add(available[i].activity_id);
                     }
                 }
-
                 var returnlist = db.Queryable<Activity>().Where(it => availableID.Contains(it.activity_id) && it.max_member_limit >= numNeed && it.address.ToLower().Contains(key)).ToArray();
-                ViewBag.returnList = returnlist;
+                if (returnlist.Length == 0)
+                {
+                    var getRecommend = db.Queryable<Activity>().Take(8).ToArray();
+                    ViewBag.returnList = getRecommend;
+                }
+                else
+                {
+                    ViewBag.returnList = returnlist;
+                }
                 ViewBag.isSearch = 1;
             }
             catch (Exception ex)
             {
-                ViewBag.isSearch = 0;
-                throw ex;
+                ViewBag.returnList = null;
             }
             return View();
-
-        }
+        
+    }
         // GET: Single Activity
         public ActionResult SingleActivity(int productID=-1)
         {
@@ -479,5 +494,7 @@ namespace Adventure.Controllers
             }
             finally { }
         }
+
+
     }
 }

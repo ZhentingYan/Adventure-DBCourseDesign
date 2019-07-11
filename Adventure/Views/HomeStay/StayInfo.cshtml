@@ -60,7 +60,8 @@
                     var addState = d.isSuccess;
                     if (addState == true) {//登录成功  
                         console.log(d);
-                        alert(d.message);
+                        //alert(d.message);
+                        window.location.href = "../Order/HomestayOrder?productID=@ViewBag.HomeStayDetail.homestay_id" + "&personNum=" + $("#personNum").val()+"&start_time=" + $("#checkin_date").val() + "&end_time="+$("#checkout_date").val();
                     }
                     else {
                         //登录失败                
@@ -198,7 +199,7 @@
                                 </p>
                             </div>
                         </article>
-                        <!---->>
+                        <!---->
                         <article class="property-article property-contact-info">
                             <header class="article-head">
                                 <h3 class="heading">参与者评价</h3>
@@ -261,7 +262,7 @@
                                 <div class="form-small">
                                     <div class="media agent-media">
                                         <div class="media-body media-middle">
-                                            <h3 class="heading">¥@ViewBag.HomeStayDetail.default_price<small>/晚</small></h3>
+                                            <h3 class="heading">¥@ViewBag.HomeStayDetail.default_price<small>/晚</small> 起</h3>
                                             <p class="rate">
                                                 <i class="icon-star"></i>
                                                 <i class="icon-star"></i>
@@ -286,19 +287,51 @@
                                             <div class="form-field">
                                                 <div class="select-wrap">
                                                     <div class="icon"><span class="ion-ios-arrow-down"></span></div>
-                                                    <select name="" id="" class="form-control">
-                                                        <option value="" selected>1</option>
-                                                        <option value="">2</option>
-                                                        <option value="">3</option>
-                                                        <option value="">4</option>
-                                                        <option value="">5</option>
+                                                    <select name="" id="personNum" class="form-control">
+                                                        <option value="1" selected>1</option>
+                                                        @{ for (int i = 2; i <= ViewBag.HomeStayDetail.max_member_limit; i++)
+                                                            {
+                                                                <option value="@i">@i</option>
+
+                                                            }
+
+                                                        }
                                                     </select>
                                                 </div>
                                             </div>
                                         </div>
+                                        <label class="widget_title" style="margin-top:10px">节假日特殊价格</label>
+                                        <ul class="list_style cat-list">
+                                            <!-- 一个活动时间 -->
+                                            @{
+                                                if (ViewBag.HomestaySpecial == null || ViewBag.HomestaySpecial.Length == 0)
+                                                {
+                                                    <li>当前房源未设置特殊价格！</li>
+                                                }
+                                                else
+                                                {
+                                                    for (int i = 0; i < ViewBag.HomestaySpecial.Length; i++)
+                                                    {
+
+                                                        <li>
+                                                            <!-- 跳转到订单界面 -->
+                                                            <a class="d-flex justify-content-between">
+                                                                <p>@ViewBag.HomestaySpecial[i].beginning_date.ToString("yyyy-MM-dd") ~ @ViewBag.HomestaySpecial[i].end_date.ToString("yyyy-MM-dd")</p>
+                                                                <p>￥@ViewBag.HomestaySpecial[i].price<small>/晚</small></p>
+                                                            </a>
+                                                        </li>
+
+
+                                                    }
+
+                                                }
+                                            }
+
+                                            <!-- END -->
+                                        </ul>
                                         <ul class="list_style cat-list">
                                             <li>
-                                                <a onclick="add(@ViewBag.HomeStayDetail.homestay_id)" class="d-flex justify-content-center" style="color:#f9be37">
+                                                <a onclick="add(@ViewBag.HomeStayDetail.homestay_id)" class="d-flex justify-content-center" style="color:#f9be37;margin-top:40px">
                                                     <p>添加到心愿单</p>
                                                 </a>
 
@@ -309,6 +342,9 @@
                                                 </a>
                                             </li>
                                         </ul>
+                                        <!--瞎几把-->
+
+                                        <div class="br"></div>
                                     </form>
                                 </div>
                             </div>

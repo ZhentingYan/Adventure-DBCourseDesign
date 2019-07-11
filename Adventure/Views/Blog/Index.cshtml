@@ -2,115 +2,206 @@
 @{
     ViewBag.Title = "旅行故事";
 }
-<link rel="stylesheet" href="~/Content/Blogstyle.css" />
+
+
+@{ 
+    var number = ViewBag.AllBlogs.Length;
+    Random ran = new Random();
+    int[] story = new int[3];
+
+    for (int i = 0; i < 3; i++)// 循环生成
+    {
+        byte[] buffer = Guid.NewGuid().ToByteArray();//生成字节数组
+        int iRoot = BitConverter.ToInt32(buffer, 0);//利用BitConvert方法把字节数组转换为整数
+        Random rdmNum = new Random(iRoot);//以这个生成的整数为种子
+        story[i] = rdmNum.Next(0, number);//生成大于大于a小于b的随机数（int）型
+    }
+}
+
 
 <div class="hero-wrap js-fullheight" style="background-image: url(../../images/bg_1.jpg);">
     <div class="overlay"></div>
     <div class="container">
         <div class="row no-gutters slider-text js-fullheight align-items-center justify-content-center" data-scrollax-parent="true">
             <div class="col-md-9 text-center ftco-animate" data-scrollax=" properties: { translateY: '70%' }">
+                <p class="breadcrumbs" data-scrollax="properties: { translateY: '30%', opacity: 1.6 }">
+                    <span class="mr-2"> @Html.ActionLink("写下旅行故事", "NewBlog", "Blog")</span>
+                    <span class="mr-2"> @Html.ActionLink("我的旅行故事", "ViewBlog", "Admin")</span>
+                </p>
                 <h1 class="mb-3 bread" data-scrollax="properties: { translateY: '30%', opacity: 1.6 }">旅行故事</h1>
             </div>
         </div>
     </div>
 </div>
 
-<section>
-    <div class="rows inn-page-bg com-colo">
-        <div class="container inn-page-con-bg tb-space pad-bot-redu-5" id="inner-page-title" style="padding-top:0">
 
-            <div>
-                <div class="blog-btn" onclick="location='../Blog/NewBlog'" style="background-image: url('../images/blogbtn_1.jpg')">写下旅行故事</div>
-                <div class="blog-btn" onclick="location='../Admin/ViewBlog'" style="background-image: url('../images/blogbtn_2.jpg')">我的旅行故事</div>
+<section class="ftco-section">
+    <div class="container">
+        <div class="row justify-content-center mb-5 pb-3">
+            <div class="col-md-7 heading-section text-center ftco-animate">
+                <h2>Travel&amp; <strong>Stories</strong></h2>
             </div>
-
-
-
-            <!-- TITLE & DESCRIPTION -->
-            @*<div class="spe-title col-md-12">
-                    <h2>Holiday Tour <span>Blog</span> Posts</h2>
-                    <div class="title-line">
-                        <div class="tl-1"></div>
-                        <div class="tl-2"></div>
-                        <div class="tl-3"></div>
-                    </div>
-                    <p>World's leading tour and travels Booking website,Over 30,000 packages worldwide. Book travel packages and enjoy your holidays with distinctive experience</p>
-                </div>*@
-            <div class="line-text-box spe-title col-md-12" style="margin-top:20px;margin-bottom:20px">
-                <span class="grey-line"></span>
-                <span class="line-text">精选旅行动态</span>
-                <span class="grey-line"></span>
-
-            </div>
-
-            <!--===== POSTS ======-->
-            <div id="allblogs" class="rows">
-                <div class="posts">
-                    <div class="col-md-6 col-sm-6 col-xs-12">
-                        <img src="../images/iplace-6.jpg" alt="" />
-                    </div>
-                    <div class="col-md-6 col-sm-6 col-xs-12">
-                        <h3>Thai island hopper east</h3>
-                        <h5><span class="post_author">Author: Johnson</span><span class="post_date">Date: 12th May,2016</span><span class="post_city">City: Illunois</span></h5>
-                        <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer.There are many variations of passages of Lorem Ipsum available, but the majority have suffered alteration in some form, by injected humour</p>
-                        <p>Randomised words which don't look even slightly believable. If you are going to use a passage of Lorem Ipsum, you need to be sure there isn't anything embarrassing hidden in the middle of text.</p>
-                        <a href="#" class="link-btn">Read more</a>
-                    </div>
-                </div>
-                <div class="posts">
-                    <div class="col-md-6 col-sm-6 col-xs-12">
-                        <img src="../images/iplace-2.jpg" alt="" />
-                    </div>
-                    <div class="col-md-6 col-sm-6 col-xs-12">
-                        <h3>We are Offering the hottest offers</h3>
-                        <h5><span class="post_author">Author: Johnson</span><span class="post_date">Date: 12th May,2016</span><span class="post_city">City: Illunois</span></h5>
-                        <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer.There are many variations of passages of Lorem Ipsum available, but the majority have suffered alteration in some form, by injected humour</p>
-                        <p>Randomised words which don't look even slightly believable. If you are going to use a passage of Lorem Ipsum, you need to be sure there isn't anything embarrassing hidden in the middle of text.</p>
-                        <a href="#" class="link-btn">Read more</a>
-                    </div>
-                </div>
-                <div class="posts">
-                    <div class="col-md-6 col-sm-6 col-xs-12">
-                        <img src="../images/iplace-3.jpg" alt="" />
-                    </div>
-                    <div class="col-md-6 col-sm-6 col-xs-12">
-                        <h3>Lorem ipsum dummy content</h3>
-                        <h5><span class="post_author">Author: Johnson</span><span class="post_date">Date: 12th May,2016</span><span class="post_city">City: Illunois</span></h5>
-                        <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer.There are many variations of passages of Lorem Ipsum available, but the majority have suffered alteration in some form, by injected humour</p>
-                        <p>Randomised words which don't look even slightly believable. If you are going to use a passage of Lorem Ipsum, you need to be sure there isn't anything embarrassing hidden in the middle of text.</p>
-                        <a href="#" class="link-btn">Read more</a>
-                    </div>
-                </div>
-                @*<div class="posts">
-                        <div class="col-md-6 col-sm-6 col-xs-12">
-                            <img src="@ViewBag.AllBlogs[i].picture" alt="" />
-                        </div>
-                        <div class="col-md-6 col-sm-6 col-xs-12">
-                            <h3>@ViewBag.AllBlogs[i].title</h3>
-                            <h5><span class="post_author">@ViewBag.AllBlogs[i].writer</span><span class="post_date">@ViewBag.AllBlogs[i].time</span></h5>
-                            <p>@ViewBag.AllBlogs[i].content</p>
-                            <a href='../Blog/BlogDetail?BlogId=@ViewBag.AllBlogs[i].blogId' class="link-btn">Read more</a>
-                        </div>
-                    </div>*@
-                @{
-
-                    for (int j = 0; j < ViewBag.AllBlogs.Length; j++)
+        </div>
+    </div>
+    <div class="container-fluid">
+        <div class="row">
+            @{
+                if (ViewBag.AllBlogs != null)
+                {
+                    if (number <= 10)
                     {
-                        <div class="posts">
-                            <div class="col-md-6 col-sm-6 col-xs-12">
-                                <img src="@ViewBag.AllBlogs[j].pictures" alt="" />
+                        int all = 0;
+                        if (number < 3)
+                        {
+                            all = number;
+                        }
+                        else
+                        {
+                            all = 3;
+                        }
+
+                        for (int i = 0; i < all; i++)
+                        {
+                            <div class="col-sm col-md-6 col-lg ftco-animate">
+                                <div class="destination">
+                                    <a href='../Blog/BlogDetail?BlogId=@ViewBag.AllBlogs[i].story_id' class="img img-2 d-flex justify-content-center align-items-center" style="background-image: url(@ViewBag.AllBlogs[i].pictures);">
+                                        <div class="icon d-flex justify-content-center align-items-center">
+                                            <span class="icon-link"></span>
+                                        </div>
+                                    </a>
+                                    <div class="text p-3">
+                                        <div class="d-flex">
+                                            <div class="one">
+                                                <h3>
+                                                    <a href='../Blog/BlogDetail?BlogId=@ViewBag.AllBlogs[i].story_id'>
+                                                        @ViewBag.AllBlogs[i].title
+                                                    </a>
+                                                </h3>
+                                            </div>
+                                        </div>
+                                        <p><b>@ViewBag.AllBlogs[i].user_id</b></p>
+                                        <hr>
+                                        <p class="bottom-area d-flex">
+                                            @ViewBag.AllBlogs[i].times
+                                        </p>
+                                    </div>
+                                </div>
                             </div>
-                            <div class="col-md-6 col-sm-6 col-xs-12">
-                                <h3>@ViewBag.AllBlogs[j].title</h3>
-                                <h5><span class="post_author">@ViewBag.AllBlogs[j].user_id</span><span class="post_date">@ViewBag.AllBlogs[j].times</span></h5>
-                                <p>@ViewBag.AllBlogs[j].content_s</p>
-                                <a href='../Blog/BlogDetail?BlogId=@ViewBag.AllBlogs[j].story_id' class="link-btn">Read more</a>
+                        }
+                    }
+                    else
+                    {
+                        for (int i = 0; i < 3; i++)
+                        {
+                            <div class="col-sm col-md-6 col-lg ftco-animate">
+                                <div class="destination">
+                                    <a href='../Blog/BlogDetail?BlogId=@ViewBag.AllBlogs[story[i]].story_id' class="img img-2 d-flex justify-content-center align-items-center" style="background-image: url(@ViewBag.AllBlogs[story[i]].pictures);">
+                                        <div class="icon d-flex justify-content-center align-items-center">
+                                            <span class="icon-link"></span>
+                                        </div>
+                                    </a>
+                                    <div class="text p-3">
+                                        <div class="d-flex">
+                                            <div class="one">
+                                                <h3>
+                                                    <a href='../Blog/BlogDetail?BlogId=@ViewBag.AllBlogs[story[i]].story_id'>
+                                                        @ViewBag.AllBlogs[story[i]].title
+                                                    </a>
+                                                </h3>
+                                            </div>
+                                        </div>
+                                        <p><b>@ViewBag.AllBlogs[story[i]].user_id</b></p>
+                                        <hr>
+                                        <p class="bottom-area d-flex">
+                                            @ViewBag.AllBlogs[story[i]].times
+                                        </p>
+                                    </div>
+                                </div>
                             </div>
-                        </div>
+                        }
                     }
                 }
-            </div>
+            }
+        </div>
+    </div>
+</section>
 
+
+<!--===== POSTS ======-->
+<section class="ftco-section testimony-section"  style="background-image: url(../images/Favor_bg.jpg);">
+    <div class="container">
+        <div class="row justify-content-center mb-5 pb-3">
+            <div class="col-md-7 text-center heading-section heading-section-white ftco-animate">
+                <h2 class="mb-4">旅行故事</h2>
+                @{ 
+                    if (!(ViewBag.AllBlogs != null && ViewBag.AllBlogs.Length >= 1))
+                    {
+                        <p>
+                            这里还没有旅行故事哦~成为第一个发布故事的人吧~
+                        </p>
+                    }
+                 }
+            </div>
+        </div>
+        <div class="row ftco-animate">
+            <div class="col-md-12">
+                <div class="carousel-testimony owl-carousel ftco-owl">
+                    <!-- 一块信息 --
+    <div class="item">
+        <div class="testimony-wrap p-4 pb-5">
+            <div class="user-img mb-5" style="background-image: url(../images/person_1.jpg)">
+                <span class="quote d-flex align-items-center justify-content-center">
+                    <i class="icon-quote-left"></i>
+                </span>
+            </div>
+            <div class="text">
+                <p class="mb-5">Far far away, behind the word mountains, far from the countries Vokalia and Consonantia, there live the blind texts.</p>
+                <p class="name">Mark Web</p>
+                <span class="position">Marketing Manager</span>
+            </div>
+        </div>
+    </div>
+    <!-- 一块信息结束 -->
+                    @{
+                        if (ViewBag.AllBlogs != null)
+                        {
+                            for (int j = 0; j < ViewBag.AllBlogs.Length; j++)
+                            {
+                                <div class="item">
+                                    <div class="testimony-wrap p-4 pb-5">
+                                        <a href='../Blog/BlogDetail?BlogId=@ViewBag.AllBlogs[j].story_id'>
+                                            <div class="user-img mb-5" style="background-image: url(@ViewBag.AllBlogs[j].pictures);"></div>
+                                            <div class="text">
+                                                <p class="mb-5"></p>
+                                                <p class="name">@ViewBag.AllBlogs[j].title</p>
+                                                <span class="position">@ViewBag.AllBlogs[j].user_id</span>
+                                                <span class="position">@ViewBag.AllBlogs[j].times</span>
+                                            </div>
+                                        </a>
+                                    </div>
+                                </div>
+                            }
+                        }
+                    }
+                    @*
+        for (int j = 0; j < ViewBag.AllBlogs.Length; j++)
+        {
+        <div class="posts">
+            <div class="col-md-6 col-sm-6 col-xs-12">
+                <img src="@ViewBag.AllBlogs[j].pictures" alt="" />
+            </div>
+            <div class="col-md-6 col-sm-6 col-xs-12">
+                <h3>@ViewBag.AllBlogs[j].title</h3>
+                <h5><span class="post_author">@ViewBag.AllBlogs[j].user_id</span><span class="post_date">@ViewBag.AllBlogs[j].times</span></h5>
+                <p>@ViewBag.AllBlogs[j].content_s</p>
+                <a href='../Blog/BlogDetail?BlogId=@ViewBag.AllBlogs[j].story_id' class="link-btn">Read more</a>
+            </div>
+        </div>
+        }
+                    *@
+
+                </div>
+            </div>
         </div>
     </div>
 </section>

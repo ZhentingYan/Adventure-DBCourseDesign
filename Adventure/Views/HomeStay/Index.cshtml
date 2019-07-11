@@ -1,13 +1,13 @@
 ﻿@{
     ViewBag.Title = "民宿";
 }
-<div class="hero-wrap js-fullheight" style="background-image: url('../images/homestay_bg.jpg');">
+<div class="hero-wrap js-fullheight" style="background-image: url('../images/Publish_bg.jpg');">
     <div class="overlay"></div>
     <div class="container">
         <div class="row no-gutters slider-text js-fullheight align-items-center justify-content-start" data-scrollax-parent="true">
             <div class="col-md-9 ftco-animate mb-5 pb-5 text-center text-md-left" data-scrollax=" properties: { translateY: '70%' }">
-                <h1 class="mb-4"  style="color:black" data-scrollax="properties: { translateY: '30%', opacity: 1.6 }">精选民宿</h1>
-                <p  style="color:#f9be37" data-scrollax="properties: { translateY: '30%', opacity: 1.6 }"><b>尝试一下新的住宿体验？住进当地居民提供的房源，收获独家体验！</b></p>
+                <h1 class="mb-4"  data-scrollax="properties: { translateY: '30%', opacity: 1.6 }">精选民宿</h1>
+                <p   data-scrollax="properties: { translateY: '30%', opacity: 1.6 }"><b>尝试一下新的住宿体验？住进当地居民提供的房源，收获独家体验！</b></p>
             </div>
         </div>
     </div>
@@ -153,7 +153,7 @@
         <div class="row">
 
 
-            <div class="col-lg-9">
+            <div class="col-lg">
                 <div class="row">
                     <div class="container ftco-section testimony-section" style="background-color:transparent">
                         <div class="row ftco-animate">
@@ -166,18 +166,18 @@
                                             {
                                                 <div class="item">
                                                     <div class="testimony-wrap p-4 pb-5">
-                                                        <a href="~/Activity/SingleActivity?productID=@ViewBag.returnList[i].activity_id">
-                                                            <div class="user-img mb-5" style="background-image: url(@ViewBag.returnList[i].activity_pictures)">
+                                                        <a href="~/HomeStay/StayInfo?productID=@ViewBag.returnList[i].homestay_id">
+                                                            <div class="user-img mb-5" style="background-image: url(@ViewBag.returnList[i].homestay_pictures)">
                                                             </div>
                                                             <div class="text p-3">
                                                                 <div class="d-flex">
                                                                     <div>
-                                                                        <div id="picture" class="img img-2 d-flex justify-content-center align-items-center" style="background-image: url(@ViewBag.returnList[i].activity_pictures);">
+                                                                        <div id="picture" class="img img-2 d-flex justify-content-center align-items-center" style="background-image: url(@ViewBag.returnList[i].homestay_pictures);">
                                                                         </div>
-                                                                        <h5 style="color:#FFFFFF">@ViewBag.returnList[i].activity_name</h5>
+                                                                        <h5 style="color:#FFFFFF">@ViewBag.returnList[i].homestay_name</h5>
                                                                         <p class="rate">
                                                                             <i class="icon-star"></i>
-                                                                            <span>人数:@ViewBag.returnList[i].max_member_limit 人</span>
+                                                                            <span>¥@ViewBag.returnList[i].default_price<small>/晚</small></span>
                                                                         </p>
                                                                     </div>
                                                                 </div>

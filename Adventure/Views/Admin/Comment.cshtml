@@ -1,0 +1,93 @@
+﻿@{
+    ViewBag.Title = "评价订单";
+}
+
+<link rel="stylesheet" href="~/Content/Activity/paper-bootstrap-wizard.css" />
+
+
+<div class="image-container set-full-height" style="background-image: url('../images/Publish_bg.jpg');">
+
+    <!-- Big container -->
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-12 col-sm-offset-2">
+                <!-- Wizard container -->
+                <div class="wizard-container">
+                    <div class="card wizard-card" id="wizard">
+
+                        <div class="wizard-header">
+                            <h3 class="wizard-title">订单评价 订单号:@ViewBag.orderID</h3>
+                            <hr />
+                        </div>
+
+                        <form action="submitComment" method="post" enctype="multipart/form-data">
+                            <div class="row">
+                                <div>
+                                    <div class="col-sm-5 col-sm-offset-1" style="margin-left:auto; margin-right:auto;">
+                                        <div class="form-check">
+                                            <input type="radio" name="rate" class="form-check-input" id="Check1" value="5">
+                                            <label class="form-check-label" for="Check1">
+                                                <p class="rate"><span><i class="icon-star"></i><i class="icon-star"></i><i class="icon-star"></i><i class="icon-star"></i><i class="icon-star"></i></span></p>
+                                            </label>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-5 col-sm-offset-1" style="margin-left:auto; margin-right:auto;">
+                                        <div class="form-check">
+                                            <input type="radio" name="rate" class="form-check-input" id="Check2" value="4">
+                                            <label class="form-check-label" for="Check2">
+                                                <p class="rate"><span><i class="icon-star"></i><i class="icon-star"></i><i class="icon-star"></i><i class="icon-star"></i><i class="icon-star-o"></i></span></p>
+                                            </label>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-5 col-sm-offset-1" style="margin-left:auto; margin-right:auto;">
+                                        <div class="form-check">
+                                            <input type="radio" name="rate" class="form-check-input" id="Check3" value="3">
+                                            <label class="form-check-label" for="Check3">
+                                                <p class="rate"><span><i class="icon-star"></i><i class="icon-star"></i><i class="icon-star"></i><i class="icon-star-o"></i><i class="icon-star-o"></i></span></p>
+                                            </label>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-5 col-sm-offset-1" style="margin-left:auto; margin-right:auto;">
+                                        <div class="form-check">
+                                            <input type="radio" name="rate" class="form-check-input" id="Check4" value="2">
+                                            <label class="form-check-label" for="Check4">
+                                                <p class="rate"><span><i class="icon-star"></i><i class="icon-star"></i><i class="icon-star-o"></i><i class="icon-star-o"></i><i class="icon-star-o"></i></span></p>
+                                            </label>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-5 col-sm-offset-1" style="margin-left:auto; margin-right:auto;">
+                                        <div class="form-check">
+                                            <input type="radio" name="rate" class="form-check-input" id="Check5" value="1">
+                                            <label class="form-check-label" for="Check5">
+                                                <p class="rate"><span><i class="icon-star"></i><i class="icon-star-o"></i><i class="icon-star-o"></i><i class="icon-star-o"></i><i class="icon-star-o"></i></span></p>
+                                            </label>
+                                        </div>
+                                    </div>
+                                </div>
+                                <hr />
+                                <br />
+                                <div class="col-sm-8 col-sm-offset-2" style="margin-left:auto; margin-right:auto;">
+                                    <div class="form-group">
+                                        <label for="">评价内容</label>
+                                        <textarea class="form-control" rows="10" maxlength="200" type="text" name="comment_content" id="" value=""></textarea>
+                                        <input type="text" maxlength="50" class="form-control" name="orderID" placeholder="" hidden value="@ViewBag.orderID">
+                                        <input type="text" maxlength="50" class="form-control" name="accessWay" placeholder="" hidden value="@ViewBag.accessWay">
+                                    </div>
+                                </div>
+                                <div class="col-sm-5 col-sm-offset-1" style="margin-left:auto; margin-right:auto;">
+                                    <div class="form-group">
+                                        <input class="form-control btn" name="" type="submit" id="" value="提交" />
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+            <!-- wizard container -->
+        </div>
+    </div>
+</div>
+
+
+

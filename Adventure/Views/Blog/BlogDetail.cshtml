@@ -2,62 +2,57 @@
 @{
     ViewBag.Title = "旅行故事详情";
 }
-<link rel="stylesheet" href="~/Content/Blogstyle.css" />
 
-@*<script>
-        $(document).ready(function () {
-            $.get("Blog/getBlog",
-                function (e) {
-    // 图片？
-                    var jsonData = JSON.parse(e.data);
-                    $(".blog-detail h1").text(jsonData.blogTitle);
-                    $(".post_data").text(jsonData.blogPostData);
-                    $(".post_city").text(jsonData.blogPostCity);
-                    $(".blog-detail p").text(jsonData.blogContent);
-                    if (jsonData.blogUserId !== Session[user_id]) {
-                        $(".personal-btn").hide();
-                    }
-                });
-        })
-    </script>*@
+<link rel="stylesheet" href="~/Content/Activity/paper-bootstrap-wizard.css" />
+<link rel="stylesheet" href="~/Content/Activity/style.css" />
+<link rel="stylesheet" href="~/Content/Activity/responsive.css" />
+
+
 
 <script>
-    $(document).ready(function () {
-
-
-
+    $(function () {
         if (blogID == "-1") {
             alert("未知blogID!");
             window.location.href = "/Blog";
         }
-        var publisher = "@ViewBag.CurrentBlog.user_id";
-        if (publisher!=Session[user_id]) {
-            $(".personal-btn").hide();
-        }
-    })
+    });
 </script>
 
 <script>
-    function changeBlog() {
-        $(".blog-detail").hide();
-        $(".blog-change").show();
 
+    function changeBlog() {
+        $(".main-content").hide();
+        $(".blog-change").show();
     }
-  // var aaa=@ViewBag.CurrentBlog.story_id;
+
+    function changeBack() {
+        $(".blog-change").hide();
+        $(".main-content").show();
+    }
+
     function deleteBlog() {
         $.ajax({
             type: "POST",
             url: "/Blog/deleteBlog",
             dataType: 'json',
             data: { story_id: @ViewBag.CurrentBlog.story_id},
-            //success: function()
-            //    {
-            //    window.location.href = "../Blog";
-            //},
-            //error: function (msg) {
-            //    alert("删除失败" + msg);
-
-            //}
+            success: function (d) {
+                var deleteState = d.isSuccess;
+                if (deleteState == true) {//登录成功
+                    console.log(d);
+                    window.location.href = "/Blog";
+                    alert("删除成功!");
+                }
+                else {
+                    //登录失败
+                    console.log(d);
+                    alert(d.message);
+                }
+            },
+            error: function (a) {
+                console.log(a);
+                alert("删除失败!");
+            }
         })
     }
 </script>
@@ -73,15 +68,8 @@
     </div>
 </div>
 
-@*<div class="blog-detail">
-        <h1>@ViewBag.CurrentBlog.title</h1>
-        <h5><span class="post_date">@ViewBag.CurrentBlog.times</span></h5>
-        <btn id="changeBlog" class="link-btn personal-btn" onclick="changeBlog()">修改</btn>
-        <btn id="deleteBlog" class="link-btn personal-btn" onclick="deleteBlog()">删除</btn>
-        <p align="left">@ViewBag.CurrentBlog.content_s</p>
-    </div>*@
 
-<section class="blog_area single-post-area blog-detail">
+<section class="blog_area single-post-area main-content">
     <div class="container">
         <div class="row">
             <div class="col-lg-8 posts-list">
@@ -92,15 +80,24 @@
                             <img id="picture" class="img-fluid" src="@ViewBag.CurrentBlog.pictures" alt="">
                         </div>
                     </div>
-
-                    <div class="col-lg-9 col-md-9 blog_details">
+                    <!-- END -->
+                    <!-- 最左栏 -->
+                    <div class="col-lg-3  col-md-3">
+                        <div class="blog_info text-right">
+                            <ul class="blog_meta list_style">
+                                <li>@ViewBag.Author.user_id<i class="lnr lnr-user"></i></li>
+                                <li>@ViewBag.CurrentBlog.times<i class="lnr lnr-calendar-full"></i></li>
+                            </ul>
+                        </div>
+                    </div>
+                    <!-- END -->
+                    <!-- 主区域 -->
+                    <div class="col-lg-9 col-md-9 blog_details  text-justify">
                         <h2 id="act-title">@ViewBag.CurrentBlog.title</h2>
-                        <btn id="changeBlog" class="link-btn personal-btn" onclick="changeBlog()">修改</btn>
-                        <btn id="deleteBlog" class="link-btn personal-btn" onclick="deleteBlog()">删除</btn>
                         <br />
                         <hr />
                         <br />
-                        <p id="act-content" class="excert">
+                        <p id="act-content" class="excert" style="word-break: break-all;word-wrap: break-word;">
                             @ViewBag.CurrentBlog.content_s
                         </p>
                         <br />
@@ -114,13 +111,37 @@
                 <div class="blog_right_sidebar">
                     <aside class="single_sidebar_widget author_widget">
                         <img id="avatar" class="author_img rounded-circle col-lg-4" src="@ViewBag.Author.head_icon" alt="">
-                        <h4 id="name">@ViewBag.Author.first_name@ViewBag.Author.last_name</h4>
-                        <p>作者</p>
-                        <p id="introduction">
+                        <h4 id="name" style="margin-top:10px;">@ViewBag.Author.first_name@ViewBag.Author.last_name</h4>
+                        <p style="margin-top:10px">作者</p>
+                        <p id="introduction" style="margin-top:10px;">
                             @ViewBag.Author.self_introduction
+                        </p>
+                        <p id="contactway" style="margin-top:10px">
+                            联系方式:@ViewBag.Author.phone_number
+                        </p>
+                        <p style="margin-top:10px">
+                            邮箱地址:@ViewBag.Author.email_address
+                        </p>
+                        <p id="language" style="margin-top:10px">
+                            沟通语言:@ViewBag.Author.main_language
+                        </p>
+                        <p style="margin-top:10px">
+                            地点定位:@ViewBag.Author.country
                         </p>
                         <div class="br"></div>
                     </aside>
+                    @{
+                        if (ViewBag.flag==1)
+                        {
+                            <aside class="single_sidebar_widget post_category_widget">
+                                <a onclick="changeBlog()"><h4 class="widget_title">修改</h4></a>
+                            </aside>
+                            <aside class="single_sidebar_widget post_category_widget">
+                                <a onclick="deleteBlog()" style="margin-top:10px" class="personal-btn"><h4 class="widget_title">删除</h4></a>
+                                <div class="br"></div>
+                            </aside>
+                        }
+                    }
 
                 </div>
             </div>
@@ -129,27 +150,55 @@
     </div>
 </section>
 
-<div class="blog-change" style="display:none;width:80%">
-    <form action="~/Blog/ChangeBlog" method="post" id="change-blog-form" enctype="multipart/form-data" style="text-align:center">
 
-        <div style="width:75%;margin:auto;text-align:left">
-            <label for="title">标题</label>
-            <input class="blog-title" type="text" name="changeBlogTitle" id="changeBlogTitle" value="@ViewBag.CurrentBlog.title" size="22">
+<div class="container blog-change" style="display:none;">
+    <div class="row">
+        <div class="col-sm-12">
+            <!-- Wizard container -->
+            <div class="wizard-container">
+                <div class="card wizard-card" id="wizard">
+
+                    <div class="wizard-header">
+                        <h3 class="wizard-title">修改旅行故事</h3>
+                        <hr />
+                    </div>
+
+                    <form id="change-blog-form" action="~/Blog/ChangeBlog" method="post" enctype="multipart/form-data">
+                        <div class="row">
+                            <div class="col-sm-5 col-sm-offset-1" style="margin-left:auto; margin-right:auto;">
+                                <div class="form-group">
+                                    <label for="title">标题</label>
+                                    <input class="blog-title form-control" maxlength="100" type="text" name="changeBlogTitle" id="changeBlogTitle" value="@ViewBag.CurrentBlog.title" size="22">
+                                    <input type="text" name="blog_ID" value="@ViewBag.CurrentBlog.story_id" hidden />
+                                </div>
+                            </div>
+                            <div class="col-sm-5 col-sm-offset-1" style="margin-left:auto; margin-right:auto;">
+                                <div class="form-group">
+                                    <label for="picture">图片</label>
+                                    <input class="blog-picture form-control" type="file" accept="image/*" name="changeBlogPicture" id="changeBlogPicture" value="@ViewBag.CurrentBlog.pictures" size="22">
+                                </div>
+                            </div>
+                            <div class="col-sm-8 col-sm-offset-2" style="margin-left:auto; margin-right:auto;">
+                                <div class="form-group">
+                                    <label for="content">内容</label>
+                                    <textarea class="blog-position form-control" maxlength="300" name="changeBlogContent" id="changeBlogContent" value="@ViewBag.CurrentBlog.content_s"></textarea>
+                                </div>
+                            </div>
+                            <div class="col-sm-5 col-sm-offset-1" style="margin-left:auto; margin-right:auto;">
+                                <div class="form-group">
+                                    <input class="form-control btn" type="button" onclick="changeBack()" value="取消" />
+                                </div>
+                            </div>
+                            <div class="col-sm-5 col-sm-offset-1" style="margin-left:auto; margin-right:auto;">
+                                <div class="form-group">
+                                    <input class="form-control btn" name="changeBlogSubmit" type="submit" id="changeBlogSubmit" value="提交修改" />
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+            <!-- wizard container -->
         </div>
-
-        <div style="width:75%;margin:auto;text-align:left">
-            <label for="picture">图片</label>
-            <input class="blog-picture" type="file" accept="image/*" name="changeBlogPicture" id="changeBlogPicture" value="@ViewBag.CurrentBlog.pictures" size="22">
-        </div>
-
-        <div style="width:75%;margin:auto;text-align:left">
-            <label for="content">内容</label>
-            <textarea class="blog-position" name="changeBlogContent" id="changeBlogContent" cols="58" rows="10" value="@ViewBag.CurrentBlog.content_s"></textarea>
-        </div>
-
-        <div>
-            <input class="btn" name="changeBlogSubmit" type="submit" id="changeBlogSubmit" value="Submit Comment">
-        </div>
-
-    </form>
+    </div>
 </div>

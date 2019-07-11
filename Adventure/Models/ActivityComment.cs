@@ -5,7 +5,7 @@ using System.Web;
 using SqlSugar;
 namespace Adventure.Models
 {
-    [SugarTable("avtivity_comment")]
+    [SugarTable("activity_comment")]
     public class ActivityComment
     {
         [SugarColumn(IsPrimaryKey = true)]

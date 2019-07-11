@@ -1,6 +1,6 @@
 ﻿
 @{
-    ViewBag.Title = "ViewActivity";
+    ViewBag.Title = "查看旅行故事";
     Layout = "~/Views/Admin/Admin_Layout.cshtml";
 }
 
@@ -40,21 +40,26 @@
                             <table class="table table-hover table-checkable order-column full-width" id="example4">
                                 <thead>
                                     <tr>
-                                        
+
                                         <th class="center"> 发布时间 </th>
                                         <th class="center"> 标题 </th>
-                                        
+                                        <th class="center"> 查看详情 </th>
+
                                     </tr>
                                 </thead>
                                 <tbody>
                                     @{
                                         for (int i = 0; i < ViewBag.BlogList.Length; i++)
                                         {
-                                            <tr class="odd gradeX" onclick="window.location.href='../Blog/BlogDetail?BlogId=@ViewBag.BlogList[i].story_id'">
-                                                <td class="center">@ViewBag.BlogList[i].times</td>
-                                                <td class="center">@ViewBag.BlogList[i].title</td>
-                                                
-                                            </tr>
+                                    <tr class="odd gradeX">
+                                        <td class="center">@ViewBag.BlogList[i].times</td>
+                                        <td class="center">@ViewBag.BlogList[i].title</td>
+                                        <td class="center">
+                                            <a href="/Activity/SingleActivity?productID=@ViewBag.activityList[i].activity_id" class="btn btn-tbl-edit btn-xs">
+                                                <i class="fa fa-exclamation-circle"></i>
+                                            </a>
+                                        </td>
+                                    </tr>
                                         }
                                     }
                                 </tbody>

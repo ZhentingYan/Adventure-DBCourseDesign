@@ -212,7 +212,8 @@ namespace Adventure.Controllers
             }
             catch (Exception ex)
             {
-                throw ex;
+                ViewBag.returnList = null;
+                return View();
             }
             finally { }
             return View();
@@ -362,7 +363,8 @@ namespace Adventure.Controllers
             catch (Exception ex)
             {
                 ViewBag.isSuccess = 0;
-                throw ex;
+                return View();
+
             }
             return View();
         }
@@ -420,7 +422,7 @@ namespace Adventure.Controllers
             {
                 isSuccess.Add("isSuccess", false);
                 isSuccess.Add("message", "操作失败");
-                throw ex;
+                return Content(JsonConvert.SerializeObject(isSuccess, Formatting.Indented));
             }
             return Content(JsonConvert.SerializeObject(isSuccess, Formatting.Indented));
         }
@@ -458,11 +460,176 @@ namespace Adventure.Controllers
             {
                 isSuccess.Add("isSuccess", false);
                 isSuccess.Add("message", "操作失败");
-                throw ex;
+                return Content(JsonConvert.SerializeObject(isSuccess, Formatting.Indented));
+
+            }
+            return Content(JsonConvert.SerializeObject(isSuccess, Formatting.Indented));
+        }
+        
+        public ActionResult Comment(int orderID,int accessWay)
+        {
+            ViewBag.orderID = orderID;
+            ViewBag.accessWay = accessWay;
+            return View();
+        }
+
+        public ActionResult CheckComment()
+        {
+            SqlSugarClient db = new SqlSugarClient(
+            new ConnectionConfig()
+            {
+                ConnectionString = System.Web.Configuration.WebConfigurationManager.AppSettings["ConnectionString"],
+                DbType = DbType.Oracle,//设置数据库类型
+                    IsAutoCloseConnection = true,//自动释放数据务，如果存在事务，在事务结束后释放
+                    InitKeyType = InitKeyType.SystemTable //从实体特性中读取主键自增列信息
+                });
+            JObject isSuccess = new JObject();
+            try
+            {
+                if (Convert.ToInt16(Request.Form["accessWay"]) == 2)
+                {
+                    var checkStatus = db.Queryable<HomestayOrder>().InSingle(Convert.ToInt32(Request.Form["orderID"]));
+                    if (checkStatus.status == 1)
+                    {
+                        var isComment = db.Queryable<HomestayOrder>().InSingle(Convert.ToInt32(Request.Form["orderID"]));
+                        if (isComment == null)
+                        {
+                            isSuccess.Add("isSuccess", true);
+                        }
+                        else
+                        {
+                            isSuccess.Add("isSuccess", false);
+                            isSuccess.Add("message", "您已评价过此订单，谢谢！");
+                        }
+                    }
+                    else
+                    {
+                        isSuccess.Add("isSuccess", false);
+                        isSuccess.Add("message", "此订单未完成，无法添加评价！");
+                    }
+                }
+                else if (Convert.ToInt16(Request.Form["accessWay"]) == 1)
+                {
+                    var checkStatus = db.Queryable<ActivityOrder>().InSingle(Convert.ToInt32(Request.Form["orderID"]));
+                    if (checkStatus.status == 1)
+                    {
+                        var isComment = db.Queryable<ActivityComment>().InSingle(Convert.ToInt32(Request.Form["orderID"]));
+                        if (isComment == null)
+                        {
+                            isSuccess.Add("isSuccess", true);
+                        }
+                        else
+                        {
+                            isSuccess.Add("isSuccess", false);
+                            isSuccess.Add("message", "您已评价过此订单，谢谢！");
+                        }
+                    }
+                    else
+                    {
+                        isSuccess.Add("isSuccess", false);
+                        isSuccess.Add("message", "此订单未完成，无法添加评价！");
+                    }
+                }
+                else
+                {
+                    isSuccess.Add("isSuccess", false);
+                    isSuccess.Add("message", "参数出错！");
+                }
+            }
+
+            catch (Exception ex)
+            {
+                isSuccess.Add("isSuccess", false);
+                isSuccess.Add("message", "操作失败！");
+                return Content(JsonConvert.SerializeObject(isSuccess, Formatting.Indented));
+
+            }
+            finally
+            {
             }
             return Content(JsonConvert.SerializeObject(isSuccess, Formatting.Indented));
         }
 
+        [HttpPost]
+        public ActionResult submitComment(FormCollection form)
+        {
+            if (Session["user_id"] == null)
+            {
+                return Redirect("~/login/index");
+            }
+            else
+            {
+                SqlSugarClient db = new SqlSugarClient(
+                new ConnectionConfig()
+                {
+                    ConnectionString = System.Web.Configuration.WebConfigurationManager.AppSettings["ConnectionString"],
+                    DbType = DbType.Oracle,//设置数据库类型
+                    IsAutoCloseConnection = true,//自动释放数据务，如果存在事务，在事务结束后释放
+                    InitKeyType = InitKeyType.SystemTable //从实体特性中读取主键自增列信息
+                });
+                JObject isSuccess = new JObject();
+                try
+                {
+                    DateTime dt = DateTime.Now;
+                    var ActComData = new ActivityComment()
+                    {
+                        activity_order_id = Convert.ToInt32(Request.Form["orderID"]),
+                        grade = Convert.ToDouble(Request.Form["rate"]),
+                        user_id = Session["user_id"].ToString(),
+                        comment_text = Request.Form["comment_content"],
+                        times = dt
+                    };
+                    if (Convert.ToInt16(Request.Form["accessWay"]) == 2)
+                    {
+                        if (db.Insertable<HomestayComment>(ActComData).ExecuteCommand() == 1)
+                        {
+                            Session["message"] = "订单评价成功!";
+                            return Redirect("~/Admin");
+                        }
+                        else
+                        {
+                            Session["message"] = "添加评论失败!";
+                            return Redirect("~/Admin");
+
+                        }
+                    }
+                    else if (Convert.ToInt16(Request.Form["accessWay"]) == 1)
+                    {
+                        if (db.Insertable<ActivityComment>(ActComData).ExecuteCommand() == 1)
+                        {
+                            Session["message"] = "订单评价成功!";
+                            return Redirect("~/Admin");
+                        }
+                        else
+                        {
+                            Session["message"] = "添加评论失败!";
+                            return Redirect("~/Admin");
+                        }
+                    }
+                    else
+                    {
+                        Session["message"] = "参数错误!";
+                        return Redirect("~/Admin");
+                    }
+                }
+                catch (Exception ex)
+                {
+                    Session["message"] = "操作失败!";
+                    return Redirect("~/Admin"); 
+
+                }
+                finally {
+                }
+            }
+        }
+
+        /*
+        [HttpPost]
+        public ActionResult submitComment()
+        {
+
+        }
+        */
     }
 
 }

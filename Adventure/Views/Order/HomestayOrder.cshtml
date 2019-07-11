@@ -1,0 +1,114 @@
+﻿@{
+    ViewBag.Title = "订单确认";
+    Layout = "~/Views/Order/Order_Layout.cshtml";
+}
+
+<h1 class="book" style="margin-top:80px">Order Confirmation</h1>
+
+<div class="reg">
+    <h1>赶快确认下列信息，开启您的奇妙之旅！</h1>
+    <div class="members">
+        <h2 style="margin-top:30px">房源编号:@ViewBag.homestay.homestay_id</h2>
+        <h2 style="margin-top:10px">产品名称:@ViewBag.homestay.homestay_name</h2>
+        <h2 style="margin-top:10px">订单价格:@ViewBag.total_price 元</h2> 
+        <h2 style="margin-top:10px">平台服务费:@ViewBag.platform_fee 元</h2>
+
+        <div class="clear"></div>
+    </div>
+    <div class="members">
+        <h2 style="margin-top:10px">活动人数:@ViewBag.person_num 人</h2>
+        <!--<div class="dropdown-button">
+            <select class="dropdown" tabindex="10" data-settings='{"wrapperClass":"flat"}'>
+                <option value="0">0</option>
+                <option value="1">1</option>
+                <option value="2">2</option>
+                <option value="3">3</option>
+                <option value="4">4</option>
+                <option value="5">5</option>
+            </select>
+        </div>-->
+        <div class="clear"></div>
+    </div>
+    <div class="book-pag" style="margin-top:10px">
+        <h2>活动日期</h2>
+        <div class="book-pag-frm1">
+            <label>开始时间: @ViewBag.start_time </label>
+            <!--<input class="date" id="datepicker1" type="text" value="Date" onfocus="this.value = '';" onblur="if (this.value == '') {this.value = '';}" required="">-->
+        </div>
+        <div class="book-pag-frm2">
+            <label>结束时间: @ViewBag.end_time </label>
+            <!--<input class="date" id="datepicker2" type="text" value="Date" onfocus="this.value = '';" onblur="if (this.value == '') {this.value = '';}" required="">-->
+        </div>
+        <div class="clear"></div>
+    </div>
+    <!--Date Picker-->
+    <script src="~/Scripts/jquery-ui.js"></script>
+    <script>
+            $(function () {
+                $("#datepicker,#datepicker1,#datepicker2").datepicker();
+            });
+
+              function submitForm() {
+        $.ajax({
+            type: "post",
+            url: "../Order/AddHomeStayOrder",
+            data: {
+                start_time: "@ViewBag.start_time",
+                end_time:"@ViewBag.end_time",
+                homestay_id: "@ViewBag.homestay.homestay_id",
+                fee:"@ViewBag.platform_fee",
+                price: "@ViewBag.total_price",
+                payment: $('input:radio:checked').val()
+            },
+            async: false,
+            dataType: 'json',
+            success: function (d) {
+                var addState = d.isSuccess;
+                if (addState == true) {//登录成功
+                    console.log(d);
+                    alert("订单创建成功!");
+                    window.location.href = "../HomeStay/StayInfo?productID=@ViewBag.homestay.homestay_id";
+                }
+                else {
+                    //登录失败
+                    console.log(d);
+                    alert(d.message);
+                }
+            },
+            error: function (a) {
+                console.log(a);
+                alert(a.message);
+            }
+        });
+
+    }
+    function returnToDetail() {
+        window.location.href = "../HomeStay/StayInfo?productID=@ViewBag.homestay.homestay_id";
+    }
+    </script>
+    <!--//Date Picker-->
+
+    <div class="food">
+        <h2>选择支付方式</h2>
+        <div class="radio-btns">
+            <div class="check_box"> <div class="radio"> <label><input type="radio" value="支付宝" name="radio" checked=""><i></i>支付宝</label> </div></div>
+            <div class="check_box"> <div class="radio"> <label><input type="radio" value="微信支付" name="radio"><i></i>微信支付</label> </div></div>
+            <div class="check_box"> <div class="radio"> <label><input type="radio" value="银联支付" name="radio"><i></i>银联支付</label> </div></div>
+            <div class="check_box"> <div class="radio"> <label><input type="radio" value="京东钱包" name="radio"><i></i>京东钱包</label> </div></div>
+            <div class="check_box"> <div class="radio"> <label><input type="radio" value="Paypal" name="radio"><i></i>Paypal</label> </div></div>
+            <div class="check_box"> <div class="radio"> <label><input type="radio" value="云闪付" name="radio"><i></i>云闪付</label> </div></div>
+        </div>
+    </div>
+    <div class="submit">
+        <div class="members">
+            <div class="adult">
+                <input type="button" class="book" onclick="returnToDetail()" value="返回修改">
+            </div>
+
+            <div class="adult">
+                <input type="button" class="book" onclick="submitForm()" value="提交预定">
+            </div>
+
+        </div>
+    </div>
+</div>

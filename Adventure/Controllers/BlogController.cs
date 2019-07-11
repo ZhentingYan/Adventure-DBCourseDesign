@@ -21,7 +21,6 @@ namespace Adventure.Controllers
         {
             if (Session["user_id"] == null)
             {
-
                 return Redirect("~/login/index");
             }
             else
@@ -33,21 +32,18 @@ namespace Adventure.Controllers
                         ConnectionString = System.Web.Configuration.WebConfigurationManager.AppSettings["ConnectionString"],
                         DbType = DbType.Oracle,//设置数据库类型
                         IsAutoCloseConnection = true,//自动释放数据务，如果存在事务，在事务结束后释放
-                        InitKeyType = InitKeyType.SystemTable //从实体特性中读取主键自增列信息
+                        InitKeyType = InitKeyType.Attribute //从实体特性中读取主键自增列信息
                     });
                 JObject isSuccess = new JObject();
                 try
                 {
-                    //int max = db.Queryable<Blog>().Max(it => it.story_id);//最大值
-                    var getAllOrder = db.Queryable<Blog>().OrderBy(it => it.story_id, OrderByType.Desc).ToArray();
-                    //发送全部的倒序
-                    // var top5 = db.Queryable<Blog>().Take(5).ToList();    //前五条    
-                    ViewBag.AllBlogs = getAllOrder;//发送
+                    var getAllStory = db.Queryable<Blog>().OrderBy(it => it.story_id, OrderByType.Desc).ToArray();
+                    ViewBag.AllBlogs = getAllStory;//发送
                 }
                 catch (Exception ex)
                 {
                     ViewBag.errorMessage = "加载失败!";
-                    return View();
+                    throw ex;
                 }
                 finally { }
                 return View();
@@ -64,96 +60,99 @@ namespace Adventure.Controllers
         [HttpPost]
         public ActionResult ChangeBlog(FormCollection form)
         {
-            int changestoryid = 0;
-            string flag = form["changeBlogSubmit"];
-            if (flag == null)
+            DateTime nowtime = DateTime.Now;
+            string folder = Server.MapPath("~/images/Blog");
+            var filePath = folder + "\\" + nowtime.ToFileTime().ToString() + Request.Files["changeBlogPicture"].FileName.Substring(Request.Files["changeBlogPicture"].FileName.LastIndexOf("\\") + 1);
+            var fileSave = Request.Files["changeBlogPicture"].FileName;
+            if (Request.Files["changeBlogPicture"].FileName != "")
             {
-                changestoryid = Request.Form["changeblogiiD"].ObjToInt();
+                fileSave = "../images/Blog/" + nowtime.ToFileTime().ToString() + Request.Files["changeBlogPicture"].FileName.Substring(Request.Files["changeBlogPicture"].FileName.LastIndexOf("\\") + 1);
             }
-            if (flag != null)
+            else
             {
-                SqlSugarClient db = new SqlSugarClient(
+                fileSave = (string)Session["blog_pic"];
+            }
+            if (System.IO.File.Exists(filePath))
+            {
+                System.IO.File.Delete(filePath);
+            }
+            Request.Files["changeBlogPicture"].SaveAs(filePath);
+            SqlSugarClient db = new SqlSugarClient(
                 new ConnectionConfig()
                 {
                     ConnectionString = System.Web.Configuration.WebConfigurationManager.AppSettings["ConnectionString"],
                     DbType = DbType.Oracle,//设置数据库类型
-                         IsAutoCloseConnection = true,//自动释放数据务，如果存在事务，在事务结束后释放
-                         InitKeyType = InitKeyType.SystemTable //从实体特性中读取主键自增列信息
-                     });
-
-
-                // JObject isSuccess = new JObject();
-
-
-                var ChangeDetail = db.Queryable<Blog>().InSingle(changestoryid);
-                string changeUserId = ChangeDetail.user_id;
-                DateTime nowtime = DateTime.Now;
+                    IsAutoCloseConnection = true,//自动释放数据务，如果存在事务，在事务结束后释放
+                    InitKeyType = InitKeyType.Attribute //从实体特性中读取主键自增列信息
+                });
+            try
+            {
                 var updata = new Blog
                 {
-                    story_id = changestoryid,
-                    user_id = changeUserId,
-                    title = form["changeBlogTitle"],
-                    content_s = form["changeBlogPosition"],
-                    pictures = "image/*",
+                    story_id = Convert.ToInt16(Request.Form["blog_ID"]),
+                    user_id = (string)Session["user_id"],
+                    title = Request.Form["changeBlogTitle"],
+                    content_s = Request.Form["changeBlogContent"],
+                    pictures = fileSave,
                     times = nowtime
                 };
-                if (db.Insertable(updata).ExecuteCommand() == 1)
+                if (db.Updateable(updata).ExecuteCommand() == 1)
                 {
-                    ViewBag.errorMessage = "旅行故事修改成功!";
-                    //  ViewBag.flag = 1;
-                    return Content(ViewBag.errorMessage);
+                    ViewBag.flag = 1;
                 }
                 else
                 {
                     ViewBag.errorMessage = "旅行故事修改失败!";
-                    // ViewBag.flag = 0;
-                    return Content(ViewBag.errorMessage);
+                    ViewBag.flag = 0;
                 }
-
+                return Redirect("~/Blog/BlogDetail?BlogId=" + Request.Form["blog_ID"]);
             }
-            else
+            catch (Exception ex)
             {
                 ViewBag.errorMessage = "旅行故事修改失败!";
-                // ViewBag.flag = 0;
-                return Content(ViewBag.errorMessage);
+                ViewBag.flag = 0;
+                return Redirect("~/Blog/BlogDetail?BlogId=" + Request.Form["blog_ID"]);
             }
-
-
         }
 
 
         public ActionResult BlogDetail(int BlogId = -1)//加载详细story
         {
-
-            //  ViewBag.title = "旅行故事";
-            SqlSugarClient db = new SqlSugarClient(
-            new ConnectionConfig()
+            if (Session["user_id"] == null)
             {
-                ConnectionString = System.Web.Configuration.WebConfigurationManager.AppSettings["ConnectionString"],
-                DbType = DbType.Oracle,//设置数据库类型
-                        IsAutoCloseConnection = true,//自动释放数据务，如果存在事务，在事务结束后释放
-                        InitKeyType = InitKeyType.SystemTable //从实体特性中读取主键自增列信息
-                    });
-            JObject isSuccess = new JObject();
-            try
-            {
-                //int max = db.Queryable<Blog>().Max(it => it.story_id);
-                // var getStoryId = db.Queryable<Blog>().Where(it => it.story_id == BlogId).ToList();
-
-                var theDetail = db.Queryable<Blog>().InSingle(BlogId);
-                var theAuthor = db.Queryable<User>().InSingle(theDetail.user_id);
-
-                ViewBag.CurrentBlog = theDetail;
-                ViewBag.Author = theAuthor;
+                return Redirect("~/login/index");
             }
-            catch (Exception ex)
+            else
             {
-                ViewBag.errorMessage = "加载失败!";
-                //ViewBag.flag = 0;
+                SqlSugarClient db = new SqlSugarClient(
+                 new ConnectionConfig()
+                 {
+                     ConnectionString = System.Web.Configuration.WebConfigurationManager.AppSettings["ConnectionString"],
+                     DbType = DbType.Oracle,//设置数据库类型
+                     IsAutoCloseConnection = true,//自动释放数据务，如果存在事务，在事务结束后释放
+                     InitKeyType = InitKeyType.Attribute //从实体特性中读取主键自增列信息
+                 });
+                try
+                {
+                    var theDetail = db.Queryable<Blog>().InSingle(BlogId);
+                    var theAuthor = db.Queryable<User>().InSingle(theDetail.user_id);
+                    ViewBag.CurrentBlog = theDetail;
+                    ViewBag.Author = theAuthor;
+                    Session["blog_pic"] = theDetail.pictures;
+                    if (theAuthor.user_id != (string)Session["user_id"])
+                        ViewBag.flag = 0;
+                    else
+                        ViewBag.flag = 1;
+                }
+                catch (Exception ex)
+                {
+                    Session["message"] = "无此旅行故事!";
+                    //ViewBag.flag = 0;
+                    return Redirect("~/Home");
+                }
+                finally { }
                 return View();
             }
-            finally { }
-            return View();
         }
 
         public ActionResult deleteBlog()
@@ -164,71 +163,67 @@ namespace Adventure.Controllers
                 {
                     ConnectionString = System.Web.Configuration.WebConfigurationManager.AppSettings["ConnectionString"],
                     DbType = DbType.Oracle,//设置数据库类型
-                        IsAutoCloseConnection = true,//自动释放数据务，如果存在事务，在事务结束后释放
-                        InitKeyType = InitKeyType.SystemTable //从实体特性中读取主键自增列信息
-                    });
-            //int max = db.Queryable<Blog>().Max(it => it.story_id);
-            // var getStoryId = db.Queryable<Blog>().Where(it => it.story_id == BlogId).ToList();
-
-            int a = Request.Form["story_id"].ObjToInt();
-            //var t3 = db.Deleteable<Blog>().In(a).ExecuteCommand();
-            var t3 = db.Deleteable<Blog>().Where(new Blog() { story_id = a }).ExecuteCommand();
-            //int asd = 0;
-
-            if (t3 == 1)
+                    IsAutoCloseConnection = true,//自动释放数据务，如果存在事务，在事务结束后释放
+                    InitKeyType = InitKeyType.Attribute //从实体特性中读取主键自增列信息
+                });
+            JObject isSuccess = new JObject();
+            int sID = Request.Form["story_id"].ObjToInt();
+            try
             {
-                ViewBag.errorMessage = "删除成功!";
-
-                return Redirect("~/Blog/Index");
+                if (db.Deleteable<Blog>().In(sID).ExecuteCommand() == 1)
+                {
+                    isSuccess.Add("isSuccess", true);
+                }
+                else
+                {
+                    isSuccess.Add("isSuccess", false);
+                    isSuccess.Add("message", "删除旅行故事失败！");
+                }
             }
-            //  ViewBag.flag = 0;
-
-            else
+            catch (Exception ex)
             {
-                ViewBag.errorMessage = "删除失败!";
-                return Redirect("~/Blog/Index");
+                isSuccess.Add("isSuccess", false);
+                isSuccess.Add("message", "操作失败！");
+                throw ex;
+
             }
-
-
-            //return Content(JsonConvert.SerializeObject(isSuccess, Formatting.Indented))
-
+            return Content(JsonConvert.SerializeObject(isSuccess, Formatting.Indented));
         }
 
 
         public ActionResult SubmitBlog(FormCollection form)         //发布故事
         {
+            DateTime nowtime = DateTime.Now;
+            string folder = Server.MapPath("~/images/Blog");
+            var filePath = folder + "\\" + nowtime.ToFileTime().ToString() + Request.Files["blogPicture"].FileName.Substring(Request.Files["blogPicture"].FileName.LastIndexOf("\\") + 1);
+            var fileSave = Request.Files["blogPicture"].FileName;
+            if (Request.Files["blogPicture"].FileName != "")
+            {
+                fileSave = "../images/Blog/" + nowtime.ToFileTime().ToString() + Request.Files["blogPicture"].FileName.Substring(Request.Files["blogPicture"].FileName.LastIndexOf("\\") + 1);
+            }
+            else
+            {
+                fileSave = "../iamges/Blog/default.jpg";
+            }
+            if (System.IO.File.Exists(filePath))
+            {
+                System.IO.File.Delete(filePath);
+            }
+            Request.Files["blogPicture"].SaveAs(filePath);
             SqlSugarClient db = new SqlSugarClient(
             new ConnectionConfig()
             {
                 ConnectionString = System.Web.Configuration.WebConfigurationManager.AppSettings["ConnectionString"],
                 DbType = DbType.Oracle,//设置数据库类型
-                    IsAutoCloseConnection = true,//自动释放数据务，如果存在事务，在事务结束后释放
-                    InitKeyType = InitKeyType.SystemTable //从实体特性中读取主键自增列信息
-                });
+                IsAutoCloseConnection = true,//自动释放数据务，如果存在事务，在事务结束后释放
+                InitKeyType = InitKeyType.Attribute //从实体特性中读取主键自增列信息
+            });
+
             try
             {
-                int max = db.Queryable<Blog>().Max(it => it.story_id);//最大值
-                DateTime nowtime = DateTime.Now;
-                string folder = Server.MapPath("~/images/Blog");
-                var filePath = folder + "\\" + nowtime.ToFileTime().ToString() + Request.Files["blogPicture"].FileName.Substring(Request.Files["blogPicture"].FileName.LastIndexOf("\\") + 1);
-                var fileSave = Request.Files["blogPicture"].FileName;
-                if (Request.Files["blogPicture"].FileName != "")
-                {
-                    fileSave = "../images/Blog/" + nowtime.ToFileTime().ToString() + Request.Files["blogPicture"].FileName.Substring(Request.Files["blogPicture"].FileName.LastIndexOf("\\") + 1);
-
-                }
-                else
-                {
-                    fileSave = "../iamges/Blog/default.jpg";
-                }
-                if (System.IO.File.Exists(filePath))
-                {
-                    System.IO.File.Delete(filePath);
-                }
-                Request.Files["blogPicture"].SaveAs(filePath);
                 var storyData = new Blog()
                 {
-                    user_id = Session["user_id"].ObjToString(),
+                    user_id = (string)Session["user_id"],
                     title = form["blogTitle"],
                     content_s = form["blogContent"],
                     pictures = fileSave,
@@ -237,28 +232,26 @@ namespace Adventure.Controllers
 
                 if (db.Insertable(storyData).ExecuteCommand() == 1)
                 {
-                    ViewBag.errorMessage = "旅行故事发布成功!";
                     ViewBag.flag = 1;
-                    var storyId = max + 1;
+                    int storyId = db.Queryable<Blog>().Max(it => it.story_id);//最大值
                     return Redirect("../Blog/BlogDetail?BlogId=" + storyId);
-
                 }
                 else
                 {
                     ViewBag.errorMessage = "旅行故事发布失败!";
                     ViewBag.flag = 0;
-                    return Content(ViewBag.errorMessage);
                 }
             }
 
             catch (Exception ex)
             {
-                ViewBag.errorMessage = "注册失败!";
+                ViewBag.errorMessage = "操作失败!";
                 ViewBag.flag = 0;
-                return Content(ViewBag.errorMessage);
+                throw ex;
+
             }
             finally { }
-            //return Content(JsonConvert.SerializeObject(isSuccess, Formatting.Indented));
+            return View();
         }
     }
 }

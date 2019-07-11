@@ -19,6 +19,49 @@ namespace Adventure.Controllers
         // GET: HomeStay
         public ActionResult Index()
         {
+            SqlSugarClient db = new SqlSugarClient(
+                   new ConnectionConfig()
+                   {
+                       ConnectionString = System.Web.Configuration.WebConfigurationManager.AppSettings["ConnectionString"],
+                       DbType = DbType.Oracle,//设置数据库类型
+                    IsAutoCloseConnection = true,//自动释放数据务，如果存在事务，在事务结束后释放
+                    InitKeyType = InitKeyType.Attribute //从实体特性中读取主键自增列信息
+                });
+            try
+            {
+                DateTime dt_start_time, dt_end_time;
+                DateTimeFormatInfo dtFormat = new DateTimeFormatInfo();
+                dtFormat.ShortDatePattern = "yyyy/MM/dd";
+                dt_start_time = Convert.ToDateTime(Request.Form["start_time"], dtFormat);
+                dt_end_time = Convert.ToDateTime(Request.Form["end_time"], dtFormat);
+                string key = Request.Form["destination"].ToLower();
+                int numNeed = Convert.ToInt32(Request.Form["person_num"]);
+
+                var conflictID = new List<int>();
+                var conflict = db.Queryable<HomestayOrder>().Where(it => dt_start_time < it.end_time && dt_end_time > it.start_time && it.status <= 0).ToArray();
+                for (int i = 0; i < conflict.Length; i++)
+                {
+                    if (conflictID.Contains(conflict[i].homestay_id) == false)
+                    {
+                        conflictID.Add(conflict[i].homestay_id);
+                    }
+                }
+                var returnlist = db.Queryable<Homestay>().Where(it => !conflictID.Contains(it.homestay_id) && it.max_member_limit >= numNeed && it.address.ToLower().Contains(key) && dt_end_time <= it.latest_schedulable_date).ToArray();
+                if (returnlist.Length == 0)
+                {
+                    var getRecommend = db.Queryable<Homestay>().OrderBy(it => it.house_grade, OrderByType.Desc).Take(8).ToArray();
+                    ViewBag.returnList = getRecommend;
+                }
+                else
+                {
+                    ViewBag.returnList = returnlist;
+                }
+            }
+            catch (Exception ex)
+            {
+                var getRecommend = db.Queryable<Homestay>().OrderBy(it => it.house_grade, OrderByType.Desc).Take(8).ToArray();
+                ViewBag.returnList = getRecommend;
+            }
             return View();
         }
 
@@ -27,41 +70,49 @@ namespace Adventure.Controllers
         public ActionResult Index(FormCollection form)
         {
             SqlSugarClient db = new SqlSugarClient(
-        new ConnectionConfig()
-        {
-            ConnectionString = System.Web.Configuration.WebConfigurationManager.AppSettings["ConnectionString"],
-            DbType = DbType.Oracle,//设置数据库类型
-                        IsAutoCloseConnection = true,//自动释放数据务，如果存在事务，在事务结束后释放
-                        InitKeyType = InitKeyType.Attribute //从实体特性中读取主键自增列信息
-                    });
-                try
+                new ConnectionConfig()
                 {
-                    DateTime dt_start_time, dt_end_time;
-                    DateTimeFormatInfo dtFormat = new DateTimeFormatInfo();
-                    dtFormat.ShortDatePattern = "yyyy/MM/dd";
-                    dt_start_time = Convert.ToDateTime(Request.Form["start_time"], dtFormat);
-                    dt_end_time = Convert.ToDateTime(Request.Form["end_time"], dtFormat);
-                    string key = Request.Form["destination"].ToLower();
-                    int numNeed = Convert.ToInt32(Request.Form["person_num"]);
+                    ConnectionString = System.Web.Configuration.WebConfigurationManager.AppSettings["ConnectionString"],
+                    DbType = DbType.Oracle,//设置数据库类型
+                    IsAutoCloseConnection = true,//自动释放数据务，如果存在事务，在事务结束后释放
+                    InitKeyType = InitKeyType.Attribute //从实体特性中读取主键自增列信息
+                });
+            try
+            {
+                DateTime dt_start_time, dt_end_time;
+                DateTimeFormatInfo dtFormat = new DateTimeFormatInfo();
+                dtFormat.ShortDatePattern = "yyyy/MM/dd";
+                dt_start_time = Convert.ToDateTime(Request.Form["start_time"], dtFormat);
+                dt_end_time = Convert.ToDateTime(Request.Form["end_time"], dtFormat);
+                string key = Request.Form["destination"].ToLower();
+                int numNeed = Convert.ToInt32(Request.Form["person_num"]);
 
-                    var conflictID = new List<int>();
-                    var conflict = db.Queryable<HomestayOrder>().Where(it => dt_start_time < it.end_time && dt_end_time > it.start_time && it.status <= 0).ToArray();
-                    for (int i = 0; i < conflict.Length; i++)
-                    {
-                        if (conflictID.Contains(conflict[i].homestay_id) == false)
-                        {
-                            conflictID.Add(conflict[i].homestay_id);
-                        }
-                    }
-                    var returnlist = db.Queryable<Homestay>().Where(it => conflictID.Contains(it.homestay_id) == false && it.max_member_limit >= numNeed && it.address.ToLower().Contains(key) && dt_end_time <= it.latest_schedulable_date).ToArray();
-                    ViewBag.returnList = returnlist;
-                    ViewBag.isSearch = 1;
-                }
-                catch (Exception ex)
+                var conflictID = new List<int>();
+                var conflict = db.Queryable<HomestayOrder>().Where(it => dt_start_time < it.end_time && dt_end_time > it.start_time && it.status <= 0).ToArray();
+                for (int i = 0; i < conflict.Length; i++)
                 {
-                    ViewBag.isSearch = 0;
+                    if (conflictID.Contains(conflict[i].homestay_id) == false)
+                    {
+                        conflictID.Add(conflict[i].homestay_id);
+                    }
                 }
-                return View();
+                var returnlist = db.Queryable<Homestay>().Where(it => !conflictID.Contains(it.homestay_id) && it.max_member_limit >= numNeed && it.address.ToLower().Contains(key) && dt_end_time <= it.latest_schedulable_date).ToArray();
+                if (returnlist.Length == 0)
+                {
+                    var getRecommend = db.Queryable<Homestay>().OrderBy(it => it.house_grade, OrderByType.Desc).Take(8).ToArray();
+                    ViewBag.returnList = getRecommend;
+                }
+                else
+                {
+                    ViewBag.returnList = returnlist;
+                }
+            }
+            catch (Exception ex)
+            {
+                ViewBag.returnlist = null;
+            }
+            return View();
+
         }
         public ActionResult StayInfo(int productID = -1)
         {
@@ -80,6 +131,8 @@ namespace Adventure.Controllers
                 var getHomestaySpecific = db.Queryable<Homestay>().InSingle(productID);
                 ViewBag.HomestayDetail = getHomestaySpecific;
                 ViewBag.Landlord = db.Queryable<User>().InSingle(getHomestaySpecific.user_id);
+                var HomestaySpecial = db.Queryable<SpecialPrice>().Where(it => it.homestay_id == productID).ToArray();
+                ViewBag.HomestaySpecial = HomestaySpecial;
             }
             catch (Exception ex)
             {
@@ -444,7 +497,6 @@ namespace Adventure.Controllers
         [HttpPost]
         public ActionResult CheckAvailable()
         {
-            JObject isSuccess = new JObject();
 
             SqlSugarClient db = new SqlSugarClient(
                 new ConnectionConfig()
@@ -454,9 +506,9 @@ namespace Adventure.Controllers
                     IsAutoCloseConnection = true,//自动释放数据务，如果存在事务，在事务结束后释放
                     InitKeyType = InitKeyType.Attribute //从实体特性中读取主键自增列信息
                 });
+            JObject isSuccess = new JObject();
             try
             {
-
                 DateTime dt_start_time, dt_end_time, dt_latest_time;
                 DateTimeFormatInfo dtFormat = new DateTimeFormatInfo();
                 dtFormat.ShortDatePattern = "yyyy/MM/dd";
@@ -466,8 +518,8 @@ namespace Adventure.Controllers
                 //int numNeed = Convert.ToInt32(Request.Form["form-member-num"]);
 
 
-                var available = db.Queryable<HomestayOrder>().Where(it => it.homestay_id == Convert.ToInt32(Request.Form["productID"]) && (DateTime.Compare(dt_start_time, it.end_time) < 0 && DateTime.Compare(dt_end_time, it.start_time) > 0) && it.status <= 0).ToArray();
-                if (available.Length == 0 && DateTime.Compare(dt_end_time, dt_latest_time) <= 0)
+                var available = db.Queryable<HomestayOrder>().Where(it => it.homestay_id == Convert.ToInt32(Request.Form["productID"]) && dt_start_time < it.end_time && dt_end_time > it.start_time && it.status <= 0).ToArray();
+                if (available.Length == 0 && dt_end_time <= dt_latest_time)
                 {
                     isSuccess.Add("isSuccess", true);
                     return Content(JsonConvert.SerializeObject(isSuccess, Formatting.Indented));
@@ -486,9 +538,9 @@ namespace Adventure.Controllers
                 isSuccess.Add("isSuccess", false);
                 isSuccess.Add("message", "您选择的日期不可预订！");
                 return Content(JsonConvert.SerializeObject(isSuccess, Formatting.Indented));
-
             }
         }
+
 
 
         [HttpPost]

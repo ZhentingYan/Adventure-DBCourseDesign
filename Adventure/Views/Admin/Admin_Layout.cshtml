@@ -124,6 +124,34 @@
                                             @Session["first_name"] @Session["last_name"]
                                         </div>
                                     </div>
+                                    <div class="profile-usertitle">
+                                        @{
+                                            if ((int)Session["bonus_points"] < 20)
+                                            {
+                                                <div class="sidebar-userpic-name" style="margin-top:20px">
+                                                    普通会员
+                                                </div>
+                                            }
+                                            else if ((int)Session["bonus_points"] < 100)
+                                            {
+                                                <div class="sidebar-userpic-name" style="margin-top:20px">
+                                                    尊享会员
+                                                </div>
+                                            }
+                                            else if ((int)Session["bonus_points"] < 200)
+                                            {
+                                                <div class="sidebar-userpic-name" style="margin-top:20px">
+                                                    白金会员
+                                                </div>
+                                            }
+                                            else
+                                            {
+                                                <div class="sidebar-userpic-name" style="margin-top:20px">
+                                                    尊享会员
+                                                </div>
+                                            }
+                                        }
+                                    </div>
                                     <div class="sidebar-userpic-btn">
                                         <a class="tooltips" href="~/Login" data-placement="top" data-original-title="注销登陆">
                                             <i class="material-icons">input</i>
@@ -173,6 +201,12 @@
                                         <a href="~/HomeStay/Release" class="nav-link ">
                                             <!--TODO-->
                                             <span class="title">发布房源</span>
+                                        </a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a href="~/HomeStay/Special" class="nav-link ">
+                                            <!--TODO-->
+                                            <span class="title">增加房源特殊价格</span>
                                         </a>
                                     </li>
                                     <li class="nav-item">
@@ -254,6 +288,7 @@
                 </div>
             </div>
             <!-- end sidebar menu -->
+            
             @RenderBody()
 
         </div>

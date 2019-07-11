@@ -3,7 +3,15 @@
     ViewBag.Title = "我的Adventure";
     Layout = "~/Views/Admin/Admin_Layout.cshtml";
 }
-
+<script>
+    $(document).ready(function () {
+           var message="@Session["message"]";
+           if (message!= "") {
+              alert(message);
+             @{Session["message"] = null;}
+            }
+        })
+</script>
 <!--start page content-->
 <div class="page-content-wrapper">
     <div class="page-content">
@@ -22,7 +30,7 @@
                 </ol>
             </div>
         </div>
-        <h2 style="margin:120px auto" class="text-center" >快从左边导航栏中选择你需要的查看的信息吧~</h2>
+        <h2 style="margin:160px auto" class="text-center" >快从左边导航栏中选择你需要的查看的信息吧~</h2>
     </div>
 </div>
 <!--end page content-->

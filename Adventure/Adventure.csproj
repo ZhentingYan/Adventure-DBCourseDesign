@@ -256,7 +256,11 @@
     <Content Include="images\Activity\132070608791308280activitytest.jpg" />
     <Content Include="images\Activity\132070609362051466activitytest.jpg" />
     <Content Include="images\Activity\default.jpg" />
+    <Content Include="images\activity_bg.jpg" />
     <Content Include="images\bg_1.jpg" />
+    <Content Include="images\bg_1_backup.jpg" />
+    <Content Include="images\bloghead.jpg" />
+    <Content Include="images\Contact_bg.jpg" />
     <Content Include="images\destination-1.jpg" />
     <Content Include="images\destination-2-1.jpg" />
     <Content Include="images\destination-2.jpg" />
@@ -264,6 +268,7 @@
     <Content Include="images\destination-4.jpg" />
     <Content Include="images\destination-5.jpg" />
     <Content Include="images\destination-6.jpg" />
+    <Content Include="images\Favor_bg.jpg" />
     <Content Include="images\headicon\132070212144090964destination-2-1.jpg" />
     <Content Include="images\headicon\132070228162064822bg_1.jpg" />
     <Content Include="images\headicon\132070259960723039destination-3.jpg" />
@@ -287,6 +292,7 @@
     <Content Include="images\headicon\132070640568532306Yanzhenting.jpg" />
     <Content Include="images\headicon\132070645411087920Yanzhenting.jpg" />
     <Content Include="images\headicon\default.jpg" />
+    <Content Include="images\homestay_bg.jpg" />
     <Content Include="images\hotel-1.jpg" />
     <Content Include="images\hotel-2.jpg" />
     <Content Include="images\hotel-3.jpg" />
@@ -382,7 +388,13 @@
     <Content Include="images\img\vehicle\v4.jpg" />
     <Content Include="images\img\vehicle\v5.jpg" />
     <Content Include="images\img\vehicle\v6.jpg" />
+    <Content Include="images\iplace-1.jpg" />
+    <Content Include="images\iplace-2.jpg" />
+    <Content Include="images\iplace-3.jpg" />
+    <Content Include="images\iplace-4.jpg" />
+    <Content Include="images\iplace-6.jpg" />
     <Content Include="images\loc.png" />
+    <Content Include="images\Login_bg.jpg" />
     <Content Include="images\Order\bg.jpg" />
     <Content Include="images\Order\bg_back.jpg" />
     <Content Include="images\Order\cal.png" />
@@ -396,6 +408,8 @@
     <Content Include="images\person_2.jpg" />
     <Content Include="images\person_3.jpg" />
     <Content Include="images\person_4.jpg" />
+    <Content Include="images\Publish_bg.jpg" />
+    <Content Include="images\Release_bg1.jpg" />
     <Content Include="images\restaurant-1.jpg" />
     <Content Include="images\restaurant-2.jpg" />
     <Content Include="images\restaurant-3.jpg" />
@@ -1115,7 +1129,6 @@
     <Content Include="Views\Register\Index.cshtml" />
     <Content Include="Views\Order\Order_Layout.cshtml" />
     <Content Include="Views\Order\Index.cshtml" />
-    <Content Include="Views\Blog\Index.cshtml" />
     <Content Include="Views\PersonInfo\Index.cshtml" />
     <Content Include="Views\PersonInfo\PersonInfo_Layout.cshtml" />
     <Content Include="Views\Activity\Index.cshtml" />
@@ -1127,11 +1140,7 @@
     <Content Include="Views\HomeStay\StayInfo.cshtml" />
     <Content Include="Views\Home\Favourites.cshtml" />
     <Content Include="Views\Admin\ViewBlog.cshtml" />
-    <Content Include="Views\Blog\BlogDetail.cshtml" />
-    <Content Include="Views\Blog\NewBlog.cshtml" />
     <Content Include="Views\Admin\Admin_Layout.cshtml" />
-    <Content Include="Views\Admin\CommentActivity.cshtml" />
-    <Content Include="Views\Admin\CommentHomestay.cshtml" />
     <Content Include="Views\Admin\Index.cshtml" />
     <Content Include="Views\Admin\ViewActivity.cshtml" />
     <Content Include="Views\Admin\ViewHomestay.cshtml" />
@@ -1143,6 +1152,11 @@
     <Content Include="Views\Admin\ViewHomestaySpecial.cshtml" />
     <Content Include="Views\HomeStay\EditHomestay.cshtml" />
     <Content Include="Views\HomeStay\Special.cshtml" />
+    <Content Include="Views\Admin\Comment.cshtml" />
+    <Content Include="Views\Order\HomestayOrder.cshtml" />
+    <Content Include="Views\Blog\BlogDetail.cshtml" />
+    <Content Include="Views\Blog\Index.cshtml" />
+    <Content Include="Views\Blog\NewBlog.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
