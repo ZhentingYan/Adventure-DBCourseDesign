@@ -3,6 +3,40 @@
     ViewBag.Title = "查看被预定的体验活动";
     Layout = "~/Views/Admin/Admin_Layout.cshtml";
 }
+<script>
+function deleteOrderedActivity(orderID) {
+        var choice = confirm("是否确认删除该用户订单?提交后将不可更改。");//确认框。
+        if (choice == true) {
+            $.ajax({
+                type: "post",
+                url: "../Admin/CancelActivityOrder",
+                data: {
+                    orderID: orderID
+                },
+                async: false,
+                dataType: 'json',
+                success: function (d) {
+                    var addState = d.isSuccess;
+                    if (addState == true) {//登录成功
+                        console.log(d);
+                        window.location.href = "/Admin/checkMyActivityOrder";
+                        alert("订单取消成功!");
+                    }
+                    else {
+                        //登录失败
+                        console.log(d);
+                        alert(d.message);
+                        window.location.href = "/Admin/checkMyActivityOrder";
+                    }
+                },
+                error: function (a) {
+                    console.log(a);
+                    alert("订单取消失败!");
+                }
+            });
+        }
+    }
+    </script>
 
 <!-- start page content -->
 <div class="page-content-wrapper">
@@ -46,6 +80,7 @@
                                         <th class="center">结束时间</th>
                                         <th class="center">总价</th>
                                         <th class="center">平台费</th>
+                                        <th class="center">订单状态</th>
                                         <th class="center">操作</th>
 
                                     </tr>
@@ -56,23 +91,40 @@
                                         {
                                             for (int i = 0; i < ViewBag.returnList.Length; i++)
                                             {
-                                                <tr class="odd gradeX">
-                                                    <td class="center">@ViewBag.returnList[i].activity_order_id</td>
-                                                    <td class="center">@ViewBag.returnList[i].customer_id</td>
-                                                    <td class="center">@ViewBag.returnList[i].create_time.ToString("yyyy-MM-dd")</td>
-                                                    <td class="center">@ViewBag.returnList[i].start_time.ToString("yyyy-MM-dd")</td>
-                                                    <td class="center">@ViewBag.returnList[i].end_time.ToString("yyyy-MM-dd")</td>
-                                                    <td class="center">@ViewBag.returnList[i].total_price</td>
-                                                    <td class="center">@ViewBag.returnList[i].platform_fee</td>
-                                                    <td class="center">
-                                                        <a href="/Activity/SingleActivity?productID=@ViewBag.returnList[i].activity_id" class="btn btn-tbl-edit btn-xs">
-                                                            <i class="fa fa-exclamation-circle"></i>
-                                                        </a>
-                                                        <a href="#" class="btn btn-tbl-delete btn-xs" onclick="">
-                                                            <i class="fa fa-trash-o "></i>
-                                                        </a>
-                                                    </td>
-                                                </tr>
+                                    <tr class="odd gradeX">
+                                        <td class="center">@ViewBag.returnList[i].activity_order_id</td>
+                                        <td class="center">@ViewBag.returnList[i].customer_id</td>
+                                        <td class="center">@ViewBag.returnList[i].create_time.ToString("yyyy-MM-dd")</td>
+                                        <td class="center">@ViewBag.returnList[i].start_time.ToString("yyyy-MM-dd")</td>
+                                        <td class="center">@ViewBag.returnList[i].end_time.ToString("yyyy-MM-dd")</td>
+                                        <td class="center">@ViewBag.returnList[i].total_price</td>
+                                        <td class="center">@ViewBag.returnList[i].platform_fee</td>
+                                        @{ if (ViewBag.returnList[i].status == -2)
+                                            {
+                                                <td class="center">已取消</td>
+                                            }
+                                            else if (ViewBag.returnList[i].status == -1)
+                                            {
+                                                <td class="center">可取消</td>
+                                            }
+                                            else if (ViewBag.returnList[i].status == 0)
+                                            {
+                                                <td class="center">正在进行</td>
+                                            }
+                                            else
+                                            {
+                                                <td class="center">已完成</td>
+                                            }
+                                        }
+                                        <td class="center">
+                                            <a href="/Activity/SingleActivity?productID=@ViewBag.returnList[i].activity_id" class="btn btn-tbl-edit btn-xs">
+                                                <i class="fa fa-exclamation-circle"></i>
+                                            </a>
+                                            <a href="#" class="btn btn-tbl-delete btn-xs" onclick="deleteOrderedActivity(@ViewBag.returnList[i].activity_order_id)">
+                                                <i class="fa fa-trash-o "></i>
+                                            </a>
+                                        </td>
+                                    </tr>
                                             }
                                         }
                                     }

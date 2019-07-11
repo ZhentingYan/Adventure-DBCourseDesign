@@ -19,12 +19,7 @@ namespace Adventure.Controllers
 
         public ActionResult Index()
         {
-            if (Session["user_id"] == null)
-            {
-                return Redirect("~/login/index");
-            }
-            else
-            {
+           
                 ViewBag.title = "旅行故事";
                 SqlSugarClient db = new SqlSugarClient(
                     new ConnectionConfig()
@@ -47,7 +42,7 @@ namespace Adventure.Controllers
                 }
                 finally { }
                 return View();
-            }
+            
         }
 
 

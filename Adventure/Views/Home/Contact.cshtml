@@ -1,6 +1,42 @@
 ﻿@{
     ViewBag.Title = "联系我们";
 }
+<script>
+    function submitReport() {
+
+            $.ajax({
+                type: "post",
+                url: "../Home/SubmitReport",
+                data: {
+                    get_type: $("#orderType").val(),
+                    get_order_id: $("#orderID").val(),
+                    get_reason: $("#content").val(),
+                    name: $("#user_name").val()
+                },
+                async: false,
+                dataType: 'json',
+                success: function (d) {
+                    var addState = d.isSuccess;
+                    if (addState == true) {//登录成功
+                        console.log(d);
+                        window.location.href = "/Home/Contact";
+                        alert("您的订单已经反馈成功,感谢您对Adventure的支持!");
+                    }
+                    else {
+                        //登录失败
+                        console.log(d);
+                        alert(d.message);
+                        window.location.href = "/Home/Contact";
+                    }
+                },
+                error: function (a) {
+                    console.log(a);
+                    alert("订单反馈提交异常,感谢您对Adventure的支持!");
+                }
+            });
+        
+    }
+</script>
 <div class="hero-wrap js-fullheight" style="background-image: url('../images/Contact_bg.jpg');">
     <div class="overlay"></div>
     <div class="container">
@@ -50,19 +86,23 @@
             <div class="col-sm-6 col-sm-offset-3 form-box">
                 <form action="#">
                     <div class="form-group">
-                        <input type="text" class="form-control" name="user_name" placeholder="您的姓名">
+                        <input type="text" class="form-control" name="user_name" id="user_name" placeholder="您的姓名" disabled value="@Session["first_name"]@Session["last_name"]">
                     </div>
                     <div class="form-group">
-                        <input type="text" class="form-control" name="email" placeholder="您的电子邮箱">
+                        <input type="text" class="form-control" name="orderid" id="orderID"  placeholder="订单号" required>
                     </div>
                     <div class="form-group">
-                        <input type="text" class="form-control" name="orderid" placeholder="订单号">
+                        <select name="" id="orderType" class="form-control" required>
+                            <option value="1" selected>反馈体验活动订单</option>
+                            <option value="2">反馈房源订单</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <textarea id="content" cols="30" rows="7" class="form-control" name="reason" placeholder="反馈内容" required></textarea>
                     </div>
                     <div class="form-group">
-                        <textarea  id="" cols="30" rows="7" class="form-control" name="reason" placeholder="反馈内容"></textarea>
-                    </div>
-                    <div class="form-group">
-                        <input type="submit" value="提交反馈" class="btn btn-primary py-3 px-5">
+                        <input type="button" value="提交反馈" onclick="submitReport()" class="btn btn-primary py-3 px-5">
                     </div>
                 </form>
 

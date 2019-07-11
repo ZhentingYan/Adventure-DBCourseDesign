@@ -28,12 +28,12 @@
             dataType: 'json',
             success: function (d) {
                 var addState = d.isSuccess;
-                if (addState == true) {//登录成功  
+                if (addState == true) {//登录成功
                     console.log(d);
                     alert(d.message);
                 }
                 else {
-                    //登录失败                
+                    //登录失败
                     console.log(d);
                     alert(d.message);
                 }
@@ -58,13 +58,13 @@
                 dataType: 'json',
                 success: function (d) {
                     var addState = d.isSuccess;
-                    if (addState == true) {//登录成功  
+                    if (addState == true) {//登录成功
                         console.log(d);
                         //alert(d.message);
                         window.location.href = "../Order/HomestayOrder?productID=@ViewBag.HomeStayDetail.homestay_id" + "&personNum=" + $("#personNum").val()+"&start_time=" + $("#checkin_date").val() + "&end_time="+$("#checkout_date").val();
                     }
                     else {
-                        //登录失败                
+                        //登录失败
                         console.log(d);
                         alert(d.message);
                     }
@@ -96,7 +96,7 @@
 </div>
 <section class="homestay_area singlehomestay">
     <!--start property head title-->
-    <div id="property-title-wrap" class="table-block" >
+    <div id="property-title-wrap" class="table-block">
         <div class="container">
             <div class="head-title-left table-col v-top full-width white-space-normal">
                 <h2 class="property-title"> <br>@ViewBag.HomeStayDetail.homestay_name </h2>
@@ -276,11 +276,11 @@
                                     <form>
                                         <div class="form-group">
                                             <label for="#">入住时间</label>
-                                            <input type="text" id="checkin_date" class="form-control checkin_date" placeholder="入住时间">
+                                            <input type="date" id="checkin_date" class="form-control" placeholder="入住时间">
                                         </div>
                                         <div class="form-group">
                                             <label for="#">退房时间</label>
-                                            <input type="text" id="checkout_date" class="form-control checkout_date" placeholder="退房时间">
+                                            <input type="date" id="checkout_date" class="form-control" placeholder="退房时间">
                                         </div>
                                         <div class="form-group">
                                             <label for="#">入住人数</label>
@@ -355,3 +355,20 @@
         </div>
     </main>
 </section>
+
+<script>
+    $(function () {
+        var date = new Date();
+        var today = date.getFullYear();
+        today += "-";
+        today += date.getMonth() + 1 < 10 ? "0" + (date.getMonth() + 1) : (date.getMonth() + 1);
+        today += "-";
+        today += date.getDate() < 10 ? "0" + date.getDate() : date.getDate();
+        $('#checkin_date').attr('min', today);
+        $('#checkout_date').attr('min', today);
+
+        $('#checkin_date').change(function () {
+            $('#checkout_date').attr('min', $(this).val());
+        });
+    });
+</script>

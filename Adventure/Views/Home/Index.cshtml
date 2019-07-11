@@ -57,14 +57,14 @@
                 <div class="tab-content p-4 px-5" id="v-pills-tabContent">
 
                     <div class="tab-pane fade show active" id="v-pills-1" role="tabpanel" aria-labelledby="v-pills-nextgen-tab">
-                        <form action="/HomeStay/Index" class="search-destination" method="post" >
+                        <form action="/HomeStay/Index" class="search-destination" method="post">
                             <div class="row">
                                 <div class="col-md align-items-end">
                                     <div class="form-group">
                                         <label for="#">目的地</label>
                                         <div class="form-field">
                                             <div class="icon"><span class="icon-map-marker"></span></div>
-                                            <input type="text" name="destination" class="form-control" placeholder="您的目的地">
+                                            <input type="text" required name="destination" class="form-control" placeholder="您的目的地">
                                         </div>
                                     </div>
                                 </div>
@@ -73,7 +73,7 @@
                                         <label for="#">入住时间</label>
                                         <div class="form-field">
                                             <div class="icon"><span class="icon-map-marker"></span></div>
-                                            <input type="text" name="start_time"  class="form-control checkin_date" placeholder="您的入住时间">
+                                            <input type="date" required id="hs-start" name="start_time" class="form-control" placeholder="您的入住时间">
                                         </div>
                                     </div>
                                 </div>
@@ -82,7 +82,7 @@
                                         <label for="#">退房时间</label>
                                         <div class="form-field">
                                             <div class="icon"><span class="icon-map-marker"></span></div>
-                                            <input type="text" name="end_time"  class="form-control checkout_date" placeholder="您的退房时间">
+                                            <input type="date" required id="hs-end" name="end_time" class="form-control" placeholder="您的退房时间">
                                         </div>
                                     </div>
                                 </div>
@@ -92,7 +92,7 @@
                                         <div class="form-field">
                                             <div class="select-wrap">
                                                 <div class="icon"><span class="ion-ios-arrow-down"></span></div>
-                                                <select name="person_num" id="" class="form-control"  >
+                                                <select name="person_num" id="" class="form-control">
                                                     <option value="1" selected>1</option>
                                                     <option value="2">2</option>
                                                     <option value="3">3</option>
@@ -115,14 +115,14 @@
                     </div>
 
                     <div class="tab-pane fade" id="v-pills-2" role="tabpanel" aria-labelledby="v-pills-performance-tab">
-                        <form action="/Activity/Index" class="search-destination"  method="post" >
+                        <form action="/Activity/Index" class="search-destination" method="post">
                             <div class="row">
                                 <div class="col-md align-items-end">
                                     <div class="form-group">
                                         <label for="#">目的地</label>
                                         <div class="form-field">
                                             <div class="icon"><span class="icon-map-marker"></span></div>
-                                            <input type="text" name="destination" class="form-control" placeholder="您的目的地">
+                                            <input type="text" required name="destination" class="form-control" placeholder="您的目的地">
                                         </div>
                                     </div>
                                 </div>
@@ -131,7 +131,7 @@
                                         <label for="#">开始日期</label>
                                         <div class="form-field">
                                             <div class="icon"><span class="icon-map-marker"></span></div>
-                                            <input type="text" name="start_time" class="form-control checkin_date" placeholder="活动开始日期">
+                                            <input type="date" required id="act-start" name="start_time" class="form-control" placeholder="活动开始日期">
                                         </div>
                                     </div>
                                 </div>
@@ -140,7 +140,7 @@
                                         <label for="#">结束日期</label>
                                         <div class="form-field">
                                             <div class="icon"><span class="icon-map-marker"></span></div>
-                                            <input type="text" name="end_time" class="form-control checkout_date" placeholder="活动结束日期">
+                                            <input type="date" required id="act-end" name="end_time" class="form-control" placeholder="活动结束日期">
                                         </div>
                                     </div>
                                 </div>
@@ -219,41 +219,41 @@
                 {
                     for (int i = 0; i < 4 && i < ViewBag.top_experience.Length; i++)
                     {
-                <div class="col-sm col-md-6 col-lg ftco-animate">
-                    <div class="destination">
-                        <a href="../Activity/SingleActivity?productID=@ViewBag.top_experience[i].activity_id" class="img img-2 d-flex justify-content-center align-items-center" style="background-image: url(@ViewBag.top_experience[i].activity_pictures);">
-                            <div class="icon d-flex justify-content-center align-items-center">
-                                <span class="icon-link"></span>
-                            </div>
-                        </a>
-                        <div class="text p-3">
-                            <div class="d-flex">
-                                <div class="one">
-                                    <h3><a class="icon icon-map-marker" href="../Activity/SingleActivity?productID=@ViewBag.top_experience[i].activity_id">@ViewBag.top_experience[i].address</a></h3>
-                                    <p class="rate">
-                                        <i class="icon-star"></i>
-                                        <i class="icon-star"></i>
-                                        <i class="icon-star"></i>
-                                        <i class="icon-star"></i>
-                                        <i class="icon-star"></i>
-                                        <span>精品推荐</span>
+                        <div class="col-sm col-md-6 col-lg ftco-animate">
+                            <div class="destination">
+                                <a href="../Activity/SingleActivity?productID=@ViewBag.top_experience[i].activity_id" class="img img-2 d-flex justify-content-center align-items-center" style="background-image: url(@ViewBag.top_experience[i].activity_pictures);">
+                                    <div class="icon d-flex justify-content-center align-items-center">
+                                        <span class="icon-link"></span>
+                                    </div>
+                                </a>
+                                <div class="text p-3">
+                                    <div class="d-flex">
+                                        <div class="one">
+                                            <h3><a class="icon icon-map-marker" href="../Activity/SingleActivity?productID=@ViewBag.top_experience[i].activity_id">@ViewBag.top_experience[i].address</a></h3>
+                                            <p class="rate">
+                                                <i class="icon-star"></i>
+                                                <i class="icon-star"></i>
+                                                <i class="icon-star"></i>
+                                                <i class="icon-star"></i>
+                                                <i class="icon-star"></i>
+                                                <span>精品推荐</span>
+                                            </p>
+                                        </div>
+                                        <div class="two">
+                                            <span class="price">@ViewBag.top_experience[i].max_member_limit 人</span>
+                                        </div>
+                                    </div>
+                                    <p>@ViewBag.top_experience[i].activity_name</p>
+                                    <hr>
+                                    <p class="bottom-area d-flex">
+                                        <span class="ml-auto"><a href="../Activity/SingleActivity?productID=@ViewBag.top_experience[i].activity_id">查看详情</a></span>
                                     </p>
                                 </div>
-                                <div class="two">
-                                    <span class="price">@ViewBag.top_experience[i].max_member_limit 人</span>
-                                </div>
                             </div>
-                            <p>@ViewBag.top_experience[i].activity_name</p>
-                            <hr>
-                            <p class="bottom-area d-flex">
-                                <span class="ml-auto"><a href="../Activity/SingleActivity?productID=@ViewBag.top_experience[i].activity_id">查看详情</a></span>
-                            </p>
                         </div>
-                    </div>
-                </div>
-                        }
                     }
                 }
+            }
         </div>
     </div>
 </section>
@@ -316,39 +316,40 @@
                 {
                     for (int i = 0; i < ViewBag.recommend_house.Length; i++)
                     {
-                    <div class="col-sm col-md-6 col-lg ftco-animate">
-                        <div class="destination">
-                            <a href="~/HomeStay/StayInfo?productID=@ViewBag.recommend_house[i].homestay_id" class="img img-2 d-flex justify-content-center align-items-center" style="background-image: url(@ViewBag.recommend_house[i].homestay_pictures);">
-                                <div class="icon d-flex justify-content-center align-items-center">
-                                    <span class="icon-link"></span>
-                                </div>
-                            </a>
-                            <div class="text p-3">
-                                <div class="d-flex">
-                                    <div class="one">
-                                        <h3><a href="~/HomeStay/StayInfo?productID=@ViewBag.recommend_house[i].homestay_id">@ViewBag.recommend_house[i].homestay_name</a></h3>
-                                        <p class="rate">
-                                            <i class="icon-star"></i>
-                                            <span>@ViewBag.recommend_house[i].house_grade 分</span>
-                                        </p>
+                        <div class="col-sm col-md-6 col-lg ftco-animate">
+                            <div class="destination">
+                                <a href="~/HomeStay/StayInfo?productID=@ViewBag.recommend_house[i].homestay_id" class="img img-2 d-flex justify-content-center align-items-center" style="background-image: url(@ViewBag.recommend_house[i].homestay_pictures);">
+                                    <div class="icon d-flex justify-content-center align-items-center">
+                                        <span class="icon-link"></span>
                                     </div>
-                                    <div class="two">
-                                        <span class="price per-price">@ViewBag.recommend_house[i].default_price<br><small>/night</small></span>
+                                </a>
+                                <div class="text p-3">
+                                    <div class="d-flex">
+                                        <div class="one">
+                                            <h3><a href="~/HomeStay/StayInfo?productID=@ViewBag.recommend_house[i].homestay_id">@ViewBag.recommend_house[i].homestay_name</a></h3>
+                                            <p class="rate">
+                                                <i class="icon-star"></i>
+                                                <span>@ViewBag.recommend_house[i].house_grade 分</span>
+                                            </p>
+                                        </div>
+                                        <div class="two">
+                                            <span class="price per-price">@ViewBag.recommend_house[i].default_price<br><small>/night</small></span>
+                                        </div>
                                     </div>
+                                    <p>
+                                        @ViewBag.recommend_house[i].homestay_name
+                                    </p>
+                                    <hr>
+                                    <p class="bottom-area d-flex">
+                                        <span><i class="icon-map-o"></i> @ViewBag.recommend_house[i].address</span>
+                                        <span class="ml-auto"><a href="~/HomeStay/StayInfo?productID=@ViewBag.recommend_house[i].homestay_id">Book Now</a></span>
+                                    </p>
                                 </div>
-                                <p>
-                                    @ViewBag.recommend_house[i].homestay_name</p>
-                                                                <hr>
-                                <p class="bottom-area d-flex">
-                                <span><i class="icon-map-o"></i> @ViewBag.recommend_house[i].address</span>
-                                    <span class="ml-auto"><a href="~/HomeStay/StayInfo?productID=@ViewBag.recommend_house[i].homestay_id">Book Now</a></span>
-                                </p>
                             </div>
                         </div>
-                    </div>
-                        }
                     }
                 }
+            }
         </div>
     </div>
 </section>
@@ -364,104 +365,51 @@
         <div class="row ftco-animate">
             <div class="col-md-12">
                 <div class="carousel-testimony owl-carousel ftco-owl">
-                    <div class="item">
-                        <div class="testimony-wrap p-4 pb-5">
-                            <div class="user-img mb-5" style="background-image: url(../images/person_1.jpg)">
-                                <span class="quote d-flex align-items-center justify-content-center">
-                                    <i class="icon-quote-left"></i>
-                                </span>
-                            </div>
-                            <div class="text">
-                                <p class="mb-5">Far far away, behind the word mountains, far from the countries Vokalia and Consonantia, there live the blind texts.</p>
-                                <p class="name">1</p>
-                                <span class="position">Marketing Manager</span>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="item">
-                        <div class="testimony-wrap p-4 pb-5">
-                            <div class="user-img mb-5" style="background-image: url(../images/person_2.jpg)">
-                                <span class="quote d-flex align-items-center justify-content-center">
-                                    <i class="icon-quote-left"></i>
-                                </span>
-                            </div>
-                            <div class="text">
-                                <p class="mb-5">Far far away, behind the word mountains, far from the countries Vokalia and Consonantia, there live the blind texts.</p>
-                                <p class="name">2</p>
-                                <span class="position">Interface Designer</span>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="item">
-                        <div class="testimony-wrap p-4 pb-5">
-                            <div class="user-img mb-5" style="background-image: url(../images/person_3.jpg)">
-                                <span class="quote d-flex align-items-center justify-content-center">
-                                    <i class="icon-quote-left"></i>
-                                </span>
-                            </div>
-                            <div class="text">
-                                <p class="mb-5">Far far away, behind the word mountains, far from the countries Vokalia and Consonantia, there live the blind texts.</p>
-                                <p class="name">3</p>
-                                <span class="position">UI Designer</span>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="item">
-                        <div class="testimony-wrap p-4 pb-5">
-                            <div class="user-img mb-5" style="background-image: url(../images/person_1.jpg)">
-                                <span class="quote d-flex align-items-center justify-content-center">
-                                    <i class="icon-quote-left"></i>
-                                </span>
-                            </div>
-                            <div class="text">
-                                <p class="mb-5">Far far away, behind the word mountains, far from the countries Vokalia and Consonantia, there live the blind texts.</p>
-                                <p class="name">4</p>
-                                <span class="position">Web Developer</span>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="item">
-                        <div class="testimony-wrap p-4 pb-5">
-                            <div class="user-img mb-5" style="background-image: url(../images/person_1.jpg)">
-                                <span class="quote d-flex align-items-center justify-content-center">
-                                    <i class="icon-quote-left"></i>
-                                </span>
-                            </div>
-                            <div class="text">
-                                <p class="mb-5">Far far away, behind the word mountains, far from the countries Vokalia and Consonantia, there live the blind texts.</p>
-                                <p class="name">5</p>
-                                <span class="position">System Analyst</span>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="item">
-                        <div class="testimony-wrap p-4 pb-5">
-                            <div class="user-img mb-5" style="background-image: url(../images/person_1.jpg)">
-                                <span class="quote d-flex align-items-center justify-content-center">
-                                    <i class="icon-quote-left"></i>
-                                </span>
-                            </div>
-                            <div class="text">
-                                <p class="mb-5">Far far away, behind the word mountains, far from the countries Vokalia and Consonantia, there live the blind texts.</p>
-                                <p class="name">6</p>
-                                <span class="position">System Analyst</span>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="item">
-                        <div class="testimony-wrap p-4 pb-5">
-                            <div class="user-img mb-5" style="background-image: url(../images/person_1.jpg)">
-                                <span class="quote d-flex align-items-center justify-content-center">
-                                    <i class="icon-quote-left"></i>
-                                </span>
-                            </div>
-                            <div class="text">
-                                <p class="mb-5">Far far away, behind the word mountains, far from the countries Vokalia and Consonantia, there live the blind texts.</p>
-                                <p class="name">7</p>
-                                <span class="position">System Analyst</span>
-                            </div>
-                        </div>
-                    </div>
+                    @{
+                        if (ViewBag.reviewA != null && ViewBag.reviewA.Length > 0)
+                        {
+                            for (int i = 0; i < ViewBag.reviewA.Length && i < 5; i++)
+                            {
+                                <div class="item">
+                                    <div class="testimony-wrap p-4 pb-5">
+                                        <div class="user-img mb-5" style="background-image: url(@ViewBag.reviewA[i].head_icon)">
+                                            <span class="quote d-flex align-items-center justify-content-center">
+                                                <i class="icon-quote-left"></i>
+                                            </span>
+                                        </div>
+                                        <div class="text">
+                                            <p class="mb-5">@ViewBag.reviewA[i].comment_text</p>
+                                            <p class="name">@ViewBag.reviewA[i].first_name @ViewBag.reviewA[i].last_name</p>
+                                        </div>
+                                    </div>
+                                </div>
+
+                            }
+
+                        }
+                        if (ViewBag.reviewH != null && ViewBag.reviewH.Length > 0)
+                        {
+                            for (int i = 0; i < ViewBag.reviewH.Length && i < 5; i++)
+                            {
+                                <div class="item">
+                                    <div class="testimony-wrap p-4 pb-5">
+                                        <div class="user-img mb-5" style="background-image: url(@ViewBag.reviewH[i].head_icon)">
+                                            <span class="quote d-flex align-items-center justify-content-center">
+                                                <i class="icon-quote-left"></i>
+                                            </span>
+                                        </div>
+                                        <div class="text">
+                                            <p class="mb-5">@ViewBag.reviewH[i].comment_text</p>
+                                            <p class="name">@ViewBag.reviewH[i].first_name @ViewBag.reviewH[i].last_name</p>
+                                        </div>
+                                    </div>
+                                </div>
+
+                            }
+
+                        }
+                    }
+
                 </div>
             </div>
         </div>
@@ -477,51 +425,27 @@
             </div>
         </div>
         <div class="row d-flex">
-            <div class="col-md-4 d-flex ftco-animate">
-                <div class="blog-entry align-self-stretch">
-                    <a href="blog-single.html" class="block-20" style="background-image: url('../images/image_1.jpg');">
-                    </a>
-                    <div class="text">
-                        <span class="tag">Tips, Travel</span>
-                        <h3 class="heading mt-3"><a href="#">8 Best homestay in Philippines that you don't miss out</a></h3>
-                        <div class="meta mb-3">
-                            <div><a href="#">October 3, 2018</a></div>
-                            <div><a href="#">Admin</a></div>
-                            <div><a href="#" class="meta-chat"><span class="icon-chat"></span> 3</a></div>
+            @{
+                if (ViewBag.recommend_story != null && ViewBag.recommend_story.Length > 0)
+                {
+                    for (int i = 0; i < ViewBag.recommend_story.Length && i < 3; i++)
+                    {
+                    <div class="col-md-4 d-flex ftco-animate">
+                        <div class="blog-entry align-self-stretch">
+                            <a href="blog-single.html" class="block-20" style="background-image: url('@ViewBag.recommend_story[i].pictures');">
+                            </a>
+                            <div class="text">
+                                <h3 class="heading mt-3"><a href="~/Blog/BlogDetail?BlogId=@ViewBag.recommend_story[i].story_id">@ViewBag.recommend_story[i].title</a></h3>
+                                <div class="meta mb-3">
+                                    <div>发布于 @ViewBag.recommend_story[i].times.ToString("yyyy-MM-dd")</div>
+                                    <span class="text-right"><a href="~/Blog/BlogDetail?BlogId=@ViewBag.recommend_story[i].story_id">Read Now</a></span>
+                                </div>
+                            </div>
                         </div>
                     </div>
-                </div>
-            </div>
-            <div class="col-md-4 d-flex ftco-animate">
-                <div class="blog-entry align-self-stretch">
-                    <a href="blog-single.html" class="block-20" style="background-image: url('../images/image_2.jpg');">
-                    </a>
-                    <div class="text">
-                        <span class="tag">Culture</span>
-                        <h3 class="heading mt-3"><a href="#">Even the all-powerful Pointing has no control about the blind texts</a></h3>
-                        <div class="meta mb-3">
-                            <div><a href="#">October 3, 2018</a></div>
-                            <div><a href="#">Admin</a></div>
-                            <div><a href="#" class="meta-chat"><span class="icon-chat"></span> 3</a></div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="col-md-4 d-flex ftco-animate">
-                <div class="blog-entry align-self-stretch">
-                    <a href="blog-single.html" class="block-20" style="background-image: url('../images/image_3.jpg');">
-                    </a>
-                    <div class="text">
-                        <span class="tag">Tips, Travel</span>
-                        <h3 class="heading mt-3"><a href="#">Even the all-powerful Pointing has no control about the blind texts</a></h3>
-                        <div class="meta mb-3">
-                            <div><a href="#">October 3, 2018</a></div>
-                            <div><a href="#">Admin</a></div>
-                            <div><a href="#" class="meta-chat"><span class="icon-chat"></span> 3</a></div>
-                        </div>
-                    </div>
-                </div>
-            </div>
+                        }
+                    }
+                }
         </div>
     </div>
 </section>
@@ -538,3 +462,25 @@
         </div>
     </div>
 </section>
+
+<script>
+    $(function () {
+        var date = new Date();
+        var today = date.getFullYear();
+        today += "-";
+        today += date.getMonth() + 1 < 10 ? "0" + (date.getMonth() + 1) : (date.getMonth() + 1);
+        today += "-";
+        today += date.getDate() < 10 ? "0" + date.getDate() : date.getDate();
+        $('#hs-start').attr('min', today);
+        $('#hs-end').attr('min', today);
+        $('#act-start').attr('min', today);
+        $('#act-end').attr('min', today);
+
+        $('#act-start').change(function () {
+            $('#act-end').attr('min', $(this).val());
+        });
+        $('#hs-start').change(function () {
+            $('#hs-end').attr('min', $(this).val());
+        });
+    });
+</script>

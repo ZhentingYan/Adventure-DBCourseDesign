@@ -11,7 +11,7 @@
         if (choice == true) {
             $.ajax({
                 type: "post",
-                url: "../Admin/RemoveActivity",
+                url: "../Admin/CancelhomestayOrder",
                 data: {
                     orderID: orderID
                 },
@@ -21,19 +21,19 @@
                     var addState = d.isSuccess;
                     if (addState == true) {//登录成功
                         console.log(d);
-                        window.location.href = "/Admin/ViewActivity";
-                        alert("删除成功!");
+                        window.location.href = "/Admin/checkMyHomestayOrder";
+                        alert("订单取消成功!");
                     }
                     else {
                         //登录失败
                         console.log(d);
                         alert(d.message);
-                        window.location.href = "/Admin/ViewActivity";
+                        window.location.href = "/Admin/checkMyHomestayOrder";
                     }
                 },
                 error: function (a) {
                     console.log(a);
-                    alert("删除失败!");
+                    alert("订单取消失败!");
                 }
             });
         }
@@ -133,7 +133,7 @@
                                             <!--TODO:comment-->
                                             <!--这里需要删除，我要晕厥了-->
 
-                                            <a  class="btn btn-tbl-delete btn-xs" onclick="">
+                                            <a  class="btn btn-tbl-delete btn-xs" onclick="deleteOrderedHomestay(@ViewBag.returnList[i].homestay_order_id)">
                                                 <i class="fa fa-trash-o "></i>
                                             </a>
                                         </td>

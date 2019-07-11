@@ -2,20 +2,7 @@
     ViewBag.Title = "关于我们";
 }
 
-<script>
-    $(document).ready(function () {
-        $.get("../Home/getCount",
-            function (e) {
-                var jsonData = JSON.parse(e.data);
-                $("#customerCount").attr("data-number", jsonData.customerCount);
-                $("#activityCount").attr("data-number", jsonData.activityCount);
-                $("#homestayCount").attr("data-number", jsonData.homestayCount);
-                $("#reviewCount").attr("data-number", jsonData.reviewCount);
 
-            });
-    })
-
-</script>
 <div class="hero-wrap js-fullheight" style="background-image: url('../images/bg_1_backup.jpg');">
     <div class="overlay"></div>
     <div class="container">
@@ -62,7 +49,7 @@
                     <div class="col-md-3 d-flex justify-content-center counter-wrap ftco-animate">
                         <div class="block-18 text-center">
                             <div class="text">
-                                <strong id="customerCount" class="number" data-number="1200">0</strong>
+                                <strong id="customerCount" class="number" data-number="@ViewBag.customerCount">0</strong>
                                 <span>我们的顾客</span>
                             </div>
                         </div>
@@ -70,7 +57,7 @@
                     <div class="col-md-3 d-flex justify-content-center counter-wrap ftco-animate">
                         <div class="block-18 text-center">
                             <div class="text">
-                                <strong id="homestayCount" class="number" data-number="1200">0</strong>
+                                <strong id="homestayCount" class="number" data-number="@ViewBag.homestayCount">0</strong>
                                 <span>我们的民宿房源</span>
                             </div>
                         </div>
@@ -78,7 +65,7 @@
                     <div class="col-md-3 d-flex justify-content-center counter-wrap ftco-animate">
                         <div class="block-18 text-center">
                             <div class="text">
-                                <strong id="activityCount" class="number" data-number="1200">0</strong>
+                                <strong id="activityCount" class="number" data-number="@ViewBag.activityCount">0</strong>
                                 <span>我们的体验活动</span>
                             </div>
                         </div>
@@ -86,7 +73,7 @@
                     <div class="col-md-3 d-flex justify-content-center counter-wrap ftco-animate">
                         <div class="block-18 text-center">
                             <div class="text">
-                                <strong id="reviewCount" class="number" data-number="1200">0</strong>
+                                <strong id="reviewCount" class="number" data-number="@ViewBag.reviewCount">0</strong>
                                 <span>我们收获的好评</span>
                             </div>
                         </div>
@@ -124,76 +111,50 @@
         <div class="row ftco-animate">
             <div class="col-md-12">
                 <div class="carousel-testimony owl-carousel ftco-owl">
-                    <div class="item">
-                        <div class="testimony-wrap p-4 pb-5">
-                            <div class="user-img mb-5" style="background-image: url(../images/person_1.jpg)">
-                                <span class="quote d-flex align-items-center justify-content-center">
-                                    <i class="icon-quote-left"></i>
-                                </span>
-                            </div>
-                            <div class="text">
-                                <p class="mb-5">Far far away, behind the word mountains, far from the countries Vokalia and Consonantia, there live the blind texts.</p>
-                                <p class="name">Mark Web</p>
-                                <span class="position">Marketing Manager</span>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="item">
-                        <div class="testimony-wrap p-4 pb-5">
-                            <div class="user-img mb-5" style="background-image: url(../images/person_2.jpg)">
-                                <span class="quote d-flex align-items-center justify-content-center">
-                                    <i class="icon-quote-left"></i>
-                                </span>
-                            </div>
-                            <div class="text">
-                                <p class="mb-5">Far far away, behind the word mountains, far from the countries Vokalia and Consonantia, there live the blind texts.</p>
-                                <p class="name">Mark Web</p>
-                                <span class="position">Interface Designer</span>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="item">
-                        <div class="testimony-wrap p-4 pb-5">
-                            <div class="user-img mb-5" style="background-image: url(../images/person_3.jpg)">
-                                <span class="quote d-flex align-items-center justify-content-center">
-                                    <i class="icon-quote-left"></i>
-                                </span>
-                            </div>
-                            <div class="text">
-                                <p class="mb-5">Far far away, behind the word mountains, far from the countries Vokalia and Consonantia, there live the blind texts.</p>
-                                <p class="name">Mark Web</p>
-                                <span class="position">UI Designer</span>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="item">
-                        <div class="testimony-wrap p-4 pb-5">
-                            <div class="user-img mb-5" style="background-image: url(../images/person_1.jpg)">
-                                <span class="quote d-flex align-items-center justify-content-center">
-                                    <i class="icon-quote-left"></i>
-                                </span>
-                            </div>
-                            <div class="text">
-                                <p class="mb-5">Far far away, behind the word mountains, far from the countries Vokalia and Consonantia, there live the blind texts.</p>
-                                <p class="name">Mark Web</p>
-                                <span class="position">Web Developer</span>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="item">
-                        <div class="testimony-wrap p-4 pb-5">
-                            <div class="user-img mb-5" style="background-image: url(../images/person_1.jpg)">
-                                <span class="quote d-flex align-items-center justify-content-center">
-                                    <i class="icon-quote-left"></i>
-                                </span>
-                            </div>
-                            <div class="text">
-                                <p class="mb-5">Far far away, behind the word mountains, far from the countries Vokalia and Consonantia, there live the blind texts.</p>
-                                <p class="name">Mark Web</p>
-                                <span class="position">System Analyst</span>
-                            </div>
-                        </div>
-                    </div>
+                    @{
+                        if (ViewBag.reviewA != null && ViewBag.reviewA.Length > 0)
+                        {
+                            for (int i = 0; i < ViewBag.reviewA.Length && i < 5; i++)
+                            {
+                                <div class="item">
+                                    <div class="testimony-wrap p-4 pb-5">
+                                        <div class="user-img mb-5" style="background-image: url(@ViewBag.reviewA[i].head_icon)">
+                                            <span class="quote d-flex align-items-center justify-content-center">
+                                                <i class="icon-quote-left"></i>
+                                            </span>
+                                        </div>
+                                        <div class="text">
+                                            <p class="mb-5">@ViewBag.reviewA[i].comment_text</p>
+                                            <p class="name">@ViewBag.reviewA[i].first_name @ViewBag.reviewA[i].last_name</p>
+                                        </div>
+                                    </div>
+                                </div>
+
+                            }
+
+                        }
+                        if (ViewBag.reviewH != null && ViewBag.reviewH.Length > 0)
+                        {
+                            for (int i = 0; i < ViewBag.reviewH.Length && i < 5; i++)
+                            {
+                                <div class="item">
+                                    <div class="testimony-wrap p-4 pb-5">
+                                        <div class="user-img mb-5" style="background-image: url(@ViewBag.reviewH[i].head_icon)">
+                                            <span class="quote d-flex align-items-center justify-content-center">
+                                                <i class="icon-quote-left"></i>
+                                            </span>
+                                        </div>
+                                        <div class="text">
+                                            <p class="mb-5">@ViewBag.reviewH[i].comment_text</p>
+                                            <p class="name">@ViewBag.reviewH[i].first_name @ViewBag.reviewH[i].last_name</p>
+                                        </div>
+                                    </div>
+                                </div>
+
+                            }
+
+                        }
+                    }
                 </div>
             </div>
         </div>

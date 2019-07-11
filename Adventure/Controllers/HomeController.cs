@@ -133,6 +133,38 @@ namespace Adventure.Controllers
                 ViewBag.recommend_house = recommend_house;
                 ViewBag.recommend_story = recommend_story;
                 //ViewBag.review = review.ToArray();
+                List<RAreview> recommendA_review = db.Queryable<ActivityComment, User>((st, sc) => new object[] {
+                JoinType.Inner,st.user_id==sc.user_id})
+                .OrderBy(st => st.grade, OrderByType.Desc)
+                .Select((st, sc) => new RAreview
+                {
+                    activity_order_id = st.activity_order_id,
+                    grade = st.grade,
+                    user_id = st.user_id,
+                    comment_text = st.comment_text,
+                    times = st.times,
+                    head_icon = sc.head_icon,
+                    first_name = sc.first_name,
+                    last_name = sc.last_name,
+                }).ToList();
+
+                List<RHreview> recommendH_review = db.Queryable<HomestayComment, User>((st, sc) => new object[] {
+                JoinType.Inner,st.user_id==sc.user_id})
+                .OrderBy(st => st.grade, OrderByType.Desc)
+                .Select((st, sc) => new RHreview
+                {
+                    homestay_order_id = st.homestay_order_id,
+                    grade = st.grade,
+                    user_id = st.user_id,
+                    comment_text = st.comment_text,
+                    times = st.times,
+                    head_icon = sc.head_icon,
+                    first_name = sc.first_name,
+                    last_name = sc.last_name,
+                }).ToList();
+                ViewBag.reviewA = recommendA_review.ToArray();
+                ViewBag.reviewH = recommendH_review.ToArray();
+
             }
             catch (Exception ex)
             {
@@ -158,16 +190,91 @@ namespace Adventure.Controllers
         }
         public ActionResult About()
         {
-            ViewBag.Message = "Your application description page.";
+            SqlSugarClient db = new SqlSugarClient(
+    new ConnectionConfig()
+    {
+        ConnectionString = System.Web.Configuration.WebConfigurationManager.AppSettings["ConnectionString"],
+        DbType = DbType.Oracle,//设置数据库类型
+                    IsAutoCloseConnection = true,//自动释放数据务，如果存在事务，在事务结束后释放
+                    InitKeyType = InitKeyType.Attribute //从实体特性中读取主键自增列信息
+                });
+                String connection = System.Web.Configuration.WebConfigurationManager.AppSettings["ConnectionString"];
+                decimal customerCount, homestayCount, activityCount, reviewCount;
+                using (OracleConnection conn = new OracleConnection(connection))
+                {
+                    conn.Open();
+                    OracleCommand cmd = new OracleCommand("select count(*) from users", conn);//执行一条SQL语句
+                    customerCount = (decimal)cmd.ExecuteScalar();
+                    cmd = new OracleCommand("select count(*) from Homestay", conn);//执行一条SQL语句
+                    homestayCount = (decimal)cmd.ExecuteScalar();
+                    cmd = new OracleCommand("select count(*) from Activity", conn);//执行一条SQL语句
+                    activityCount = (decimal)cmd.ExecuteScalar();
+                    cmd = new OracleCommand("select count(*) from activity_comment", conn);//执行一条SQL语句
+                    reviewCount = (decimal)cmd.ExecuteScalar();
+                    cmd = new OracleCommand("select count(*) from homestay_comment", conn);//执行一条SQL语句
+                    reviewCount += (decimal)cmd.ExecuteScalar();
+                    conn.Close();
+                    ViewBag.customerCount = customerCount;
+                    ViewBag.homestayCount = homestayCount;
+                    ViewBag.activityCount = activityCount;
+                    ViewBag.reviewCount = reviewCount;
 
-            return View();
+                }
+                try
+                {
+
+                    List<RAreview> recommendA_review = db.Queryable<ActivityComment, User>((st, sc) => new object[] {
+                    JoinType.Inner,st.user_id==sc.user_id})
+                    .OrderBy(st => st.grade, OrderByType.Desc)
+                    .Select((st, sc) => new RAreview
+                    {
+                        activity_order_id = st.activity_order_id,
+                        grade = st.grade,
+                        user_id = st.user_id,
+                        comment_text = st.comment_text,
+                        times = st.times,
+                        head_icon = sc.head_icon,
+                        first_name = sc.first_name,
+                        last_name = sc.last_name,
+                    }).ToList();
+
+                    List<RHreview> recommendH_review = db.Queryable<HomestayComment, User>((st, sc) => new object[] {
+                    JoinType.Inner,st.user_id==sc.user_id})
+                    .OrderBy(st => st.grade, OrderByType.Desc)
+                    .Select((st, sc) => new RHreview
+                    {
+                        homestay_order_id = st.homestay_order_id,
+                        grade = st.grade,
+                        user_id = st.user_id,
+                        comment_text = st.comment_text,
+                        times = st.times,
+                        head_icon = sc.head_icon,
+                        first_name = sc.first_name,
+                        last_name = sc.last_name,
+                    }).ToList();
+                    ViewBag.reviewA = recommendA_review.ToArray();
+                    ViewBag.reviewH = recommendH_review.ToArray();
+
+                }
+                catch (Exception ex)
+                {
+                    throw ex;
+                }
+                finally { }
+                ViewBag.title = "关于我们";
+                return View();
         }
         [HttpGet]
         public ActionResult Contact()
         {
-            ViewBag.Message = "Your contact page.";
-
-            return View();
+            if (Session["user_id"] == null)
+            {
+                return Redirect("~/Login/index");
+            }
+            else
+            {
+                return View();
+            }
         }
         [HttpPost]
         public ActionResult Contact(FormCollection form)
@@ -243,5 +350,129 @@ namespace Adventure.Controllers
             
             return View();
         }
+        public class RAreview
+        {
+            public int activity_order_id { get; set; }
+            public double grade { get; set; }
+            public string user_id { get; set; }
+            public string comment_text { get; set; }
+            public DateTime times { get; set; }
+            public string head_icon { get; set; }
+            public string first_name { get; set; }
+            public string last_name { get; set; }
+        }
+        public class RHreview
+        {
+            public int homestay_order_id { get; set; }
+            public double grade { get; set; }
+            public string user_id { get; set; }
+            public string comment_text { get; set; }
+            public DateTime times { get; set; }
+            public string head_icon { get; set; }
+            public string first_name { get; set; }
+            public string last_name { get; set; }
+        }
+        [HttpPost]
+        public ActionResult SubmitReport(FormCollection form)
+        {
+            SqlSugarClient db = new SqlSugarClient(
+            new ConnectionConfig()
+            {
+                ConnectionString = System.Web.Configuration.WebConfigurationManager.AppSettings["ConnectionString"],
+                DbType = DbType.Oracle,//设置数据库类型
+                IsAutoCloseConnection = true,//自动释放数据务，如果存在事务，在事务结束后释放
+                InitKeyType = InitKeyType.Attribute //从实体特性中读取主键自增列信息
+            });
+
+            JObject isSuccess = new JObject();
+            DateTime dt = DateTime.Now;
+            try
+            {
+                int t = Convert.ToInt16(form["get_type"]);
+                string tyPE;
+                if (t == 1)
+                {
+                    tyPE = "体验活动订单";
+                }
+                else if (t == 2)
+                {
+                    tyPE = "民宿订单";
+                }
+                else
+                {
+                    isSuccess.Add("isSuccess", false);
+                    isSuccess.Add("message", "参数错误!");
+                    return Content(JsonConvert.SerializeObject(isSuccess, Formatting.Indented));
+                }
+                var ReportData = new Report()
+                {
+                    user_id = Session["user_id"].ObjToString(),
+                    email = Session["email_address"].ToString(),
+                    name = form["name"],
+                    type = tyPE,
+                    order_id = Convert.ToInt32(form["get_order_id"]),
+                    reason = form["get_reason"],
+                    times = dt
+                };
+                //先找homestay_order
+                if (t == 2)//type与homestay匹配
+                {
+                    //bool db.Queryable<Homestay_Order>().Where(it => it.homestay_order_id == ReportData.order_id).Any()；
+                    if (db.Queryable<HomestayOrder>().Any(it => it.homestay_order_id == ReportData.order_id && it.customer_id == ReportData.user_id)) //房屋订单有否                                                                                                                //此查找语句未经测试
+                    {
+                        if (db.Insertable(ReportData).ExecuteCommand() == 1)//插入成否
+                        {
+                            isSuccess.Add("isSuccess", true);
+                        }
+                        else
+                        {
+                            isSuccess.Add("isSuccess", false);
+                            isSuccess.Add("message", "反馈与意见上传失败!");
+                        }
+                    }
+                    else
+                    {
+                        isSuccess.Add("isSuccess", false);
+                        isSuccess.Add("message", "无法找到与您相关的订单!");
+                    }
+                }
+                else if (t == 1)//type与activity匹配
+                {
+                    //bool db.Queryable<Homestay_Order>().Where(it => it.homestay_order_id == ReportData.order_id).Any()；
+                    if (db.Queryable<ActivityOrder>().Any(it => it.activity_order_id == ReportData.order_id && it.customer_id == ReportData.user_id))//房屋订单有否
+                    {
+                        if (db.Insertable(ReportData).ExecuteCommand() == 1)//插入成否
+                        {
+                            isSuccess.Add("isSuccess", true);
+                        }
+                        else
+                        {
+                            isSuccess.Add("isSuccess", false);
+                            isSuccess.Add("message", "反馈与意见上传失败!");
+                        }
+                    }
+                    else
+                    {
+                        isSuccess.Add("isSuccess", false);
+                        isSuccess.Add("message", "无法找到与您相关的订单!");
+                    }
+                }
+                else//type没和任何值匹配上
+                {
+                    isSuccess.Add("isSuccess", false);
+                    isSuccess.Add("message", "无法匹配正确类型！");
+                }
+            }
+            catch (Exception ex)
+            {
+                isSuccess.Add("isSuccess", false);
+                isSuccess.Add("message", "操作错误！");
+                return Content(JsonConvert.SerializeObject(isSuccess, Formatting.Indented));
+            }
+            finally { };
+            return Content(JsonConvert.SerializeObject(isSuccess, Formatting.Indented));
+        }
+
+
     }
 }

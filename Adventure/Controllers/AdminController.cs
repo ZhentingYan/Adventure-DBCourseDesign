@@ -31,7 +31,13 @@ namespace Adventure.Controllers
         [HttpGet]
         public ActionResult checkMyHOrder()
         {
-            SqlSugarClient db = new SqlSugarClient(
+            if (Session["user_id"] == null)
+            {
+                return Redirect("~/Login/index");
+            }
+            else
+            {
+                SqlSugarClient db = new SqlSugarClient(
                 new ConnectionConfig()
                 {
                     ConnectionString = System.Web.Configuration.WebConfigurationManager.AppSettings["ConnectionString"],
@@ -39,25 +45,32 @@ namespace Adventure.Controllers
                     IsAutoCloseConnection = true,//自动释放数据务，如果存在事务，在事务结束后释放
                     InitKeyType = InitKeyType.Attribute //从实体特性中读取主键自增列信息
                 });
-            try
-            {
-                //查询我预定活动结果
-                var myHomestayList = db.Queryable<HomestayOrder>().Where(it => it.customer_id == Session["user_id"].ToString()).ToArray();
-                ViewBag.returnlist = myHomestayList;
-                ViewBag.isSuccess = 1;
+                try
+                {
+                    //查询我预定活动结果
+                    var myHomestayList = db.Queryable<HomestayOrder>().Where(it => it.customer_id == Session["user_id"].ToString()).ToArray();
+                    ViewBag.returnlist = myHomestayList;
+                    ViewBag.isSuccess = 1;
+                }
+                catch (Exception ex)
+                {
+                    ViewBag.returnlist = null;
+                    return View();
+                }
+                return View();
             }
-            catch (Exception ex)
-            {
-                ViewBag.isSuccess = 0;
-                throw ex;
-            }
-            return View();
         }
         //别人订我的房源订单
         [HttpGet]
         public ActionResult checkMyHomestayOrder()
         {
-            SqlSugarClient db = new SqlSugarClient(
+            if (Session["user_id"] == null)
+            {
+                return Redirect("~/login/index");
+            }
+            else
+            {
+                SqlSugarClient db = new SqlSugarClient(
                 new ConnectionConfig()
                 {
                     ConnectionString = System.Web.Configuration.WebConfigurationManager.AppSettings["ConnectionString"],
@@ -65,53 +78,55 @@ namespace Adventure.Controllers
                     IsAutoCloseConnection = true,//自动释放数据务，如果存在事务，在事务结束后释放
                     InitKeyType = InitKeyType.Attribute //从实体特性中读取主键自增列信息
                 });
-            try
-            {
-                //查询我预定活动结果
-                var bookedList = db.Queryable<HomestayOrder, Homestay>((st, sc) => new object[] {
+                try
+                {
+                    //查询我预定活动结果
+                    var bookedList = db.Queryable<HomestayOrder, Homestay>((st, sc) => new object[] {
                 JoinType.Inner,st.homestay_id==sc.homestay_id,
                 })
-                .OrderBy((st) => st.create_time)
-                .Where((st, sc) => sc.user_id == Session["user_id"].ToString())
-                .Select((st, sc) => new {
-                    homestay_order_id = st.homestay_order_id,
-                    customer_id = st.customer_id,
-                    homestay_id = st.homestay_id,
-                    status = st.status,
-                    create_time = st.create_time,
-                    start_time = st.start_time,
-                    end_time = st.end_time,
-                    total_price = st.total_price,
-                    platform_fee = st.platform_fee,
-                    homestay_name = sc.homestay_name
-                }).ToArray();
-                List<Ordered_Homestay_Return> returnList = new List<Ordered_Homestay_Return>();
-                for (int i = 0; i < bookedList.Length; i++)
-                {
-                    Ordered_Homestay_Return temp = new Ordered_Homestay_Return
+                    .OrderBy((st) => st.create_time)
+                    .Where((st, sc) => sc.user_id == Session["user_id"].ToString())
+                    .Select((st, sc) => new
                     {
-                        homestay_order_id = bookedList[i].homestay_order_id,
-                        customer_id = bookedList[i].customer_id,
-                        homestay_id = bookedList[i].homestay_id,
-                        status = bookedList[i].status,
-                        create_time = bookedList[i].create_time,
-                        start_time = bookedList[i].start_time,
-                        end_time = bookedList[i].end_time,
-                        total_price = bookedList[i].total_price,
-                        platform_fee = bookedList[i].platform_fee,
-                        homestay_name = bookedList[i].homestay_name
-                    };
-                    returnList.Add(temp);
+                        homestay_order_id = st.homestay_order_id,
+                        customer_id = st.customer_id,
+                        homestay_id = st.homestay_id,
+                        status = st.status,
+                        create_time = st.create_time,
+                        start_time = st.start_time,
+                        end_time = st.end_time,
+                        total_price = st.total_price,
+                        platform_fee = st.platform_fee,
+                        homestay_name = sc.homestay_name
+                    }).ToArray();
+                    List<Ordered_Homestay_Return> returnList = new List<Ordered_Homestay_Return>();
+                    for (int i = 0; i < bookedList.Length; i++)
+                    {
+                        Ordered_Homestay_Return temp = new Ordered_Homestay_Return
+                        {
+                            homestay_order_id = bookedList[i].homestay_order_id,
+                            customer_id = bookedList[i].customer_id,
+                            homestay_id = bookedList[i].homestay_id,
+                            status = bookedList[i].status,
+                            create_time = bookedList[i].create_time,
+                            start_time = bookedList[i].start_time,
+                            end_time = bookedList[i].end_time,
+                            total_price = bookedList[i].total_price,
+                            platform_fee = bookedList[i].platform_fee,
+                            homestay_name = bookedList[i].homestay_name
+                        };
+                        returnList.Add(temp);
+                    }
+                    ViewBag.isSuccess = 1;
+                    ViewBag.returnList = returnList.ToArray();
                 }
-                ViewBag.isSuccess = 1;
-                ViewBag.returnList = returnList.ToArray();
+                catch (Exception ex)
+                {
+                    ViewBag.isSuccess = 0;
+                    throw ex;
+                }
+                return View();
             }
-            catch (Exception ex)
-            {
-                ViewBag.isSuccess = 0;
-                throw ex;
-            }
-            return View();
         }
 
         public class Ordered_Homestay_Return
@@ -130,42 +145,16 @@ namespace Adventure.Controllers
 
 
         }
-        [HttpPost]
-        public ActionResult HcancelHomestayOrder(FormCollection form)
-        {
-            SqlSugarClient db = new SqlSugarClient(
-                new ConnectionConfig()
-                {
-                    ConnectionString = System.Web.Configuration.WebConfigurationManager.AppSettings["ConnectionString"],
-                    DbType = DbType.Oracle,//设置数据库类型
-                    IsAutoCloseConnection = true,//自动释放数据务，如果存在事务，在事务结束后释放
-                    InitKeyType = InitKeyType.Attribute //从实体特性中读取主键自增列信息
-                });
-            try
-            {
-                //查询我预定活动结果
-                var target = db.Queryable<HomestayOrder>().InSingle(Convert.ToInt32(form["form-homestay-order-id"]));
-                if (target.status == -1)
-                {
-                    target.status = -2;
-                    db.Updateable(target).UpdateColumns(it => new { it.status }).ExecuteCommand();
-                    ViewBag.cancelstate = 'Y';
-                }
-                else
-                {
-                    ViewBag.cancelstate = 'D';
-                }
-            }
-            catch (Exception ex)
-            {
-                ViewBag.cancelstate = 'D';
-                throw ex;
-            }
-            return View();
-        }
+      
         public ActionResult ViewActivityInstance()
         {
-            SqlSugarClient db = new SqlSugarClient(
+            if (Session["user_id"] == null)
+            {
+                return Redirect("~/login/index");
+            }
+            else
+            {
+                SqlSugarClient db = new SqlSugarClient(
                             new ConnectionConfig()
                             {
                                 ConnectionString = System.Web.Configuration.WebConfigurationManager.AppSettings["ConnectionString"],
@@ -174,49 +163,51 @@ namespace Adventure.Controllers
                                 InitKeyType = InitKeyType.Attribute //从实体特性中读取主键自增列信息
                             });
 
-            try
-            {
-
-                var activityResult = db.Queryable<ActivityInstance, Activity>((st, sc) => new object[] {
-                JoinType.Inner,st.activity_id==sc.activity_id})
-                .Where((st, sc) => sc.user_id == Session["user_id"].ToString())
-                .Select((st, sc) => new {
-                    activity_id = st.activity_id,
-                    activity_name = sc.activity_name,
-                    activity_instance_id = st.activity_instance_id,
-                    start_time = st.start_time,
-                    end_time = st.end_time,
-                    is_booked = st.is_booked,
-                    price = st.price
-                })
-                .ToArray();
-                List<ActivityInstanceReturn> returnList = new List<ActivityInstanceReturn>();
-                for (int i = 0; i < activityResult.Length; i++)
+                try
                 {
-                    ActivityInstanceReturn temp = new ActivityInstanceReturn
-                    {
-                        activity_id = activityResult[i].activity_id,
-                        activity_name = activityResult[i].activity_name,
-                        activity_instance_id = activityResult[i].activity_instance_id,
-                        start_time = activityResult[i].start_time,
-                        end_time = activityResult[i].end_time,
-                        is_booked = activityResult[i].is_booked,
-                        price = activityResult[i].price
-                    };
-                    returnList.Add(temp);
-                }
-                ViewBag.isSuccess = 1;
-                ViewBag.returnList = returnList.ToArray();
 
-                //ViewBag.activityList = activityResult;
-            }
-            catch (Exception ex)
-            {
-                ViewBag.returnList = null;
+                    var activityResult = db.Queryable<ActivityInstance, Activity>((st, sc) => new object[] {
+                JoinType.Inner,st.activity_id==sc.activity_id})
+                    .Where((st, sc) => sc.user_id == Session["user_id"].ToString())
+                    .Select((st, sc) => new
+                    {
+                        activity_id = st.activity_id,
+                        activity_name = sc.activity_name,
+                        activity_instance_id = st.activity_instance_id,
+                        start_time = st.start_time,
+                        end_time = st.end_time,
+                        is_booked = st.is_booked,
+                        price = st.price
+                    })
+                    .ToArray();
+                    List<ActivityInstanceReturn> returnList = new List<ActivityInstanceReturn>();
+                    for (int i = 0; i < activityResult.Length; i++)
+                    {
+                        ActivityInstanceReturn temp = new ActivityInstanceReturn
+                        {
+                            activity_id = activityResult[i].activity_id,
+                            activity_name = activityResult[i].activity_name,
+                            activity_instance_id = activityResult[i].activity_instance_id,
+                            start_time = activityResult[i].start_time,
+                            end_time = activityResult[i].end_time,
+                            is_booked = activityResult[i].is_booked,
+                            price = activityResult[i].price
+                        };
+                        returnList.Add(temp);
+                    }
+                    ViewBag.isSuccess = 1;
+                    ViewBag.returnList = returnList.ToArray();
+
+                    //ViewBag.activityList = activityResult;
+                }
+                catch (Exception ex)
+                {
+                    ViewBag.returnList = null;
+                    return View();
+                }
+                finally { }
                 return View();
             }
-            finally { }
-            return View();
         }
         public class ActivityInstanceReturn
         {
@@ -231,7 +222,13 @@ namespace Adventure.Controllers
         }
         public ActionResult ViewHomestay()
         {
-            SqlSugarClient db = new SqlSugarClient(
+            if (Session["user_id"] == null)
+            {
+                return Redirect("~/login/index");
+            }
+            else
+            {
+                SqlSugarClient db = new SqlSugarClient(
                new ConnectionConfig()
                {
                    ConnectionString = System.Web.Configuration.WebConfigurationManager.AppSettings["ConnectionString"],
@@ -239,16 +236,17 @@ namespace Adventure.Controllers
                    IsAutoCloseConnection = true,//自动释放数据务，如果存在事务，在事务结束后释放
                    InitKeyType = InitKeyType.Attribute //从实体特性中读取主键自增列信息
                });
-            try
-            {
-                var homestayList = db.Queryable<Homestay>().Where(it => it.user_id == (string)Session["user_id"]).ToArray();
-                ViewBag.homestayList = homestayList;
-            }
-            catch
-            {
+                try
+                {
+                    var homestayList = db.Queryable<Homestay>().Where(it => it.user_id == (string)Session["user_id"]).ToArray();
+                    ViewBag.homestayList = homestayList;
+                }
+                catch
+                {
+                    return View();
+                }
                 return View();
             }
-            return View();
         }
         public ActionResult ViewActivity()
         {
@@ -466,11 +464,24 @@ namespace Adventure.Controllers
             return Content(JsonConvert.SerializeObject(isSuccess, Formatting.Indented));
         }
         
-        public ActionResult Comment(int orderID,int accessWay)
+        public ActionResult Comment(int orderID=-1,int accessWay=-1,int productID=-1)
         {
-            ViewBag.orderID = orderID;
-            ViewBag.accessWay = accessWay;
-            return View();
+            if (orderID == -1 || accessWay == -1 || productID == -1)
+            {
+                Session["message"] = "非法访问评论页面！";
+                return Redirect("~/Home");
+            }
+            else if (Session["user_id"] == null)
+            {
+                return Redirect("~/login/index");
+            }
+            else
+            {
+                ViewBag.orderID = orderID;
+                ViewBag.accessWay = accessWay;
+                ViewBag.productID = productID;
+                return View();
+            }
         }
 
         public ActionResult CheckComment()
@@ -481,7 +492,7 @@ namespace Adventure.Controllers
                 ConnectionString = System.Web.Configuration.WebConfigurationManager.AppSettings["ConnectionString"],
                 DbType = DbType.Oracle,//设置数据库类型
                     IsAutoCloseConnection = true,//自动释放数据务，如果存在事务，在事务结束后释放
-                    InitKeyType = InitKeyType.SystemTable //从实体特性中读取主键自增列信息
+                    InitKeyType = InitKeyType.Attribute //从实体特性中读取主键自增列信息
                 });
             JObject isSuccess = new JObject();
             try
@@ -630,6 +641,238 @@ namespace Adventure.Controllers
 
         }
         */
+
+
+        [HttpPost]
+        public ActionResult CancelActivityOrder(FormCollection form)
+        {
+            SqlSugarClient db = new SqlSugarClient(
+                new ConnectionConfig()
+                {
+                    ConnectionString = System.Web.Configuration.WebConfigurationManager.AppSettings["ConnectionString"],
+                    DbType = DbType.Oracle,//设置数据库类型
+                    IsAutoCloseConnection = true,//自动释放数据务，如果存在事务，在事务结束后释放
+                    InitKeyType = InitKeyType.Attribute //从实体特性中读取主键自增列信息
+                });
+            JObject isSuccess = new JObject();
+            try
+            {
+                var id = Convert.ToInt32(Request.Form["orderID"]);
+                var target = db.Queryable<ActivityOrder>().InSingle(Convert.ToInt32(Request.Form["orderID"]));
+                if (target.status == -1)
+                {
+                    target.status = -2;
+                    db.Updateable(target).UpdateColumns(it => new { it.status }).ExecuteCommand();
+                    var relatedActivityIns = db.Queryable<ActivityInstance>().InSingle(target.activity_instance_id);
+                    relatedActivityIns.is_booked = 0;
+                    db.Updateable(relatedActivityIns).UpdateColumns(it => new { it.is_booked }).ExecuteCommand();
+                    isSuccess.Add("isSuccess", true);
+                }
+                else
+                {
+                    isSuccess.Add("isSuccess", false);
+                    isSuccess.Add("message", "你的订单不处在待出行状态，无法取消");
+                }
+            }
+            catch (Exception ex)
+            {
+                isSuccess.Add("isSuccess", false);
+                isSuccess.Add("message", "操作失败");
+                throw ex;
+            }
+            return Content(JsonConvert.SerializeObject(isSuccess, Formatting.Indented));
+        }
+
+        //取消房源订单
+
+
+        [HttpPost]
+        public ActionResult CancelhomestayOrder()
+        {
+            SqlSugarClient db = new SqlSugarClient(
+                new ConnectionConfig()
+                {
+                    ConnectionString = System.Web.Configuration.WebConfigurationManager.AppSettings["ConnectionString"],
+                    DbType = DbType.Oracle,//设置数据库类型
+                    IsAutoCloseConnection = true,//自动释放数据务，如果存在事务，在事务结束后释放
+                    InitKeyType = InitKeyType.Attribute //从实体特性中读取主键自增列信息
+                });
+            JObject isSuccess = new JObject();
+            try
+            {
+                //查询房源订单结果
+                var target = db.Queryable<HomestayOrder>().InSingle(Convert.ToInt32(Request.Form["orderID"]));
+                if (target.status == -1)
+                {
+                    target.status = -2;
+                    db.Updateable(target).UpdateColumns(it => new { it.status }).ExecuteCommand();
+                    isSuccess.Add("isSuccess", true);
+                }
+                else
+                {
+                    isSuccess.Add("isSuccess", false);
+                    isSuccess.Add("message", "你的房源订单不处在待出行状态，无法取消");
+                }
+            }
+            catch (Exception ex)
+            {
+                isSuccess.Add("isSuccess", false);
+                isSuccess.Add("message", "操作失败");
+                return Content(JsonConvert.SerializeObject(isSuccess, Formatting.Indented));
+            }
+            return Content(JsonConvert.SerializeObject(isSuccess, Formatting.Indented));
+        }
+        [HttpGet]
+        public ActionResult checkMyAOrder()
+        {
+            if (Session["user_id"] == null)
+            {
+                return Redirect("~/login/index");
+            }
+            else
+            {
+                SqlSugarClient db = new SqlSugarClient(
+                new ConnectionConfig()
+                {
+                    ConnectionString = System.Web.Configuration.WebConfigurationManager.AppSettings["ConnectionString"],
+                    DbType = DbType.Oracle,//设置数据库类型
+                    IsAutoCloseConnection = true,//自动释放数据务，如果存在事务，在事务结束后释放
+                    InitKeyType = InitKeyType.Attribute //从实体特性中读取主键自增列信息
+                });
+                try
+                {
+                    //查询我预定活动结果
+                    var myActivityList = db.Queryable<ActivityOrder>().Where(it => it.customer_id == Session["user_id"].ToString()).ToArray();
+                    ViewBag.isSuccess = 1;
+                    ViewBag.returnList = myActivityList;
+                }
+                catch (Exception ex)
+                {
+                    ViewBag.isSuccess = 0;
+                    ViewBag.returnList = null;
+                    return View();
+
+                }
+                return View();
+            }
+        }
+
+        public ActionResult ViewBlog()//后台浏览旅行故事
+        {
+            if (Session["user_id"] == null)
+            {
+                return Redirect("~/login/index");
+            }
+            else
+            {
+                SqlSugarClient db = new SqlSugarClient(
+                 new ConnectionConfig()
+                 {
+                     ConnectionString = System.Web.Configuration.WebConfigurationManager.AppSettings["ConnectionString"],
+                     DbType = DbType.Oracle,//设置数据库类型
+                     IsAutoCloseConnection = true,//自动释放数据务，如果存在事务，在事务结束后释放
+                     InitKeyType = InitKeyType.Attribute //从实体特性中读取主键自增列信息
+                 });
+                try
+                {
+                    var myBlogList = db.Queryable<Blog>().Where(it => it.user_id == Session["user_id"]).ToArray();
+                    ViewBag.returnList = myBlogList;
+                }
+                catch (Exception ex)
+                {
+                    ViewBag.returnList = null;
+                    return View();
+                }
+                finally { }
+                return View();
+            }
+        }
+
+        //删除特殊价格
+        [HttpPost]
+        public ActionResult RemoveSpecialPrice()
+        {
+            SqlSugarClient db = new SqlSugarClient(
+                new ConnectionConfig()
+                {
+                    ConnectionString = System.Web.Configuration.WebConfigurationManager.AppSettings["ConnectionString"],
+                    DbType = DbType.Oracle,//设置数据库类型
+                    IsAutoCloseConnection = true,//自动释放数据务，如果存在事务，在事务结束后释放
+                    InitKeyType = InitKeyType.Attribute //从实体特性中读取主键自增列信息
+                });
+            JObject isSuccess = new JObject();
+            try
+            {
+                if (db.Deleteable<SpecialPrice>().In(Convert.ToInt32(Request.Form["instanceID"])).ExecuteCommand() == 1)
+                {
+                    isSuccess.Add("isDelete", true);
+                }
+                else
+                {
+                    isSuccess.Add("isDelete", false);
+                    isSuccess.Add("message", "特殊价格删除失败！");
+                }
+            }
+            catch (Exception ex)
+            {
+                isSuccess.Add("isDelete", false);
+                isSuccess.Add("message", "特殊价格删除失败！");
+                throw ex;
+            }
+            finally { }
+            return Content(JsonConvert.SerializeObject(isSuccess, Formatting.Indented));
+        }
+
+        //浏览特殊价格
+        public ActionResult ViewHomestaySpecial()
+        {
+            if (Session["user_id"] == null)
+            {
+                return Redirect("~/login/index");
+            }
+            else
+            {
+                SqlSugarClient db = new SqlSugarClient(
+                new ConnectionConfig()
+                {
+                    ConnectionString = System.Web.Configuration.WebConfigurationManager.AppSettings["ConnectionString"],
+                    DbType = DbType.Oracle,//设置数据库类型
+                    IsAutoCloseConnection = true,//自动释放数据务，如果存在事务，在事务结束后释放
+                    InitKeyType = InitKeyType.Attribute //从实体特性中读取主键自增列信息
+                });
+                try
+                {
+                    List<HomestaySP> list = db.Queryable<SpecialPrice, Homestay>((st, sc) => new object[] {
+                JoinType.Inner,st.homestay_id==sc.homestay_id})
+                    .Select((st, sc) => new HomestaySP
+                    {
+                        special_price_id = st.special_price_id,
+                        homestay_id = st.homestay_id,
+                        beginning_date = st.beginning_date,
+                        end_date = st.end_date,
+                        price = st.price,
+                        homestay_name = sc.homestay_name
+                    }).ToList();
+                    ViewBag.returnList = list.ToArray();
+                }
+                catch (Exception ex)
+                {
+                    ViewBag.returnList = null;
+                    return View();
+                }
+                finally { }
+                return View();
+            }
+        }
+        public class HomestaySP
+        {
+            public int special_price_id { get; set; }
+            public int homestay_id { get; set; }
+            public DateTime beginning_date { get; set; }
+            public DateTime end_date { get; set; }
+            public double price { get; set; }
+            public string homestay_name { get; set; }
+        }
     }
 
 }

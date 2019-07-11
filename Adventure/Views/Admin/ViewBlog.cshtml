@@ -40,7 +40,7 @@
                             <table class="table table-hover table-checkable order-column full-width" id="example4">
                                 <thead>
                                     <tr>
-
+                                        <th class="center"> 故事ID </th>
                                         <th class="center"> 发布时间 </th>
                                         <th class="center"> 标题 </th>
                                         <th class="center"> 查看详情 </th>
@@ -49,18 +49,23 @@
                                 </thead>
                                 <tbody>
                                     @{
-                                        for (int i = 0; i < ViewBag.BlogList.Length; i++)
+                                        if (ViewBag.returnList != null && ViewBag.returnList.Length > 0)
                                         {
+                                            for (int i = 0; i < ViewBag.returnList.Length; i++)
+                                            {
                                     <tr class="odd gradeX">
-                                        <td class="center">@ViewBag.BlogList[i].times</td>
-                                        <td class="center">@ViewBag.BlogList[i].title</td>
+                                        <td class="center">@ViewBag.returnList[i].story_id</td>
+                                        <td class="center">@ViewBag.returnList[i].times</td>
+                                        <td class="center">@ViewBag.returnList[i].title</td>
                                         <td class="center">
-                                            <a href="/Activity/SingleActivity?productID=@ViewBag.activityList[i].activity_id" class="btn btn-tbl-edit btn-xs">
+                                            <a href="/Blog/BlogDetail?BlogId=@ViewBag.returnList[i].story_id" class="btn btn-tbl-edit btn-xs">
                                                 <i class="fa fa-exclamation-circle"></i>
                                             </a>
                                         </td>
                                     </tr>
+                                            }
                                         }
+
                                     }
                                 </tbody>
                             </table>

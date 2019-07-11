@@ -1,46 +1,43 @@
 ﻿
 @{
-    ViewBag.Title = "checkMyAOrder";
+    ViewBag.Title = "查看我的体验活动订单";
     Layout = "~/Views/Admin/Admin_Layout.cshtml";
 }
 
 <script>
-    function cancelCheck(status, id) {
-        var next_step = false;
-        var cancelstate = status;
-        if (cancelstate == -1) {
-            next_step = true;
-        }
-        if (next_step) {
-            var statu = confirm("您是否要取消订单？");
-            if (!statu) {
-                return false;
-            } else {
-                $.ajax({
-                    type: "post",
-                    url: "../Admin/IcancelActivityOrder",
-                    data: {
-                        toDeleteID: id
-                    },
-                    async: false,
-                    dataType: 'json',
-                    success: function (d) {//取消成功
+    function deleteOrderedActivity(orderID) {
+        var choice = confirm("是否确认删除该用户订单?提交后将不可更改。");//确认框。
+        if (choice == true) {
+            $.ajax({
+                type: "post",
+                url: "../Admin/CancelActivityOrder",
+                data: {
+                    orderID: orderID
+                },
+                async: false,
+                dataType: 'json',
+                success: function (d) {
+                    var addState = d.isSuccess;
+                    if (addState == true) {//登录成功
                         console.log(d);
-                        alert("取消成功！");
-                        location.href = '~/Admin/checkMyAOrder';
-                    },
-                    error: function (a) {
-                        console.log(a);
-                        alert("取消失败!");
+                        window.location.href = "/Admin/checkMyAOrder";
+                        alert("订单取消成功!");
                     }
-                });
-            }
-        } else {
-            alert("订单不允许取消！");
+                    else {
+                        //登录失败
+                        console.log(d);
+                        alert(d.message);
+                        window.location.href = "/Admin/checkMyAOrder";
+                    }
+                },
+                error: function (a) {
+                    console.log(a);
+                    alert("订单取消失败!");
+                }
+            });
         }
-
     }
-    function reviewCheck(orderID) {
+    function reviewCheck(orderID,productID) {
         $.ajax({
             type: "post",
             url: "../Admin/CheckComment",
@@ -53,7 +50,7 @@
             success: function (d) {//取消成功
                 var reviewState = d.isSuccess;
                 if (reviewState == true) {//登录成功
-                    location.href = '~/Admin/Comment?orderID=' + orderID + "&accessWay=1";
+                    location.href = '~/Admin/Comment?orderID=' + orderID + "&accessWay=1&productID="+productID;
                 } else {
                     alert(d.message);
                 }
@@ -121,9 +118,9 @@
                                                 <tr class="odd gradeX">
                                                     <td class="center">@ViewBag.returnList[i].activity_order_id</td>
                                                     <td class="center">@ViewBag.returnList[i].customer_id</td>
-                                                    <td class="center">@ViewBag.returnList[i].create_time</td>
-                                                    <td class="center">@ViewBag.returnList[i].start_time</td>
-                                                    <td class="center">@ViewBag.returnList[i].end_time</td>
+                                                    <td class="center">@ViewBag.returnList[i].create_time.ToString("yyyy-MM-dd")</td>
+                                                    <td class="center">@ViewBag.returnList[i].start_time.ToString("yyyy-MM-dd")</td>
+                                                    <td class="center">@ViewBag.returnList[i].end_time.ToString("yyyy-MM-dd")</td>
                                                     <td class="center">@ViewBag.returnList[i].total_price</td>
                                                     <td class="center">@ViewBag.returnList[i].platform_fee</td>
 
@@ -152,7 +149,7 @@
                                                         <a onclick="reviewCheck(@ViewBag.returnList[i].activity_order_id)" class="btn btn-tbl-edit btn-xs">
                                                             <i class="fa fa-pencil"></i>
                                                         </a>
-                                                        <a class="btn btn-tbl-delete btn-xs" onclick="cancelCheck(@ViewBag.returnList[i].status,@ViewBag.returnList[i].activity_order_id)">
+                                                        <a class="btn btn-tbl-delete btn-xs" onclick="deleteOrderedActivity(@ViewBag.returnList[i].activity_order_id)">
                                                             <i class="fa fa-trash-o "></i>
                                                         </a>
                                                     </td>

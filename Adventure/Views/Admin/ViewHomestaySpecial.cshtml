@@ -10,15 +10,15 @@
         if (choice == true) {
             $.ajax({
                 type: "post",
-                url: "../Admin/RemoveHomestaySpecial",
+                url: "../Admin/RemoveSpecialPrice",
                 data: {
                     instanceID: instanceID
                 },
                 async: false,
                 dataType: 'json',
                 success: function (d) {
-                    var addState = d.isSuccess;
-                    if (addState == true) {//登录成功
+                    var deleteState = d.isDelete;
+                    if (deleteState == true) {//登录成功
                         console.log(d);
                         window.location.href = "/Admin/ViewHomestaySpecial";
                         alert("删除房源特殊价格成功!");
@@ -91,30 +91,18 @@
                                             for (int i = 0; i < ViewBag.returnList.Length; i++)
                                             {
                                                 <tr class="odd gradeX">
-                                                    <td class="center"> @ViewBag.returnList[i].activity_instance_id </td>
-                                                    <td class="center"> @ViewBag.returnList[i].activity_id </td>
-                                                    <td class="center"> @ViewBag.returnList[i].activity_name </td>
-                                                    <td class="center"> @ViewBag.returnList[i].start_time.ToString("yyyy-MM-dd") </td>
-                                                    <td class="center"> @ViewBag.returnList[i].end_time.ToString("yyyy-MM-dd") </td>
-                                                    @{
-                                                        if (ViewBag.returnList[i].is_booked == 0)
-                                                        {
-                                                            <td class="center">待预定</td>
-
-                                                        }
-                                                        else
-                                                        {
-                                                            <td class="center">已预定</td>
-
-                                                        }
-
-                                                    }
+                                                    <td class="center"> @ViewBag.returnList[i].special_price_id </td>
+                                                    <td class="center"> @ViewBag.returnList[i].homestay_id </td>
+                                                    <td class="center"> @ViewBag.returnList[i].homestay_name </td>
+                                                    <td class="center"> @ViewBag.returnList[i].beginning_date.ToString("yyyy-MM-dd") </td>
+                                                    <td class="center"> @ViewBag.returnList[i].end_date.ToString("yyyy-MM-dd") </td>
+                                                   
                                                     <td class="center">  @ViewBag.returnList[i].price</td>
                                                     <td class="center">
-                                                        <a href="/Activity/SingleActivity?productID=@ViewBag.returnList[i].activity_id" class="btn btn-tbl-edit btn-xs">
+                                                        <a href="/HomeStay/StayInfo?productID=@ViewBag.returnList[i].homestay_id" class="btn btn-tbl-edit btn-xs">
                                                             <i class="fa fa-exclamation-circle"></i>
                                                         </a>
-                                                        <a class="btn btn-tbl-delete btn-xs" onclick="deleteInstance(@ViewBag.returnList[i].activity_instance_id)">
+                                                        <a class="btn btn-tbl-delete btn-xs" onclick="deleteInstance(@ViewBag.returnList[i].special_price_id)">
                                                             <i class="fa fa-trash-o "></i>
                                                         </a>
                                                     </td>

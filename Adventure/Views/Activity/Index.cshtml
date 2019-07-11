@@ -11,12 +11,13 @@
     <div class="container">
         <div class="row no-gutters slider-text js-fullheight align-items-center justify-content-start" data-scrollax-parent="true">
             <div class="col-md-9 ftco-animate mb-5 pb-5 text-center text-md-left" data-scrollax=" properties: { translateY: '70%' }">
-                <h1 class="mb-4"  data-scrollax="properties: { translateY: '30%', opacity: 1.6 }">精选体验活动</h1>
-                <p  data-scrollax="properties: { translateY: '30%', opacity: 1.6 }"><b>尝试一下新的当地居民创设的体验活动？万种风情等你来探索！</b></p>
+                <h1 class="mb-4" data-scrollax="properties: { translateY: '30%', opacity: 1.6 }">精选体验活动</h1>
+                <p data-scrollax="properties: { translateY: '30%', opacity: 1.6 }"><b>尝试一下新的当地居民创设的体验活动？万种风情等你来探索！</b></p>
             </div>
         </div>
     </div>
 </div>
+
 
 <section class="ftco-section justify-content-end ftco-search">
     <div class="container-wrap ml-auto">
@@ -33,7 +34,7 @@
 
                 <div class="tab-content p-4 px-5" id="v-pills-tabContent">
 
-                    <div class="tab-pane fade " id="v-pills-1" role="tabpanel" aria-labelledby="v-pills-nextgen-tab">
+                    <div class="tab-pane fade" id="v-pills-1" role="tabpanel" aria-labelledby="v-pills-nextgen-tab">
                         <form action="/HomeStay/Index" class="search-destination" method="post">
                             <div class="row">
                                 <div class="col-md align-items-end">
@@ -41,7 +42,7 @@
                                         <label for="#">目的地</label>
                                         <div class="form-field">
                                             <div class="icon"><span class="icon-map-marker"></span></div>
-                                            <input type="text" name="destination" class="form-control" placeholder="您的目的地">
+                                            <input type="text" required name="destination" class="form-control" placeholder="您的目的地">
                                         </div>
                                     </div>
                                 </div>
@@ -50,7 +51,7 @@
                                         <label for="#">入住时间</label>
                                         <div class="form-field">
                                             <div class="icon"><span class="icon-map-marker"></span></div>
-                                            <input type="text" name="start_time" class="form-control checkin_date" placeholder="您的入住时间">
+                                            <input type="date" required id="hs-start" name="start_time" class="form-control" placeholder="您的入住时间">
                                         </div>
                                     </div>
                                 </div>
@@ -59,7 +60,7 @@
                                         <label for="#">退房时间</label>
                                         <div class="form-field">
                                             <div class="icon"><span class="icon-map-marker"></span></div>
-                                            <input type="text" name="end_time" class="form-control checkout_date" placeholder="您的退房时间">
+                                            <input type="date" required id="hs-end" name="end_time" class="form-control" placeholder="您的退房时间">
                                         </div>
                                     </div>
                                 </div>
@@ -99,7 +100,7 @@
                                         <label for="#">目的地</label>
                                         <div class="form-field">
                                             <div class="icon"><span class="icon-map-marker"></span></div>
-                                            <input type="text" name="destination" class="form-control" placeholder="您的目的地">
+                                            <input type="text" required name="destination" class="form-control" placeholder="您的目的地">
                                         </div>
                                     </div>
                                 </div>
@@ -108,7 +109,7 @@
                                         <label for="#">开始日期</label>
                                         <div class="form-field">
                                             <div class="icon"><span class="icon-map-marker"></span></div>
-                                            <input type="text" name="start_time" class="form-control checkin_date" placeholder="活动开始日期">
+                                            <input type="date" required id="act-start" name="start_time" class="form-control" placeholder="活动开始日期">
                                         </div>
                                     </div>
                                 </div>
@@ -117,7 +118,7 @@
                                         <label for="#">结束日期</label>
                                         <div class="form-field">
                                             <div class="icon"><span class="icon-map-marker"></span></div>
-                                            <input type="text" name="end_time" class="form-control checkout_date" placeholder="活动结束日期">
+                                            <input type="date" required id="act-end" name="end_time" class="form-control" placeholder="活动结束日期">
                                         </div>
                                     </div>
                                 </div>
@@ -153,6 +154,7 @@
         </div>
     </div>
 </section>
+
 <section class="ftco-section  testimony-section" style="background-image: url(../images/Favor_bg.jpg);background-color:transparent" data-stellar-background-ratio="0.5">
     <div class="container">
         <div class="row">
@@ -206,3 +208,24 @@
     </div>
 
 </section> <!-- .section -->
+<script>
+    $(function () {
+        var date = new Date();
+        var today = date.getFullYear();
+        today += "-";
+        today += date.getMonth() + 1 < 10 ? "0" + (date.getMonth() + 1) : (date.getMonth() + 1);
+        today += "-";
+        today += date.getDate() < 10 ? "0" + date.getDate() : date.getDate();
+        $('#hs-start').attr('min', today);
+        $('#hs-end').attr('min', today);
+        $('#act-start').attr('min', today);
+        $('#act-end').attr('min', today);
+
+        $('#act-start').change(function () {
+            $('#act-end').attr('min', $(this).val());
+        });
+        $('#hs-start').change(function () {
+            $('#hs-end').attr('min', $(this).val());
+        });
+    });
+</script>
