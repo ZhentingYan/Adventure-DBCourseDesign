@@ -64,7 +64,7 @@
                                         <label for="#">目的地</label>
                                         <div class="form-field">
                                             <div class="icon"><span class="icon-map-marker"></span></div>
-                                            <input type="text" required name="destination" class="form-control" placeholder="您的目的地">
+                                            <input type="text" name="destination" class="form-control" placeholder="您的目的地">
                                         </div>
                                     </div>
                                 </div>
@@ -73,7 +73,7 @@
                                         <label for="#">入住时间</label>
                                         <div class="form-field">
                                             <div class="icon"><span class="icon-map-marker"></span></div>
-                                            <input type="date" required id="hs-start" name="start_time"  class="form-control" placeholder="您的入住时间">
+                                            <input type="text" name="start_time"  class="form-control checkin_date" placeholder="您的入住时间">
                                         </div>
                                     </div>
                                 </div>
@@ -82,7 +82,7 @@
                                         <label for="#">退房时间</label>
                                         <div class="form-field">
                                             <div class="icon"><span class="icon-map-marker"></span></div>
-                                            <input type="date" required id="hs-end" name="end_time"  class="form-control" placeholder="您的退房时间">
+                                            <input type="text" name="end_time"  class="form-control checkout_date" placeholder="您的退房时间">
                                         </div>
                                     </div>
                                 </div>
@@ -122,7 +122,7 @@
                                         <label for="#">目的地</label>
                                         <div class="form-field">
                                             <div class="icon"><span class="icon-map-marker"></span></div>
-                                            <input type="text" required name="destination" class="form-control" placeholder="您的目的地">
+                                            <input type="text" name="destination" class="form-control" placeholder="您的目的地">
                                         </div>
                                     </div>
                                 </div>
@@ -131,7 +131,7 @@
                                         <label for="#">开始日期</label>
                                         <div class="form-field">
                                             <div class="icon"><span class="icon-map-marker"></span></div>
-                                            <input type="date" required id="act-start" name="start_time" class="form-control" placeholder="活动开始日期">
+                                            <input type="text" name="start_time" class="form-control checkin_date" placeholder="活动开始日期">
                                         </div>
                                     </div>
                                 </div>
@@ -140,7 +140,7 @@
                                         <label for="#">结束日期</label>
                                         <div class="form-field">
                                             <div class="icon"><span class="icon-map-marker"></span></div>
-                                            <input type="date" required id="act-end" name="end_time" class="form-control" placeholder="活动结束日期">
+                                            <input type="text" name="end_time" class="form-control checkout_date" placeholder="活动结束日期">
                                         </div>
                                     </div>
                                 </div>
@@ -538,25 +538,3 @@
         </div>
     </div>
 </section>
-
-<script>
-    $(function () {
-        var date = new Date();
-        var today = date.getFullYear();
-        today += "-";
-        today += date.getMonth() + 1 < 10 ? "0" + (date.getMonth() + 1) : (date.getMonth() + 1);
-        today += "-";
-        today += date.getDate() < 10 ? "0" + date.getDate() : date.getDate();
-        $('#hs-start').attr('min', today);
-        $('#hs-end').attr('min', today);
-        $('#act-start').attr('min', today);
-        $('#act-end').attr('min', today);
-
-        $('#act-start').change(function () {
-            $('#act-end').attr('min', $(this).val());
-        });
-        $('#hs-start').change(function () {
-            $('#hs-end').attr('min', $(this).val());
-        });
-    });
-</script>

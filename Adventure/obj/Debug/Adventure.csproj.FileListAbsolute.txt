@@ -494,7 +494,3 @@ C:\Users\WTG\Documents\Adventure-DBCourseDesign\Adventure\bin\EntityFramework.dl
 C:\Users\WTG\Documents\Adventure-DBCourseDesign\Adventure\bin\EntityFramework.SqlServer.dll
 C:\Users\WTG\Documents\Adventure-DBCourseDesign\Adventure\bin\EntityFramework.xml
 C:\Users\WTG\Documents\Adventure-DBCourseDesign\Adventure\bin\EntityFramework.SqlServer.xml
-C:\Users\Administrator\Desktop\数据库\Adventure\bin\EntityFramework.dll
-C:\Users\Administrator\Desktop\数据库\Adventure\bin\EntityFramework.SqlServer.dll
-C:\Users\Administrator\Desktop\数据库\Adventure\bin\EntityFramework.xml
-C:\Users\Administrator\Desktop\数据库\Adventure\bin\EntityFramework.SqlServer.xml
