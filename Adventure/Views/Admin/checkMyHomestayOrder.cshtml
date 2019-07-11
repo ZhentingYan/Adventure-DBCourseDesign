@@ -2,10 +2,43 @@
 @{
                 /**/
 
-                ViewBag.Title = "checkMyHomestayOrder";
+                ViewBag.Title = "查看被预定房源";
                 Layout = "~/Views/Admin/Admin_Layout.cshtml";
 }
-
+<script>
+    function deleteOrderedHomestay(orderID) {
+        var choice = confirm("是否确认删除该用户订单?提交后将不可更改。");//确认框。
+        if (choice == true) {
+            $.ajax({
+                type: "post",
+                url: "../Admin/RemoveActivity",
+                data: {
+                    orderID: orderID
+                },
+                async: false,
+                dataType: 'json',
+                success: function (d) {
+                    var addState = d.isSuccess;
+                    if (addState == true) {//登录成功
+                        console.log(d);
+                        window.location.href = "/Admin/ViewActivity";
+                        alert("删除成功!");
+                    }
+                    else {
+                        //登录失败
+                        console.log(d);
+                        alert(d.message);
+                        window.location.href = "/Admin/ViewActivity";
+                    }
+                },
+                error: function (a) {
+                    console.log(a);
+                    alert("删除失败!");
+                }
+            });
+        }
+    }
+    </script>
 <!--start page content-->
 <div class="page-content-wrapper">
     <div class="page-content">
@@ -63,12 +96,36 @@
                                         <td class="center">@ViewBag.returnList[i].homestay_order_id</td>
                                         <td class="center">@ViewBag.returnList[i].customer_id</td>
                                         <td class="center">@ViewBag.returnList[i].homestay_name</td>
-                                        <td class="center">@ViewBag.returnList[i].start_time</td>
-                                        <td class="center">@ViewBag.returnList[i].end_time</td>
+                                        <td class="center">@ViewBag.returnList[i].start_time.ToString("yyyy-MM-dd")</td>
+                                        <td class="center">@ViewBag.returnList[i].end_time.ToString("yyyy-MM-dd")</td>
                                         <td class="center">@ViewBag.returnList[i].total_price</td>
                                         <td class="center">@ViewBag.returnList[i].platform_fee</td>
                                         <!--这里需要更改状态，我要晕厥了-->
-                                        <td class="center">@ViewBag.returnList[i].status</td>
+                                        @{
+                                            if (ViewBag.returnList[i].status == -2)
+                                            {
+                                                <td class="center">已取消</td>
+
+                                            }
+                                            else if (ViewBag.returnList[i].status == -1)
+                                            {
+                                                <td class="center">待出行</td>
+
+                                            }
+                                            else if (ViewBag.returnList[i].status == 0)
+                                            {
+                                                <td class="center">进行中</td>
+
+                                            }
+                                            else
+                                            {
+                                                <td class="center">已完成</td>
+
+                                            }
+
+
+
+                                        }
                                         <td class="center">
                                             <a href="/HomeStay/StayInfo?productID=@ViewBag.returnList[i].homestay_id" class="btn btn-tbl-edit btn-xs">
                                                 <i class="fa fa-exclamation-circle"></i>
@@ -76,7 +133,7 @@
                                             <!--TODO:comment-->
                                             <!--这里需要删除，我要晕厥了-->
 
-                                            <a href="#" class="btn btn-tbl-delete btn-xs" onclick="">
+                                            <a  class="btn btn-tbl-delete btn-xs" onclick="">
                                                 <i class="fa fa-trash-o "></i>
                                             </a>
                                         </td>

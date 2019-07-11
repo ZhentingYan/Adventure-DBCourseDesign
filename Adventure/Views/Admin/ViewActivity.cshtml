@@ -6,33 +6,36 @@
 
 <script>
     function deleteActivity(productID) {
-        $.ajax({
-            type: "post",
-            url: "../Admin/RemoveActivity",
-            data: {
-                productID: productID
-            },
-            async: false,
-            dataType: 'json',
-            success: function (d) {
-                var addState = d.isSuccess;
-                if (addState == true) {//登录成功
-                    console.log(d);
-                    window.location.href = "../Admin/ViewActivity";
-                    alert("删除成功!");
+        var choice = confirm("是否确认删除该实例?提交后将不可更改。");//确认框。
+        if (choice == true) {
+            $.ajax({
+                type: "post",
+                url: "../Admin/RemoveActivity",
+                data: {
+                    productID: productID
+                },
+                async: false,
+                dataType: 'json',
+                success: function (d) {
+                    var addState = d.isSuccess;
+                    if (addState == true) {//登录成功
+                        console.log(d);
+                        window.location.href = "/Admin/ViewActivity";
+                        alert("删除成功!");
+                    }
+                    else {
+                        //登录失败
+                        console.log(d);
+                        alert(d.message);
+                        window.location.href = "/Admin/ViewActivity";
+                    }
+                },
+                error: function (a) {
+                    console.log(a);
+                    alert("删除失败!");
                 }
-                else {
-                    //登录失败
-                    console.log(d);
-                    alert(d.message);
-                    window.location.href = "../Admin/ViewActivity";
-                }
-            },
-            error: function (a) {
-                console.log(a);
-                alert("删除失败!");
-            }
-        });
+            });
+        }
     }
 </script>
 <!-- start page content -->

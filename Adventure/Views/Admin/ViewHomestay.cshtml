@@ -3,7 +3,39 @@
     ViewBag.Title = "查看我的房源";
     Layout = "~/Views/Admin/Admin_Layout.cshtml";
 }
-
+<script>
+    function deleteHomestay(productID) {
+        var choice = confirm("是否确认删除该房源?提交后将不可更改。");//确认框。
+        if (choice == true) {
+            $.ajax({
+                type: "post",
+                url: "../Admin/RemoveHomestay",
+                data: {
+                    productID: productID
+                },
+                async: false,
+                dataType: 'json',
+                success: function (d) {
+                    var addState = d.isSuccess;
+                    if (addState == true) {//登录成功
+                        console.log(d);
+                        window.location.href = "/Admin/ViewHomestay";
+                        alert("删除成功!");
+                    }
+                    else {
+                        //登录失败
+                        console.log(d);
+                        alert(d.message);
+                    }
+                },
+                error: function (a) {
+                    console.log(a);
+                    alert("删除失败!");
+                }
+            });
+        }
+    }
+</script>
 <!-- start page content -->
 <div class="page-content-wrapper">
     <div class="page-content">
@@ -72,7 +104,7 @@
                                                 <i class="fa fa-pencil"></i>
                                             </a>
 
-                                            <a href="#" class="btn btn-tbl-delete btn-xs" onclick="Delete(@ViewBag.homestayList[i].homestay_id)">
+                                            <a href="#" class="btn btn-tbl-delete btn-xs" onclick="deleteHomestay(@ViewBag.homestayList[i].homestay_id)">
                                                 <i class="fa fa-trash-o "></i>
                                             </a>
                                         </td>

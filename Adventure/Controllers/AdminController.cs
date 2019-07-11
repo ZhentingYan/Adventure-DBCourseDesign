@@ -397,35 +397,72 @@ namespace Adventure.Controllers
                     InitKeyType = InitKeyType.Attribute //从实体特性中读取主键自增列信息
                 });
             JObject isSuccess = new JObject();
-
             try
             {
+                //找到是否有未预定或者已预定且未完成的订单
                 var checkif = db.Queryable<ActivityOrder, ActivityInstance>((st, sc) => new object[] {
                 JoinType.Inner,st.activity_instance_id==sc.activity_instance_id})
                 .Where((st, sc) => sc.activity_id == Convert.ToInt32(Request.Form["productID"]) && (sc.is_booked == 0 || (sc.is_booked == 1 && st.status <= 0)))
                 .Select((st, sc) => new { Id = sc.activity_id }).ToArray();
-
                 if (checkif.Length == 0)
                 {
                     db.Deleteable<ActivityInstance>(it => it.activity_id == Convert.ToInt32(Request.Form["productID"])).ExecuteCommand();
                     db.Deleteable<Activity>().In(Convert.ToInt32(Request.Form["productID"])).ExecuteCommand();
                     isSuccess.Add("isSuccess", true);
-                    return Content(JsonConvert.SerializeObject(isSuccess, Formatting.Indented));
                 }
                 else
                 {
                     isSuccess.Add("isSuccess", false);
-                    isSuccess.Add("message", "删除失败!");
-                    return Content(JsonConvert.SerializeObject(isSuccess, Formatting.Indented));
+                    isSuccess.Add("message", "不允许删除！你有未被预定的活动实例/你的实例正在处于活跃状态！");
                 }
             }
             catch (Exception ex)
             {
                 isSuccess.Add("isSuccess", false);
-                isSuccess.Add("message", "删除失败!");
-                return Content(JsonConvert.SerializeObject(isSuccess, Formatting.Indented));
+                isSuccess.Add("message", "操作失败");
+                throw ex;
             }
+            return Content(JsonConvert.SerializeObject(isSuccess, Formatting.Indented));
         }
+
+       
+        [HttpPost]
+        public ActionResult RemoveHomestay(FormCollection form)
+        {
+            SqlSugarClient db = new SqlSugarClient(
+                new ConnectionConfig()
+                {
+                    ConnectionString = System.Web.Configuration.WebConfigurationManager.AppSettings["ConnectionString"],
+                    DbType = DbType.Oracle,//设置数据库类型
+                    IsAutoCloseConnection = true,//自动释放数据务，如果存在事务，在事务结束后释放
+                    InitKeyType = InitKeyType.Attribute //从实体特性中读取主键自增列信息
+                });
+            JObject isSuccess = new JObject();
+            try
+            {
+                //检测房源是否有正处在活跃的订单
+                var checkif = db.Queryable<HomestayOrder>().Where(it => it.homestay_id == Convert.ToInt32(Request.Form["productID"]) && it.status <= 0).ToArray();
+                if (checkif.Length == 0)
+                {
+                    db.Deleteable<SpecialPrice>(it => it.homestay_id == Convert.ToInt32(Request.Form["productID"])).ExecuteCommand();
+                    db.Deleteable<Homestay>().In(Convert.ToInt32(Request.Form["productID"])).ExecuteCommand();
+                    isSuccess.Add("isSuccess", true);
+                }
+                else
+                {
+                    isSuccess.Add("isSuccess", false);
+                    isSuccess.Add("message", "不允许删除！你有房源订单正在处于活跃状态！");
+                }
+            }
+            catch (Exception ex)
+            {
+                isSuccess.Add("isSuccess", false);
+                isSuccess.Add("message", "操作失败");
+                throw ex;
+            }
+            return Content(JsonConvert.SerializeObject(isSuccess, Formatting.Indented));
+        }
+
     }
 
 }

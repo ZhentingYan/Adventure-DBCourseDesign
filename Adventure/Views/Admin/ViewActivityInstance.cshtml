@@ -6,34 +6,37 @@
 }
 <script>
     function deleteInstance(productID) {
-        $.ajax({
-            type: "post",
-            url: "../Admin/RemoveActivityInstance",
-            data: {
-                productID: productID
-            },
-            async: false,
-            dataType: 'json',
-            success: function (d) {
-                var addState = d.isSuccess;
-                if (addState == true) {//登录成功  
-                    console.log(d);
-                    window.location.href = "~/Admin/ViewActivityInstance";
-                    alert("删除成功!");
-                }
-                else {
-                    //登录失败                
-                    console.log(d);
-                    alert(d.message);
-                    window.location.href = "~/Admin/ViewActivityInstance";
+        var choice = confirm("是否确认删除该实例?提交后将不可更改。");//确认框。
+        if (choice == true) {
+            $.ajax({
+                type: "post",
+                url: "../Admin/RemoveActivityInstance",
+                data: {
+                    productID: productID
+                },
+                async: false,
+                dataType: 'json',
+                success: function (d) {
+                    var addState = d.isSuccess;
+                    if (addState == true) {//登录成功  
+                        console.log(d);
+                        window.location.href = "/Admin/ViewActivityInstance";
+                        alert("删除该实例成功!");
+                    }
+                    else {
+                        //登录失败                
+                        console.log(d);
+                        alert(d.message);
+                        window.location.href = "/Admin/ViewActivityInstance";
 
+                    }
+                },
+                error: function (a) {
+                    console.log(a);
+                    alert("删除活动实例失败！");
                 }
-            },
-            error: function (a) {
-                console.log(a);
-                alert("删除活动实例失败！");
-            }
-        });
+            });
+        }
     }
 </script>
 <!-- start page content -->
