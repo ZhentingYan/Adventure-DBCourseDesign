@@ -490,3 +490,7 @@ D:\Adventure-DBCourseDesign-master\Adventure\obj\Debug\Adventure.csproj.CoreComp
 D:\Adventure-DBCourseDesign-master\Adventure\obj\Debug\Adventure.csproj.CopyComplete
 D:\Adventure-DBCourseDesign-master\Adventure\obj\Debug\Adventure.dll
 D:\Adventure-DBCourseDesign-master\Adventure\obj\Debug\Adventure.pdb
+C:\Users\WTG\Documents\Adventure-DBCourseDesign\Adventure\bin\EntityFramework.dll
+C:\Users\WTG\Documents\Adventure-DBCourseDesign\Adventure\bin\EntityFramework.SqlServer.dll
+C:\Users\WTG\Documents\Adventure-DBCourseDesign\Adventure\bin\EntityFramework.xml
+C:\Users\WTG\Documents\Adventure-DBCourseDesign\Adventure\bin\EntityFramework.SqlServer.xml

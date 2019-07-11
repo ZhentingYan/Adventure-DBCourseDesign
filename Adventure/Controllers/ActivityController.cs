@@ -123,6 +123,42 @@ namespace Adventure.Controllers
         [HttpGet]
         public ActionResult Index()
         {
+            SqlSugarClient db = new SqlSugarClient(
+       new ConnectionConfig()
+       {
+           ConnectionString = System.Web.Configuration.WebConfigurationManager.AppSettings["ConnectionString"],
+           DbType = DbType.Oracle,//设置数据库类型
+            IsAutoCloseConnection = true,//自动释放数据务，如果存在事务，在事务结束后释放
+            InitKeyType = InitKeyType.Attribute //从实体特性中读取主键自增列信息
+        });
+            try
+            {
+                DateTime dt_start_time, dt_end_time;
+                DateTimeFormatInfo dtFormat = new DateTimeFormatInfo();
+                dtFormat.ShortDatePattern = "yyyy/MM/dd";
+                dt_start_time = Convert.ToDateTime(Request.Form["start_time"], dtFormat);
+                dt_end_time = Convert.ToDateTime(Request.Form["end_time"], dtFormat);
+                string key = Request.Form["destination"].ToLower();
+                int numNeed = Convert.ToInt32(Request.Form["person_num"]);
+
+                var availableID = new List<int>();
+                var available = db.Queryable<ActivityInstance>().Where(it => (dt_start_time <= it.start_time && dt_end_time >= it.end_time) && it.is_booked == 0).ToArray();
+                for (int i = 0; i < available.Length; i++)
+                {
+                    if (availableID.Contains(available[i].activity_id) == false)
+                    {
+                        availableID.Add(available[i].activity_id);
+                    }
+                }
+
+                var returnlist = db.Queryable<Activity>().Where(it => availableID.Contains(it.activity_id) && it.max_member_limit >= numNeed && it.address.ToLower().Contains(key)).ToArray();
+                ViewBag.returnList = returnlist;
+                ViewBag.isSearch = 1;
+            }
+            catch (Exception ex)
+            {
+                ViewBag.returnList = null;
+            }
             return View();
         }
 
