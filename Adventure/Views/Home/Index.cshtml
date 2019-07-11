@@ -57,7 +57,7 @@
                 <div class="tab-content p-4 px-5" id="v-pills-tabContent">
 
                     <div class="tab-pane fade show active" id="v-pills-1" role="tabpanel" aria-labelledby="v-pills-nextgen-tab">
-                        <form action="/Activity/Index" class="search-destination">
+                        <form action="/HomeStay/Index" class="search-destination" method="post"  >
                             <div class="row">
                                 <div class="col-md align-items-end">
                                     <div class="form-group">
@@ -115,8 +115,17 @@
                     </div>
 
                     <div class="tab-pane fade" id="v-pills-2" role="tabpanel" aria-labelledby="v-pills-performance-tab">
-                        <form action="#" class="search-destination">
+                        <form action="/Activity/Index" class="search-destination"  method="post" >
                             <div class="row">
+                                <div class="col-md align-items-end">
+                                    <div class="form-group">
+                                        <label for="#">目的地</label>
+                                        <div class="form-field">
+                                            <div class="icon"><span class="icon-map-marker"></span></div>
+                                            <input type="text" name="destination" class="form-control" placeholder="您的目的地">
+                                        </div>
+                                    </div>
+                                </div>
                                 <div class="col-md align-items-end">
                                     <div class="form-group">
                                         <label for="#">开始日期</label>
@@ -141,7 +150,7 @@
                                         <div class="form-field">
                                             <div class="select-wrap">
                                                 <div class="icon"><span class="ion-ios-arrow-down"></span></div>
-                                                <select  name="person_num" id="person_num" class="form-control">
+                                                <select name="person_num" id="person_num" class="form-control">
                                                     <option value="1" selected>1</option>
                                                     <option value="2">2</option>
                                                     <option value="3">3</option>
